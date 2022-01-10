@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import User from './user';
-import Category from './category';
+const mongoose = global.mongoose;
+const User = require('./user');
+const Category = require('./category');
 
 const postSchema = mongoose.Schema({
   title: {

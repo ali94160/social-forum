@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import User from './user';
-import Post from './post';
+const mongoose = global.mongoose;
+const User = require('./user')
+const Post = require('./post');
 
 const commentSchema = new mongoose.Schema({
   content: {

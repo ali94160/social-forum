@@ -6,10 +6,8 @@ const app = express();
 
 const url = process.env.URL;
 
-mongoose
+global.mongoose
   .connect(url, {
-    // let me speak the same dialect
-    // as a modern MongoDB server:
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
