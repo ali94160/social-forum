@@ -1,3 +1,19 @@
-const crypt = require("crypto");
+const crypto = require("crypto");
 
-module.exports = user = (app) => {};
+const secret = "goodLuckToHackThisSaltMsg@haha.se"
+
+module.exports = user = (app) => {
+  app.post("/api/login", (req, res) => {
+    //import model
+
+    // see if user exists
+
+    //encrypt password
+    const hash = crypto
+      .createHmac("sha256", secret)
+      .update(req.body.password)
+      .digest("hex");
+
+    //send response, save
+  });
+};
