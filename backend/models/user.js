@@ -1,6 +1,5 @@
 const mongoose = global.mongoose;
-
-import roles from './role';
+const roles = require('./role');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -20,8 +19,7 @@ const userSchema = new mongoose.Schema({
   roles: [{
     type: String,
     enum: Object.values(roles),
-    default: roles.USER // or shall it be anonymous?
   }]
 });
 
-export default mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);
