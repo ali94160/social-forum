@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+global.mongoose = require("mongoose");
 const crypt = require("crypto");
 const express = require("express");
 require("dotenv").config();

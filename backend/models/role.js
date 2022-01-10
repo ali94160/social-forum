@@ -1,4 +1,4 @@
-export const roles = Object.freeze({
+module.exports = Object.freeze({
     USER: 'USER',
     ADMIN: 'ADMIN',
     POSTOWNER: 'POSTOWNER',
