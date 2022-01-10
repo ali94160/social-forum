@@ -1,10 +1,11 @@
 global.mongoose = require("mongoose");
-const crypt = require("crypto");
 const express = require("express");
+const user = require("./api/userService");
 require("dotenv").config();
 const app = express();
 
 const url = process.env.URL;
+user(app);
 
 global.mongoose
   .connect(url, {
