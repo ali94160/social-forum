@@ -37,17 +37,14 @@ module.exports = async (req, res, next) => {
     }
     
     let frequency = sum / entries[ip].attempts.length;
-    console.log("frequency ", frequency);
-    console.log("entries[ip].attempts.length ", entries[ip].attempts.length);
-    
-    if (entries[ip].attempts.length > MAXIMUM_ATTEMPTS && frequency < MINIMUM_WAIT_DURATION * 2) {
+    if (entries[ip].attempts.length > MAXIMUM_ATTEMPTS && frequency < MINIMUM_WAIT_DURATION) {
       return
     }
     
-    if (entries[ip].attempts.length > MAXIMUM_ATTEMPTS * 10 && frequency < MINIMUM_WAIT_DURATION * 3) {
+    if (entries[ip].attempts.length > MAXIMUM_ATTEMPTS * 10 && frequency < MINIMUM_WAIT_DURATION) {
       await ban(ip);
     }
-
+    
     if (entries[ip].attempts.length > MAXIMUM_ATTEMPTS * 100 && frequency < MINUTE_IN_MS) {
       await ban(ip);
     }
