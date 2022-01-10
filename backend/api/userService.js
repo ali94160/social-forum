@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 
-const secret = "goodLuckToHackThisSaltMsg@haha.se"
+const secret = "goodLuckToHackThisSaltMsgBrevet00@haha.se";
 
 module.exports = user = (app) => {
   app.post("/api/login", (req, res) => {
