@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+global.mongoose = require("mongoose");
 const express = require("express");
 const user = require("./api/userService");
 const banlist = require("./api/banService");
@@ -9,7 +9,7 @@ const url = process.env.URL;
 user(app);
 banlist(app);
 
-mongoose
+global.mongoose
   .connect(url, {
     // let me speak the same dialect
     // as a modern MongoDB server:
@@ -19,6 +19,9 @@ mongoose
   .then(() => {
     console.log("connected to mongoose");
   });
+
+const floodControl = require('./middlewares/floodControl.js')
+app.use(floodControl)
 
 app.listen(process.env.PORT, () => {
   console.log("app started: ", process.env.PORT);
