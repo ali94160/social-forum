@@ -28,6 +28,7 @@ module.exports = user = (app) => {
     }
   });
 
+  //register
   app.post("/api/register", (req, res) => {
     // fetch user model
 
@@ -43,6 +44,7 @@ module.exports = user = (app) => {
     //save and send response
   });
 
+  //current user
   app.get("/api/whoAmI", (req, res) => {
     if (req.session?.user) {
       let user = { ...req.session.user };
@@ -50,7 +52,7 @@ module.exports = user = (app) => {
       res.json(user);
       res.sendStatus(200);
     } else {
-      res.sendStatus(400);
+      res.sendStatus(401);
     }
   });
 };
