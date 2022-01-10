@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   roles: [{
     type: String,
     enum: Object.values(roles),
-    default: roles.USER
+    default: roles.USER // or shall it be anonymous?
   }]
 });
 
