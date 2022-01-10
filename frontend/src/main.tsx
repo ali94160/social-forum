@@ -3,12 +3,15 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import AllRoutes from "./router/AllRoutes";
+import AllContexts from "./context/AllContexts";
 
 ReactDOM.render(
   <React.StrictMode>
-    <AllRoutes>
-      <App />
-    </AllRoutes>
+    <AllContexts>
+      <AllRoutes>
+        <App />
+      </AllRoutes>
+    </AllContexts>
   </React.StrictMode>,
   document.getElementById("root")
 );
