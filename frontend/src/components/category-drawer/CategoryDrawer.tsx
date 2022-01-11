@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Toolbar,
   Drawer,
@@ -8,14 +8,21 @@ import {
 } from "@mui/material";
 
 import { StyledBox, StyledList, StyledText } from "./StyledCategoryDrawer";
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = "20%";
 
 interface Props {
-  isOpen: boolean
+  isOpen: boolean;
 }
 
-function CategoryDrawer({isOpen} : Props) {
+function CategoryDrawer({ isOpen }: Props) {
+  const history = useHistory();
+  const navigateToCategory = (name: string) => {
+    // temporary
+    history.push(`/categories/${name}`);
+  };
+
   return (
     <Drawer
       variant="persistent"
@@ -35,7 +42,7 @@ function CategoryDrawer({isOpen} : Props) {
         <StyledList>
           {/* shall be replaced with categories */}
           {["Meme", "Trollololo", "Cooking", "Economic"].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button key={text} onClick={() => navigateToCategory(text)}>
               <StyledText>{text}</StyledText>
             </ListItem>
           ))}
