@@ -12,11 +12,11 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   StyledButton,
   StyledForm,
-  StyledTextField,
   StyledFormControl,
   StyledInputContainer,
 } from "./StyledLoginForm";
 import BasicTextField from "../../basics/basic-text-field/BasicTextField";
+import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
 
 const login = (ev: BaseSyntheticEvent) => {
   ev.preventDefault();
@@ -38,35 +38,21 @@ function LoginForm() {
           value={email}
           label="E-mail"
           placeholder="123@email.com"
-          handleChange={(ev) => setEmail(ev.target.value)}
+          handleChange={(ev: BaseSyntheticEvent) => setEmail(ev.target.value)}
           required
         />
       </StyledInputContainer>
       <StyledInputContainer>
-        <StyledFormControl variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">
-            Password
-          </InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(ev) => setPassword(ev.target.value)}
-            required
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </StyledFormControl>
+        <BasicVisibilityInput
+          variant="outlined"
+          label="Password"
+          showText={showPassword}
+          setShowText={setShowPassword}
+          handleChange={(ev: BaseSyntheticEvent) =>
+            setPassword(ev.target.value)
+          }
+          required
+        />
       </StyledInputContainer>
       <StyledInputContainer>
         <Checkbox
