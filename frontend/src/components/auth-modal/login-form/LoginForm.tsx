@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, { BaseSyntheticEvent, useState } from "react";
 
 import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
   IconButton,
-  Button,
-  Box,
+  Checkbox,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import {
+  StyledButton,
   StyledForm,
   StyledTextField,
   StyledFormControl,
   StyledInputContainer,
 } from "./StyledLoginForm";
+import BasicTextField from "../../basics/basic-text-field/BasicTextField";
 
-const login = (ev) => {
+const login = (ev: BaseSyntheticEvent) => {
   ev.preventDefault();
   console.log("TRIGGER LOGIN");
 };
@@ -25,18 +26,19 @@ const login = (ev) => {
 function LoginForm() {
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [check, setCheck] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
     <StyledForm onSubmit={login}>
       <h3>Log in</h3>
       <StyledInputContainer>
-        <StyledTextField
+        <BasicTextField
           type="email"
           value={email}
           label="E-mail"
           placeholder="123@email.com"
-          onChange={(ev) => setEmail(ev.target.value)}
+          handleChange={(ev) => setEmail(ev.target.value)}
           required
         />
       </StyledInputContainer>
@@ -66,9 +68,24 @@ function LoginForm() {
           />
         </StyledFormControl>
       </StyledInputContainer>
-      <Button type="submit" variant="contained">
+      <StyledInputContainer>
+        <Checkbox
+          checked={check}
+          onChange={() => setCheck(!check)}
+          inputProps={{ "aria-label": "controlled" }}
+          required
+          sx={{
+            color: "var(--dark-teal)",
+            "&.Mui-checked": {
+              color: "var(--dark-teal)",
+            },
+          }}
+        />
+        Accept user conditions
+      </StyledInputContainer>
+      <StyledButton type="submit" variant="contained">
         Log in
-      </Button>
+      </StyledButton>
     </StyledForm>
   );
 }

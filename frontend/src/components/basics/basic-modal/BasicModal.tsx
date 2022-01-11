@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Modal, Fade, Box, Typography, Backdrop } from "@mui/material";
+import { StyledModal, StyledBox } from "./StyledBasicModal";
 
 type Props = {
   isOpen: boolean;
@@ -17,13 +18,13 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 4,
   outline: "none",
-  p: 4,
+  p: 4
 };
 
 export default function BasicModal({ children, isOpen, handleClose }: Props) {
   return (
     <div>
-      <Modal
+      <StyledModal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={isOpen}
@@ -35,9 +36,9 @@ export default function BasicModal({ children, isOpen, handleClose }: Props) {
         }}
       >
         <Fade in={isOpen}>
-          <Box sx={style}>{children}</Box>
+          <StyledBox sx={style}>{children}</StyledBox>
         </Fade>
-      </Modal>
+      </StyledModal>
     </div>
   );
 }

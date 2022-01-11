@@ -3,7 +3,7 @@ import React from 'react'
 import { Modal, Fade, Box, Typography, Backdrop } from "@mui/material";
 import { useModal } from '../../context/ModalContext';
 import LoginForm from './login-form/LoginForm';
-import BasicModal from '../basic-modal/BasicModal';
+import BasicModal from '../basics/basic-modal/BasicModal';
 
 function AuthModal() {
   const { isAuthOpen, toggleAuthModal } = useModal();
