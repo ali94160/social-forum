@@ -7,29 +7,36 @@ import {
   Divider,
 } from "@mui/material";
 
-import { StyledBox, StyledList } from "./StyledSideNav";
+import { StyledBox, StyledList, StyledText } from "./StyledCategoryDrawer";
 
 const drawerWidth = "20%";
 
+interface Props {
+  isOpen: boolean
+}
 
-function SideNav() {
+function CategoryDrawer({isOpen} : Props) {
   return (
     <Drawer
-      variant="permanent"
+      variant="persistent"
+      open={isOpen}
       sx={{
         [`& .MuiDrawer-paper`]: {
           background: "var(--dark-teal)",
+          opacity: 0.95,
           width: drawerWidth,
+          minWidth: 200,
           boxSizing: "border-box",
         },
       }}
     >
       <Toolbar />
       <StyledBox>
-        <StyledList sx={{ color: "white" }}>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        <StyledList>
+          {/* shall be replaced with categories */}
+          {["Meme", "Trollololo", "Cooking", "Economic"].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemText primary={text} />
+              <StyledText>{text}</StyledText>
             </ListItem>
           ))}
         </StyledList>
@@ -39,4 +46,4 @@ function SideNav() {
   );
 }
 
-export default SideNav
+export default CategoryDrawer;
