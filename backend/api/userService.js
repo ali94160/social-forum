@@ -3,8 +3,6 @@ const userModel = require("../models/user");
 const roles = require("../models/role");
 const banModel = require("../models/ban");
 
-const secret = "goodLuckToHackThisSaltMsgBrevet00@haha.se";
-
 module.exports = user = (app) => {
   //login
   app.post("/api/login", async (req, res) => {
@@ -18,7 +16,7 @@ module.exports = user = (app) => {
       return;
     }
     const hash = crypto
-      .createHmac("sha256", secret)
+      .createHmac("sha256", process.env.SECRET)
       .update(req.body?.password)
       .digest("hex");
 
@@ -69,7 +67,7 @@ module.exports = user = (app) => {
     }
 
     const hash = crypto
-      .createHmac("sha256", secret)
+      .createHmac("sha256", process.env.SECRET)
       .update(req.body?.password)
       .digest("hex");
 
