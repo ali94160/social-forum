@@ -16,12 +16,18 @@ module.exports = user = (app) => {
       .update(req.body?.password)
       .digest("hex");
 
-    let user = await userModel.findOne({
-      email: req.body.email,
-      password: hash,
-    });
+    let user;
+    try {
+      user = await userModel.findOne({
+        email: req.body.email,
+        password: hash,
+      });
+    } catch (error) {
+      res.sendStatus(400);
+    }
     if (user) {
       req.session.user = user;
+      console.log(req.session);
       res.sendStatus(200);
       return;
     }
@@ -74,11 +80,11 @@ module.exports = user = (app) => {
 
   //current user
   app.get("/api/whoAmI", (req, res) => {
+    console.log(req.session);
     if (req.session?.user) {
       let user = { ...req.session.user };
       delete user.password;
       res.json(user);
-      res.sendStatus(200);
     } else {
       res.sendStatus(401);
     }
