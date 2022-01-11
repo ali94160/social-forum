@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const userModel = require("../models/user");
 const roles = require("../models/role");
+const banModel = require("../models/ban");
 
 const secret = "goodLuckToHackThisSaltMsgBrevet00@haha.se";
 
@@ -52,8 +53,13 @@ module.exports = user = (app) => {
     let userAlreadyExistsByUsername = await userModel.findOne({
       username: req.body?.username,
     });
+    let userIsBanned = await banModel.findOne({ email: req.body?.email });
 
-    if (userAlreadyExistsByEmail || userAlreadyExistsByUsername) {
+    if (
+      userAlreadyExistsByEmail ||
+      userAlreadyExistsByUsername ||
+      userIsBanned
+    ) {
       res.sendStatus(400);
       return;
     }
