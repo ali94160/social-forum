@@ -1,13 +1,9 @@
 import React, { BaseSyntheticEvent, useState } from "react";
 
 import {
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  IconButton,
+  Button,
   Checkbox,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import {
   StyledButton,
@@ -17,6 +13,7 @@ import {
 } from "./StyledLoginForm";
 import BasicTextField from "../../basics/basic-text-field/BasicTextField";
 import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
+import { useModal } from "../../../context/ModalContext";
 
 const login = (ev: BaseSyntheticEvent) => {
   ev.preventDefault();
@@ -28,6 +25,8 @@ function LoginForm() {
   const [email, setEmail] = useState<string>("");
   const [check, setCheck] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const {toggleAuthModal} = useModal()
 
   return (
     <StyledForm onSubmit={login}>
@@ -72,6 +71,9 @@ function LoginForm() {
       <StyledButton type="submit" variant="contained">
         Log in
       </StyledButton>
+      <Button sx={{background: "grey"}} type="button" variant="contained" onClick={toggleAuthModal}>
+        Cancel
+      </Button>
     </StyledForm>
   );
 }
