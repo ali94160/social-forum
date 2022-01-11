@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.use(
   session({
-    secret: "S0m3#p30p13_l1k35-c1l4n7r0,_50m3.d0N7", // choose your own...
+    secret: process.env.SECRETSESSION, // choose your own...
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false },
