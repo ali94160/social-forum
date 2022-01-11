@@ -5,7 +5,7 @@ const Category = require('./category');
 const postSchema = mongoose.Schema({
   title: {
     type: String,
-    require: true
+    required: true
   },
   ownerId:
   {
@@ -14,11 +14,11 @@ const postSchema = mongoose.Schema({
   },
   createdDate: {
     type: Date,
-    require: true
+    required: true
   },
   content: {
     type: String,
-    require: true
+    required: true
   },
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,

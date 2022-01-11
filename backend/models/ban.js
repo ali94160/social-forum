@@ -4,8 +4,19 @@ const banSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      required: true,
       unique: true
+    },
+    ip: {
+      type: String,
+      unique: true
+    },
+    reason: {
+      type: String,
+      required: true
+    },
+    banDate: {
+      type: Date,
+      required: true
     }
   }
 );
