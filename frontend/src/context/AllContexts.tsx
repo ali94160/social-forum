@@ -1,11 +1,18 @@
 import React from "react";
+import ModalContextProvider from "./ModalContext";
 
 interface Props {
   children: JSX.Element;
 }
 
 function AllContexts({ children }: Props) {
-  return <div>{children};</div>;
+  return (
+    <>
+      <ModalContextProvider>
+        {children}
+      </ModalContextProvider>
+    </>
+  );
 }
 
 export default AllContexts;
