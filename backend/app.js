@@ -11,8 +11,6 @@ banlist(app);
 
 global.mongoose
   .connect(url, {
-    // let me speak the same dialect
-    // as a modern MongoDB server:
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
