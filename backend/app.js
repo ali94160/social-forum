@@ -1,6 +1,7 @@
 global.mongoose = require("mongoose");
 const express = require("express");
 const user = require("./api/userService");
+const post = require("./api/postService");
 const banlist = require("./api/banService");
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -21,6 +22,7 @@ app.use(
 
 const url = process.env.URL;
 user(app);
+post(app);
 banlist(app);
 
 global.mongoose
