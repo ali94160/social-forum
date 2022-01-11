@@ -2,18 +2,25 @@ import React, { useState } from "react";
 import { Toolbar, Typography, Box, Button } from "@mui/material";
 import CategoryDrawer from "../category-drawer/CategoryDrawer";
 import { StyledAppBar, StyledButton } from "./StyledNav";
+import { useHistory } from "react-router-dom";
 
 function Nav() {
+  const history = useHistory();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const toggleDrawer = () => {
-    setIsOpen(!isOpen)
+    setIsOpen(!isOpen);
   };
 
+  const navigate = (text: string) => {
+    const site: string = text == "home" ? "" : text;
+    history.push(`/${site}`)
+  }
+
   const pages = [
-    { text: "Home", clickEvent: toggleDrawer },
-    { text: "Posts", clickEvent: toggleDrawer },
-    { text: "Categories", clickEvent: toggleDrawer },
+    { text: "home", clickEvent: navigate },
+    { text: "posts", clickEvent: navigate },
+    { text: "categories", clickEvent: toggleDrawer },
   ];
 
   return (
@@ -28,7 +35,7 @@ function Nav() {
           </Typography>
           <Box>
             {pages.map((page) => (
-              <StyledButton key={page.text} onClick={page.clickEvent}>
+              <StyledButton key={page.text} onClick={() => page.clickEvent(page.text)}>
                 {page.text}
               </StyledButton>
             ))}
