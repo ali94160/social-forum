@@ -12,6 +12,11 @@ module.exports = user = (app) => {
       res.sendStatus(400);
       return;
     }
+    let userIsBanned = await banModel.findOne({ email: req.body?.email });
+    if (userIsBanned) {
+      res.sendStatus(403);
+      return;
+    }
     const hash = crypto
       .createHmac("sha256", secret)
       .update(req.body?.password)
