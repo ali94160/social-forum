@@ -15,6 +15,7 @@ body {
   --dark-teal: #065471;
   --light-teal: #749DAA;
   --menu-text-color: white;
+  --shadow: rgb(6, 83, 111, 0.6);
 }
 
 code {
