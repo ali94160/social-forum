@@ -33,7 +33,6 @@ module.exports = user = (app) => {
     }
     if (user) {
       req.session.user = user;
-      console.log(req.session);
       res.sendStatus(200);
       return;
     }
@@ -91,7 +90,6 @@ module.exports = user = (app) => {
 
   //current user
   app.get("/api/whoAmI", (req, res) => {
-    console.log(req.session);
     if (req.session?.user) {
       let user = { ...req.session.user };
       delete user.password;
