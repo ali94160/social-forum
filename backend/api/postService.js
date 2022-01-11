@@ -1,4 +1,4 @@
-const { authRole } = require('../middlewares/authRole')
+const { authRole } = require('../middlewares/validation')
 const roles = require('../models/role')
 
 module.exports = function (app) {
