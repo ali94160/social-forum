@@ -9,12 +9,12 @@ interface Props {
 }
 
 function ModalContextProvider({ children }: Props) {
-  const [isLoginModal, setIsLoginModal] = useState(false);
-  const toggleLoginModal = () => setIsLoginModal(!isLoginModal)
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const toggleAuthModal = () => setIsAuthOpen(!isAuthOpen);
   
   const values = {
-    isLoginModal,
-    toggleLoginModal
+    isAuthOpen,
+    toggleAuthModal,
   };
 
   return (
