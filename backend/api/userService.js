@@ -64,7 +64,7 @@ module.exports = user = (app) => {
       userAlreadyExistsByUsername ||
       userIsBanned
     ) {
-      res.sendStatus(400);
+      res.sendStatus(403);
       return;
     }
 
