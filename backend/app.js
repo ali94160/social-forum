@@ -2,13 +2,13 @@ global.mongoose = require("mongoose");
 const express = require("express");
 const user = require("./api/userService");
 const banlist = require("./api/banService");
-const bodyParser = require("body-parser");
+const post = require("./api/postService");
 const session = require("express-session");
 require("dotenv").config();
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use(
   session({
@@ -22,6 +22,7 @@ app.use(
 const url = process.env.URL;
 user(app);
 banlist(app);
+post(app);
 
 global.mongoose
   .connect(url, {
