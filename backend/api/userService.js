@@ -3,8 +3,6 @@ const userModel = require("../models/user");
 const roles = require("../models/role");
 const banModel = require("../models/ban");
 
-const secret = "goodLuckToHackThisSaltMsgBrevet00@haha.se";
-
 module.exports = user = (app) => {
   //login
   app.post("/api/login", async (req, res) => {
@@ -12,8 +10,13 @@ module.exports = user = (app) => {
       res.sendStatus(400);
       return;
     }
+    let userIsBanned = await banModel.findOne({ email: req.body?.email });
+    if (userIsBanned) {
+      res.sendStatus(403);
+      return;
+    }
     const hash = crypto
-      .createHmac("sha256", secret)
+      .createHmac("sha256", process.env.SECRET)
       .update(req.body?.password)
       .digest("hex");
 
@@ -28,7 +31,6 @@ module.exports = user = (app) => {
     }
     if (user) {
       req.session.user = user;
-      console.log(req.session);
       res.sendStatus(200);
       return;
     }
@@ -60,12 +62,12 @@ module.exports = user = (app) => {
       userAlreadyExistsByUsername ||
       userIsBanned
     ) {
-      res.sendStatus(400);
+      res.sendStatus(403);
       return;
     }
 
     const hash = crypto
-      .createHmac("sha256", secret)
+      .createHmac("sha256", process.env.SECRET)
       .update(req.body?.password)
       .digest("hex");
 
@@ -86,7 +88,6 @@ module.exports = user = (app) => {
 
   //current user
   app.get("/api/whoAmI", (req, res) => {
-    console.log(req.session);
     if (req.session?.user) {
       let user = { ...req.session.user };
       delete user.password;
