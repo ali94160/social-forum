@@ -1,11 +1,20 @@
 const banModel = require("../models/ban");
 
-function authUserLoggedIn(req, res, next) {
+function authUserNotLoggedIn(req, res, next) {
   if (req.session?.user) {
     res.sendStatus(400);
     return;
   }
   
+  next()
+}
+
+function authUserLoggedIn(req, res, next) {
+  if (!req.session?.user) {
+    res.sendStatus(401);
+    return;
+  }
+
   next()
 }
 
@@ -27,18 +36,22 @@ async function bannedUser(req, res, next) {
 function authRole(roles) {
   return (req, res, next) => {
 
-    for (let foundRole of req.body.user.roles) {
+    let found = false
+    for (let foundRole of req.session.user.roles) {
       if (roles.includes(foundRole)) {
-        next()
+        found = true
       }
     }
     
-    res.status(401)
-    return res.send('Not allowed')
+    if (!found) {
+      return res.sendStatus(401);
+    }
+    next()
   }
 }
 
 module.exports = {
+  authUserNotLoggedIn,
   authUserLoggedIn,
   bannedUser,
   authRole
