@@ -3,5 +3,4 @@ module.exports = Object.freeze({
     ADMIN: 'ADMIN',
     POSTOWNER: 'POSTOWNER',
     POSTMODERATOR: 'POSTMODERATOR',
-    ANONYMOUS: 'ANONYMOUS'
 })
