@@ -10,22 +10,27 @@ interface Props {
 }
 
 function AuthContextProvider({ children }: Props) {
-  const login = (user: LoginUser) => {
-    console.log(user);
-    
-  }
-  const register = async (user: RegisterUser) => {
-    let response = await fetch("/api/register", {
+  const login = async (user: LoginUser) => {
+    const response: Response = await fetch("/api/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(user),
     });
-    if (response.status === 200) {
-      return true;
-    }
     
+    return response.status === 200
+  }
+  const register = async (user: RegisterUser) => {
+    const response: Response = await fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    return response.status === 200;
   }
 
   const values = {
