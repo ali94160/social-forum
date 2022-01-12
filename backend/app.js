@@ -2,6 +2,7 @@ global.mongoose = require("mongoose");
 const express = require("express");
 const user = require("./api/userService");
 const banlist = require("./api/banService");
+const post = require("./api/postService");
 const session = require("express-session");
 require("dotenv").config();
 
@@ -21,6 +22,7 @@ app.use(
 const url = process.env.URL;
 user(app);
 banlist(app);
+post(app);
 
 global.mongoose
   .connect(url, {
