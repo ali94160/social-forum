@@ -1,5 +1,6 @@
 import React from "react";
 import ModalContextProvider from "./ModalContext";
+import UserContextProvider from "./UserContext"
 
 interface Props {
   children: JSX.Element;
@@ -8,9 +9,9 @@ interface Props {
 function AllContexts({ children }: Props) {
   return (
     <>
-      <ModalContextProvider>
-        {children}
-      </ModalContextProvider>
+      <UserContextProvider>
+        <ModalContextProvider>{children}</ModalContextProvider>
+      </UserContextProvider>
     </>
   );
 }
