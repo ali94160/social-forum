@@ -10,5 +10,6 @@ export interface LoginUser {
 }
 
 export interface User {
+  id: string;
   username: string;
 }

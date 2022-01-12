@@ -19,9 +19,12 @@ function AuthModal() {
   return (
     <BasicModal isOpen={isAuthOpen} handleClose={handleClose}>
       {showRegister ? (
-        <RegisterForm toggleRegister={toggleRegister} toggleModal={toggleAuthModal}/>
+        <RegisterForm
+          toggleRegister={toggleRegister}
+          handleClose={handleClose}
+        />
       ) : (
-        <LoginForm toggleRegister={toggleRegister} toggleModal={toggleAuthModal}/>
+        <LoginForm toggleRegister={toggleRegister} handleClose={handleClose} />
       )}
     </BasicModal>
   );

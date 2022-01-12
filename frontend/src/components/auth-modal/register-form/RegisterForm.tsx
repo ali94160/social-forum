@@ -13,10 +13,10 @@ import { useAuth } from "../../../context/AuthContext";
 
 interface Props {
   toggleRegister: Function;
-  toggleModal: Function;
+  handleClose: Function;
 }
 
-function RegisterForm({ toggleRegister, toggleModal }: Props) {
+function RegisterForm({ toggleRegister, handleClose }: Props) {
   const { register } = useAuth();
 
   const [email, setEmail] = useState<string>("");
@@ -128,7 +128,7 @@ function RegisterForm({ toggleRegister, toggleModal }: Props) {
         <StyledCloseButton
           type="button"
           variant="contained"
-          onClick={() => toggleModal()}
+          onClick={() => handleClose()}
         >
           Cancel
         </StyledCloseButton>

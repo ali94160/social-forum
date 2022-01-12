@@ -17,17 +17,17 @@ import { useAuth } from "../../../context/AuthContext";
 
 interface Props {
   toggleRegister: Function;
-  toggleModal: Function;
+  handleClose: Function;
 }
 
-function LoginForm({ toggleRegister, toggleModal }: Props) {
+function LoginForm({ toggleRegister, handleClose }: Props) {
   const { login, whoAmI,user } = useAuth();
   const submitLogin = async (ev: BaseSyntheticEvent) => {
     ev.preventDefault();
     const isSucceed = await login({ email, password });
     if (isSucceed) {
       whoAmI()
-      toggleModal()
+      handleClose()
       return;
       
     }
@@ -84,7 +84,7 @@ function LoginForm({ toggleRegister, toggleModal }: Props) {
         <StyledCloseButton
           type="button"
           variant="contained"
-          onClick={() => toggleModal()}
+          onClick={() => handleClose()}
         >
           Cancel
         </StyledCloseButton>
