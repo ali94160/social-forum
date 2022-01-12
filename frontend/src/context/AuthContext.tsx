@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { LoginUser, RegisterUser } from "../interfaces/User";
+import { createContext, useContext, useState, useEffect } from "react";
+import { LoginUser, RegisterUser, User } from "../interfaces/User";
 
 const AuthContext = createContext<any>(null);
 
@@ -10,6 +10,14 @@ interface Props {
 }
 
 function AuthContextProvider({ children }: Props) {
+
+  const [user, setUser] = useState<User | null>(null);
+
+
+  useEffect(() => {
+    whoAmI()
+  }, [])
+
   const login = async (user: LoginUser) => {
     const response: Response = await fetch("/api/login", {
       method: "POST",
@@ -18,7 +26,7 @@ function AuthContextProvider({ children }: Props) {
       },
       body: JSON.stringify(user),
     });
-    
+
     return response.status === 200
   }
   const register = async (user: RegisterUser) => {
@@ -33,9 +41,20 @@ function AuthContextProvider({ children }: Props) {
     return response.status === 200;
   }
 
+  const whoAmI = async () => {
+    const response: Response = await fetch("/api/whoAmI")
+    
+    if (response.status === 200) {
+      const responseUser: User = await response.json()
+      setUser(responseUser);
+    }
+  }
+
   const values = {
     login,
-    register
+    register,
+    whoAmI,
+    user
   };
 
   return (

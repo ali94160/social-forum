@@ -13,24 +13,34 @@ import {
 import BasicTextField from "../../basics/basic-text-field/BasicTextField";
 import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
 import { useModal } from "../../../context/ModalContext";
+import { useAuth } from "../../../context/AuthContext";
 
 interface Props {
   toggleRegister: Function;
   toggleModal: Function;
 }
 
-function LoginForm({ toggleRegister, toggleModal}: Props) {
-  const login = (ev: BaseSyntheticEvent) => {
+function LoginForm({ toggleRegister, toggleModal }: Props) {
+  const { login, whoAmI,user } = useAuth();
+  const submitLogin = async (ev: BaseSyntheticEvent) => {
     ev.preventDefault();
-    console.log("TRIGGER LOGIN");
+    const isSucceed = await login({ email, password });
+    if (isSucceed) {
+      whoAmI()
+      toggleModal()
+      return;
+      
+    }
+    setShowErrorMessage(true);
   };
 
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
 
   return (
-    <StyledForm onSubmit={login}>
+    <StyledForm onSubmit={submitLogin}>
       <h3>Log in</h3>
       <small>* = required</small>
       <StyledInputContainer>
@@ -62,6 +72,11 @@ function LoginForm({ toggleRegister, toggleModal}: Props) {
           Register an account here
         </StyledRegisterButton>
       </StyledInputContainer>
+      {showErrorMessage && (
+        <StyledInputContainer>
+          Bad credentials!
+        </StyledInputContainer>
+      )}
       <StyledButtonContainer>
         <StyledButton type="submit" variant="contained">
           Log in

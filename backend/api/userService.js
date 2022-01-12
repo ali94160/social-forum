@@ -90,6 +90,8 @@ module.exports = user = (app) => {
   app.get("/api/whoAmI", (req, res) => {
     if (req.session?.user) {
       let user = { ...req.session.user };
+      delete user.id;
+      delete user.email;
       delete user.password;
       res.json(user);
     } else {
