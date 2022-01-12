@@ -18,15 +18,6 @@ interface Props {
 
 function RegisterForm({ toggleRegister, toggleModal }: Props) {
   const { register } = useAuth();
-  const submitRegister = (ev: BaseSyntheticEvent) => {
-    ev.preventDefault();
-    if (!check || password !== repeatPassword) {
-      setShowNotMatch(true);
-      return
-    }
-    setShowNotMatch(false);
-    register({ email, username, password });
-  };
 
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -35,6 +26,21 @@ function RegisterForm({ toggleRegister, toggleModal }: Props) {
   const [check, setCheck] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showNotMatch, setShowNotMatch] = useState<boolean>(false);
+
+  const submitRegister = async (ev: BaseSyntheticEvent) => {
+    ev.preventDefault();
+    if (!check || password !== repeatPassword) {
+      setShowNotMatch(true);
+      return;
+    }
+    setShowNotMatch(false);
+    const isSuccess = await register({ email, username, password });
+    if (isSuccess) {
+      toggleRegister();
+      return;
+    }
+    setShowNotMatch(true);
+  };
 
   return (
     <form onSubmit={submitRegister}>
@@ -111,7 +117,9 @@ function RegisterForm({ toggleRegister, toggleModal }: Props) {
         </StyledLoginButton>
       </StyledInputContainer>
       {showNotMatch && (
-        <StyledInputContainer>OBS! Password don't match</StyledInputContainer>
+        <StyledInputContainer>
+          OBS! Password don't match/ Bad credentials
+        </StyledInputContainer>
       )}
       <StyledButtonContainer>
         <StyledButton type="submit" variant="contained">

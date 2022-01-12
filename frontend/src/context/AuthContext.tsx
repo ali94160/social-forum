@@ -22,6 +22,10 @@ function AuthContextProvider({ children }: Props) {
       },
       body: JSON.stringify(user)
     });
+    if (response.status === 200) {
+      return true;
+    }
+    
   }
 
   const values = {
