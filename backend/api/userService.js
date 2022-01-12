@@ -2,11 +2,11 @@ const crypto = require("crypto");
 const userModel = require("../models/user");
 const roles = require("../models/role");
 const banModel = require("../models/ban");
-const { authUserLoggedIn, bannedUser, authRole } = require("../middlewares/validation")
+const { authUserLoggedIn, authUserNotLoggedIn, bannedUser, authRole } = require("../middlewares/validation")
 
 module.exports = user = (app) => {
   //login
-  app.post("/api/login", authUserLoggedIn, bannedUser, async (req, res) => {
+  app.post("/api/login", authUserNotLoggedIn, bannedUser, async (req, res) => {
     const hash = crypto
       .createHmac("sha256", process.env.SECRET)
       .update(req.body?.password)
@@ -30,13 +30,9 @@ module.exports = user = (app) => {
   });
 
   //logout
-  app.delete("/api/logout", (req, res) => {
-    if (req.session?.user) {
-      delete req.session.user;
-      res.sendStatus(200);
-      return;
-    }
-    res.sendStatus(400);
+  app.delete("/api/logout", authUserLoggedIn, authRole([roles.USER, roles.ADMIN]), (req, res) => {
+    delete req.session.user;
+    res.sendStatus(200);
   });
 
   //register
@@ -79,13 +75,9 @@ module.exports = user = (app) => {
   });
 
   //current user
-  app.get("/api/whoAmI", (req, res) => {
-    if (req.session?.user) {
-      let user = { ...req.session.user };
-      delete user.password;
-      res.json(user);
-    } else {
-      res.sendStatus(401);
-    }
+  app.get("/api/whoAmI", authUserLoggedIn, authRole([roles.USER, roles.ADMIN]), (req, res) => {
+    let user = { ...req.session.user };
+    delete user.password;
+    res.json(user);
   });
 };
