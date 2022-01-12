@@ -7,8 +7,9 @@ import {
   StyledLoginButton,
   StyledButton,
   StyledCloseButton,
-  StyledButtonContainer
+  StyledButtonContainer,
 } from "./StyledRegisterForm";
+import { useAuth } from "../../../context/AuthContext";
 
 interface Props {
   toggleRegister: Function;
@@ -16,9 +17,15 @@ interface Props {
 }
 
 function RegisterForm({ toggleRegister, toggleModal }: Props) {
-  const register = (ev: BaseSyntheticEvent) => {
+  const { register } = useAuth();
+  const submitRegister = (ev: BaseSyntheticEvent) => {
     ev.preventDefault();
-    console.log("TRIGGER Register");
+    if (!check || password !== repeatPassword) {
+      setShowNotMatch(true);
+      return
+    }
+    setShowNotMatch(false);
+    register({ email, username, password });
   };
 
   const [email, setEmail] = useState<string>("");
@@ -27,11 +34,13 @@ function RegisterForm({ toggleRegister, toggleModal }: Props) {
   const [repeatPassword, setRepeatPassword] = useState<string>("");
   const [check, setCheck] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showNotMatch, setShowNotMatch] = useState<boolean>(false);
 
   return (
-    <form onSubmit={register}>
+    <form onSubmit={submitRegister}>
       <h3>Register</h3>
-      <small>* = required</small>
+      <p>* = required</p>
+      <p>Tips: Use a sentence as password ;)</p>
       <StyledInputContainer>
         <BasicTextField
           type="email"
@@ -101,6 +110,9 @@ function RegisterForm({ toggleRegister, toggleModal }: Props) {
           Log in here
         </StyledLoginButton>
       </StyledInputContainer>
+      {showNotMatch && (
+        <StyledInputContainer>OBS! Password don't match</StyledInputContainer>
+      )}
       <StyledButtonContainer>
         <StyledButton type="submit" variant="contained">
           Register
