@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Modal, Fade, Box, Typography, Backdrop } from "@mui/material";
+import { Fade, Backdrop } from "@mui/material";
 import { StyledModal, StyledBox } from "./StyledBasicModal";
 
 type Props = {
@@ -18,7 +18,7 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 4,
   outline: "none",
-  p: 4
+  p: 4,
 };
 
 export default function BasicModal({ children, isOpen, handleClose }: Props) {

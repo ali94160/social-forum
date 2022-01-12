@@ -18,7 +18,7 @@ function BasicTextField({type, placeholder, label, value, required, handleChange
       value={value}
       label={label}
       placeholder={placeholder}
-      onChange={handleChange}
+      onChange={(ev) => handleChange(ev)}
       required = {required}
     />
   );

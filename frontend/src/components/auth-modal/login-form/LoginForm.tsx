@@ -1,36 +1,38 @@
 import React, { BaseSyntheticEvent, useState } from "react";
 
-import {
-  Button,
-  Checkbox,
-} from "@mui/material";
+import { Button, Checkbox } from "@mui/material";
 
 import {
   StyledButton,
+  StyledCloseButton,
+  StyledRegisterButton,
   StyledForm,
-  StyledFormControl,
   StyledInputContainer,
+  StyledButtonContainer,
 } from "./StyledLoginForm";
 import BasicTextField from "../../basics/basic-text-field/BasicTextField";
 import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
 import { useModal } from "../../../context/ModalContext";
 
-const login = (ev: BaseSyntheticEvent) => {
-  ev.preventDefault();
-  console.log("TRIGGER LOGIN");
-};
+interface Props {
+  toggleRegister: Function;
+  toggleModal: Function;
+}
 
-function LoginForm() {
+function LoginForm({ toggleRegister, toggleModal}: Props) {
+  const login = (ev: BaseSyntheticEvent) => {
+    ev.preventDefault();
+    console.log("TRIGGER LOGIN");
+  };
+
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [check, setCheck] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
-  const {toggleAuthModal} = useModal()
 
   return (
     <StyledForm onSubmit={login}>
       <h3>Log in</h3>
+      <small>* = required</small>
       <StyledInputContainer>
         <BasicTextField
           type="email"
@@ -43,6 +45,7 @@ function LoginForm() {
       </StyledInputContainer>
       <StyledInputContainer>
         <BasicVisibilityInput
+          value={password}
           variant="outlined"
           label="Password"
           showText={showPassword}
@@ -54,26 +57,23 @@ function LoginForm() {
         />
       </StyledInputContainer>
       <StyledInputContainer>
-        <Checkbox
-          checked={check}
-          onChange={() => setCheck(!check)}
-          inputProps={{ "aria-label": "controlled" }}
-          required
-          sx={{
-            color: "var(--dark-teal)",
-            "&.Mui-checked": {
-              color: "var(--dark-teal)",
-            },
-          }}
-        />
-        Accept user conditions
+        Don't have an account?{" "}
+        <StyledRegisterButton onClick={() => toggleRegister()}>
+          Register an account here
+        </StyledRegisterButton>
       </StyledInputContainer>
-      <StyledButton type="submit" variant="contained">
-        Log in
-      </StyledButton>
-      <Button sx={{background: "grey"}} type="button" variant="contained" onClick={toggleAuthModal}>
-        Cancel
-      </Button>
+      <StyledButtonContainer>
+        <StyledButton type="submit" variant="contained">
+          Log in
+        </StyledButton>
+        <StyledCloseButton
+          type="button"
+          variant="contained"
+          onClick={() => toggleModal()}
+        >
+          Cancel
+        </StyledCloseButton>
+      </StyledButtonContainer>
     </StyledForm>
   );
 }

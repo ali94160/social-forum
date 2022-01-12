@@ -33,11 +33,11 @@ function BasicVisibilityInput({
 }: Props) {
   return (
     <StyledFormControl variant={variant}>
-      <InputLabel htmlFor="outlined-adornment-password">{label}</InputLabel>
+      <InputLabel htmlFor="outlined-adornment-password">{label + (required ? " *" : "")}</InputLabel>
       <OutlinedInput
         type={showText ? type : "password"}
         value={value}
-        onChange={(ev) => handleChange}
+        onChange={(ev) => handleChange(ev)}
         required={required}
         endAdornment={
           <InputAdornment position="end">
