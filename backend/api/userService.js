@@ -2,19 +2,11 @@ const crypto = require("crypto");
 const userModel = require("../models/user");
 const roles = require("../models/role");
 const banModel = require("../models/ban");
-const { authUser, authRole } = require("../middlewares/validation")
+const { authUserLoggedIn, bannedUser, authRole } = require("../middlewares/validation")
 
 module.exports = user = (app) => {
   //login
-  app.post("/api/login", authUser, async (req, res) => {
-    // kontrollera om personen är inloggad
-    // skapa middleware för att kontrollera banlist
-    // ta bort anonymous från roles??
-    let userIsBanned = await banModel.findOne({ email: req.body?.email });
-    if (userIsBanned) {
-      res.sendStatus(403);
-      return;
-    }
+  app.post("/api/login", authUserLoggedIn, bannedUser, async (req, res) => {
     const hash = crypto
       .createHmac("sha256", process.env.SECRET)
       .update(req.body?.password)

@@ -1,6 +1,23 @@
-function authUser(req, res, next) {
+const banModel = require("../models/ban");
+
+function authUserLoggedIn(req, res, next) {
   if (req.session?.user) {
     res.sendStatus(400);
+    return;
+  }
+  
+  next()
+}
+
+async function bannedUser(req, res, next) {
+  if (!req.body.email || !req.body.password) {
+    res.sendStatus(400);
+    return;
+  }
+
+  let bannedUser = await banModel.findOne({ email: req.body?.email });
+  if (bannedUser) {
+    res.sendStatus(403);
     return;
   }
 
@@ -22,6 +39,7 @@ function authRole(roles) {
 }
 
 module.exports = {
-  authUser,
+  authUserLoggedIn,
+  bannedUser,
   authRole
 }
