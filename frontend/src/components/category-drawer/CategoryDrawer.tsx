@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 
 import {
-  StyledDiv,
+  StyledDrawerContainer,
   StyledDrawer,
   StyledBox,
   StyledList,
@@ -36,7 +36,7 @@ function CategoryDrawer({ isOpen }: Props) {
         },
       }}
     >
-      <StyledDiv>
+      <StyledDrawerContainer>
         <Toolbar />
         <StyledBox>
           <StyledList>
@@ -55,7 +55,7 @@ function CategoryDrawer({ isOpen }: Props) {
           </StyledList>
           <Divider />
         </StyledBox>
-      </StyledDiv>
+      </StyledDrawerContainer>
     </StyledDrawer>
   );
 }
