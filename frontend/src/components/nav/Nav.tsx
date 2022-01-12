@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import { Toolbar, Typography, Box, Button } from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
 import CategoryDrawer from "../category-drawer/CategoryDrawer";
-import { StyledAppBar, StyledButton } from "./StyledNav";
+import {
+  StyledAppBar,
+  StyledButton,
+  StyledToolBar,
+  StyledTypography,
+} from "./StyledNav";
 import { useHistory } from "react-router-dom";
+import Avatar from "../avatar/Avatar";
 
 function Nav() {
   const history = useHistory();
@@ -14,8 +20,8 @@ function Nav() {
 
   const navigate = (text: string) => {
     const site: string = text == "home" ? "" : text;
-    history.push(`/${site}`)
-  }
+    history.push(`/${site}`);
+  };
 
   const pages = [
     { text: "home", clickEvent: navigate },
@@ -29,18 +35,22 @@ function Nav() {
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
+        <StyledToolBar>
+          <StyledTypography variant="h6" noWrap>
             Social forum
-          </Typography>
+          </StyledTypography>
           <Box>
             {pages.map((page) => (
-              <StyledButton key={page.text} onClick={() => page.clickEvent(page.text)}>
+              <StyledButton
+                key={page.text}
+                onClick={() => page.clickEvent(page.text)}
+              >
                 {page.text}
               </StyledButton>
             ))}
           </Box>
-        </Toolbar>
+          <Avatar justify="end" margin="0 1rem 0 0" backgroundColor="#749DAA" />
+        </StyledToolBar>
       </StyledAppBar>
       <CategoryDrawer isOpen={isOpen} />
     </div>
