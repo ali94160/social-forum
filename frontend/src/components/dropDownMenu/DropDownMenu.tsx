@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useDropDown } from "../../context/DropDownContext";
@@ -6,21 +6,20 @@ import { useDropDown } from "../../context/DropDownContext";
 interface Props {
   menuItems: {
     title: string;
-    path?: string;
+    method: () => void;
   }[];
 }
 
 function DropDownMenu({ menuItems }: Props) {
-  const { showDropDown, toggleDropDown } = useDropDown();
-  const open = showDropDown;
+  const { showDropDown, setShowDropDown } = useDropDown();
   const handleClose = () => {
-    toggleDropDown();
+    setShowDropDown(!showDropDown);
   };
 
   return (
     <Menu
       id="basic-menu"
-      open={open}
+      open={showDropDown ? showDropDown : false}
       onClose={handleClose}
       MenuListProps={{
         "aria-labelledby": "basic-button",
@@ -35,7 +34,9 @@ function DropDownMenu({ menuItems }: Props) {
       }}
     >
       {menuItems.map((item) => (
-        <MenuItem key={item.title}>{item.title}</MenuItem>
+        <MenuItem onClick={() => item.method()} key={item.title}>
+          {item.title}
+        </MenuItem>
       ))}
     </Menu>
   );

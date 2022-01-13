@@ -3,13 +3,18 @@ import { Toolbar, Typography } from "@mui/material";
 
 import { AppBar, Button, Box } from "@mui/material";
 
+interface buttonProps {
+  justify?: string;
+}
+
 export const StyledAppBar = styled(AppBar)`
   background: var(--dark-teal) !important;
 `;
 
-export const StyledButton = styled(Button)`
+export const StyledButton = styled(Button)<buttonProps>`
   color: var(--menu-text-color) !important;
   text-transform: capitalize !important;
+  justify-self: ${(props) => (props.justify ? props.justify : "")};
 `;
 
 export const StyledTypography = styled(Typography)`

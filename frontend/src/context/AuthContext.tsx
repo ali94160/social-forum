@@ -10,13 +10,11 @@ interface Props {
 }
 
 function AuthContextProvider({ children }: Props) {
-
   const [user, setUser] = useState<User | null>(null);
 
-
   useEffect(() => {
-    whoAmI()
-  }, [])
+    whoAmI();
+  }, []);
 
   const login = async (user: LoginUser) => {
     const response: Response = await fetch("/api/login", {
@@ -27,8 +25,8 @@ function AuthContextProvider({ children }: Props) {
       body: JSON.stringify(user),
     });
 
-    return response.status === 200
-  }
+    return response.status === 200;
+  };
   const register = async (user: RegisterUser) => {
     const response: Response = await fetch("/api/register", {
       method: "POST",
@@ -39,27 +37,34 @@ function AuthContextProvider({ children }: Props) {
     });
 
     return response.status === 200;
-  }
+  };
+
+  const logout = async () => {
+    const response: Response = await fetch("/api/logout", {
+      method: "DELETE",
+    });
+    setUser(null);
+    return response.status === 200;
+  };
 
   const whoAmI = async () => {
-    const response: Response = await fetch("/api/whoAmI")
-    
+    const response: Response = await fetch("/api/whoAmI");
+
     if (response.status === 200) {
-      const responseUser: User = await response.json()
+      const responseUser: User = await response.json();
       setUser(responseUser);
     }
-  }
+  };
 
   const values = {
     login,
     register,
     whoAmI,
-    user
+    user,
+    logout,
   };
 
-  return (
-    <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }
 
 export default AuthContextProvider;

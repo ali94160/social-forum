@@ -3,7 +3,6 @@ const express = require("express");
 const user = require("./api/userService");
 const post = require("./api/postService");
 const banlist = require("./api/banService");
-const post = require("./api/postService");
 const session = require("express-session");
 require("dotenv").config();
 

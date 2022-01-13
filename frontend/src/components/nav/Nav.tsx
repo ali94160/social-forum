@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Box, Button } from "@mui/material";
 import CategoryDrawer from "../category-drawer/CategoryDrawer";
 import {
@@ -55,10 +55,17 @@ function Nav() {
               </StyledButton>
             ))}
           </StyledBox>
-          <Avatar justify="end" margin="0 1rem 0 0" backgroundColor="#749DAA" />
-
           {!user && (
-            <StyledButton onClick={toggleAuthModal}>Login</StyledButton>
+            <StyledButton justify="end" onClick={toggleAuthModal}>
+              Login
+            </StyledButton>
+          )}
+          {user && (
+            <Avatar
+              justify="end"
+              margin="0 1rem 0 0"
+              backgroundColor="#749DAA"
+            />
           )}
         </StyledToolBar>
       </StyledAppBar>
