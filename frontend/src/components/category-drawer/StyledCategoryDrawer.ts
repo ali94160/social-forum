@@ -8,7 +8,7 @@ import {
   Drawer,
 } from "@mui/material";
 
-export const StyledDiv = styled.div`
+export const StyledDrawerContainer = styled.div`
   background: var(--dark-teal);
   opacity: 0.95;
   width: 20vw;

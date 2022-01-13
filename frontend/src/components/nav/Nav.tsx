@@ -6,13 +6,19 @@ import {
   StyledButton,
   StyledToolBar,
   StyledTypography,
+  StyledBox,
 } from "./StyledNav";
-import { useHistory } from "react-router-dom";
 import Avatar from "../avatar/Avatar";
+import { useHistory } from "react-router-dom";
+import { useModal } from "../../context/ModalContext";
+import { useAuth } from "../../context/AuthContext";
 
 function Nav() {
   const history = useHistory();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const { user } = useAuth();
+  const { toggleAuthModal } = useModal();
 
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
@@ -30,7 +36,7 @@ function Nav() {
   ];
 
   return (
-    <div>
+    <StyledBox>
       <StyledAppBar
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -39,7 +45,7 @@ function Nav() {
           <StyledTypography variant="h6" noWrap>
             Social forum
           </StyledTypography>
-          <Box>
+          <StyledBox>
             {pages.map((page) => (
               <StyledButton
                 key={page.text}
@@ -48,12 +54,16 @@ function Nav() {
                 {page.text}
               </StyledButton>
             ))}
-          </Box>
+          </StyledBox>
           <Avatar justify="end" margin="0 1rem 0 0" backgroundColor="#749DAA" />
+
+          {!user && (
+            <StyledButton onClick={toggleAuthModal}>Login</StyledButton>
+          )}
         </StyledToolBar>
       </StyledAppBar>
       <CategoryDrawer isOpen={isOpen} />
-    </div>
+    </StyledBox>
   );
 }
 

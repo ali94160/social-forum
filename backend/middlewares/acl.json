@@ -1,0 +1,113 @@
+[
+  {
+    "path": "/api/login",
+    "roles": [
+      {"role": "ANONYMOUS", "methods": ["POST"]}
+    ]
+  },
+  {
+    "path": "/api/register",
+    "roles": [
+      {"role": "ANONYMOUS", "methods": ["POST"]}
+    ]
+  },
+  {
+    "path": "/api/logout",
+    "roles": [
+      {"role": "USER", "methods": [ "DELETE" ]},
+      {"role": "ADMIN", "methods": [ "DELETE" ]}
+    ]
+  },
+  {
+    "path": "/api/posts",
+    "roles": [
+      {"role": "*", "methods": [ "GET" ]}
+    ]
+  },
+  {
+    "path": "/api/posts/id",
+    "roles": [
+      {"role": "*", "methods": [ "GET" ]},
+      {"role": "POSTOWNER", "methods": [ "PUT", "DELETE" ]},
+      {"role": "ADMIN", "methods": [ "DELETE" ]},
+      {"role": "POSTMODERATOR", "methods": [ "PUT" ]}
+    ]
+  },
+  {
+    "path": "/api/categories",
+    "roles": [
+      {"role": "*", "methods": [ "GET" ]},
+      {"role": "ADMIN", "methods": [ "POST" ]}
+    ]
+  },
+  {
+    "path": "/api/user/posts",
+    "roles": [
+      {"role": "USER", "methods": [ "POST", "GET" ]}
+    ]
+  },
+  {
+    "path": "/api/user/id",
+    "roles": [
+      {"role": "USER", "methods": [ "DELETE" ]}
+    ]
+  },
+  {
+    "path": "/api/user/comments",
+    "roles": [
+      {"role": "USER", "methods": [ "POST" ]}
+    ]
+  },
+  {
+    "path": "/api/comments/id",
+    "roles": [
+      {"role": "POSTOWNER", "methods": [ "DELETE" ]},
+      {"role": "POSTMODERATOR", "methods": [ "DELETE" ]},
+      {"role": "ADMIN", "methods": [ "DELETE" ]}
+    ]
+  },
+  {
+    "path": "/api/user/comments/id",
+    "roles": [
+      {"role": "USER", "methods": [ "DELETE" ]}
+    ]
+  },
+  {
+    "path": "/api/categories/id",
+    "roles": [
+      {"role": "ADMIN", "methods": [ "PUT", "DELETE" ]}
+    ]
+  },
+  {
+    "path": "/api/users/id",
+    "roles": [
+      {"role": "ADMIN", "methods": [ "DELETE" ]}
+    ]
+  },
+  {
+    "path": "/api/bans",
+    "roles": [
+      {"role": "ADMIN", "methods": [ "GET", "POST" ]}
+    ]
+  },
+  {
+    "path": "/api/bans/id",
+    "roles": [
+      {"role": "ADMIN", "methods": [ "DELETE" ]}
+    ]
+  },
+  {
+    "path": "/api/users",
+    "roles": [
+      {"role": "ADMIN", "methods": [ "GET" ]},
+      {"role": "POSTOWNER", "methods": [ "GET" ]}
+    ]
+  },
+  {
+    "path": "/api/whoami",
+    "roles": [
+      {"role": "USER", "methods": [ "GET" ]},
+      {"role": "ADMIN", "methods": [ "GET" ]}
+    ]
+  }
+]
