@@ -1,11 +1,18 @@
 import Nav from "./components/nav/Nav";
 import AuthModal from "./components/auth-modal/AuthModal";
+import AllRoutes from "./router/AllRoutes";
 
 function App() {
   return (
     <div className="App">
-      <AuthModal />
-      <Nav />
+      <header>
+        <Nav />
+      </header>
+      <main>
+        <AllRoutes>
+          <AuthModal />
+        </AllRoutes>
+      </main>
     </div>
   );
 }
