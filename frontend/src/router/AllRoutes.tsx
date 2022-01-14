@@ -10,10 +10,12 @@ const AllRoutes = ({ children }: Props) => {
   return (
     <Router>
       {children}
-      <Switch>
-        <Route exact path="/create-post" component={CreatePost} />
-        <Route path="/" component={Home} />
-      </Switch>
+      <main>
+        <Switch>
+          <Route exact path="/create-post" component={CreatePost} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </main>
     </Router>
   );
 };

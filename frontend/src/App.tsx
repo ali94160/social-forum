@@ -9,9 +9,7 @@ function App() {
         <header>
           <Nav />
         </header>
-        <>
-          <AuthModal />
-        </>
+        <AuthModal />
       </AllRoutes>
     </div>
   );

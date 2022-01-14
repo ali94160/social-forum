@@ -3,13 +3,21 @@ const { authUserLoggedIn } = require("../middlewares/acl");
 
 module.exports = function (app) {
   app.post("/api/user/posts", authUserLoggedIn, async (req, res) => {
+    if (!req.body) {
+      res.sendStatus(403);
+      return;
+    }
     try {
       let newPost = new postModel({
         ...req.body,
-        createdDate: new Date().getTime(),
+        createdDate: Date.now(),
         ownerId: req.session.user.id,
       });
-      await newPost.save();
+      const result = await newPost.save();
+      if (!result) {
+        res.sendStatus(400);
+        return;
+      }
       res.sendStatus(200);
       return;
     } catch (error) {
