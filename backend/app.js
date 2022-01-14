@@ -1,14 +1,15 @@
 global.mongoose = require("mongoose");
 const express = require("express");
-const user = require("./api/userService");
-const post = require("./api/postService");
-const banlist = require("./api/banService");
 const session = require("express-session");
+const allApis = require('./api');
+const floodControl = require("./middlewares/floodControl.js");
+
 require("dotenv").config();
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+const url = process.env.URL;
 
 app.use(
   session({
@@ -19,11 +20,7 @@ app.use(
   })
 );
 
-const url = process.env.URL;
-user(app);
-post(app);
-banlist(app);
-post(app);
+allApis(app);
 
 global.mongoose
   .connect(url, {
@@ -34,7 +31,6 @@ global.mongoose
     console.log("connected to mongoose");
   });
 
-const floodControl = require("./middlewares/floodControl.js");
 app.use(floodControl);
 
 app.listen(process.env.PORT, () => {
