@@ -1,5 +1,5 @@
 const user = require("./userService");
-const auth = require("./authService");
+const auth = require("./auth/authService");
 const banlist = require("./banService");
 const post = require("./postService");
 
