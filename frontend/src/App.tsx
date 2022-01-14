@@ -5,14 +5,14 @@ import AllRoutes from "./router/AllRoutes";
 function App() {
   return (
     <div className="App">
-      <header>
-        <Nav />
-      </header>
-      <main>
-        <AllRoutes>
+      <AllRoutes>
+        <header>
+          <Nav />
+        </header>
+        <>
           <AuthModal />
-        </AllRoutes>
-      </main>
+        </>
+      </AllRoutes>
     </div>
   );
 }

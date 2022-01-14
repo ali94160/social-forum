@@ -3,7 +3,7 @@ import CreatePost from "../pages/create-post/CreatePost";
 import Home from "../pages/home/Home";
 
 interface Props {
-  children: JSX.Element;
+  children: JSX.Element[];
 }
 
 const AllRoutes = ({ children }: Props) => {
@@ -11,8 +11,8 @@ const AllRoutes = ({ children }: Props) => {
     <Router>
       {children}
       <Switch>
-        <Route exact path="/create-post" component={CreatePost}/>
-        <Route path="/" component={Home}/>
+        <Route exact path="/create-post" component={CreatePost} />
+        <Route path="/" component={Home} />
       </Switch>
     </Router>
   );
