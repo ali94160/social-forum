@@ -9,12 +9,15 @@ interface Props {
 }
 
 interface Post {
-  title: String;
-  content: String;
-  categoryId: String;
+  _id: string;
+  title: string;
+  content: string;
+  categoryId: string;
 }
 
 function PostContextProvider({ children }: Props) {
+  const [posts, setPosts] = useState<null | Post[]>(null);
+
   const createPost = async (newPost: Post) => {
     const response: Response = await fetch("/api/user/posts", {
       method: "POST",
@@ -27,7 +30,21 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
-  const values = { createPost };
+  const getPosts = async (sort: () => any) => {
+    const response: Response = await fetch("/api/posts", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(sort),
+    });
+    const result = await response.json();
+    console.log(result);
+    setPosts(result);
+    return response.status === 200;
+  };
+
+  const values = { createPost, getPosts, posts };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;
 }
