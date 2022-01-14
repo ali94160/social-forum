@@ -1,6 +1,7 @@
 import React from "react";
 import ModalContextProvider from "./ModalContext";
-import AuthContextProvider from "./AuthContext"
+import AuthContextProvider from "./AuthContext";
+import PostContextProvider from "./PostContext";
 
 interface Props {
   children: JSX.Element;
@@ -10,7 +11,9 @@ function AllContexts({ children }: Props) {
   return (
     <>
       <AuthContextProvider>
-        <ModalContextProvider>{children}</ModalContextProvider>
+        <PostContextProvider>
+          <ModalContextProvider>{children}</ModalContextProvider>
+        </PostContextProvider>
       </AuthContextProvider>
     </>
   );

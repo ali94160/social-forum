@@ -1,6 +1,7 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from "react";
 import BasicSelect from "../basics/basic-select/BasicSelect";
 import BasicTextField from "../basics/basic-text-field/BasicTextField";
+import { usePost } from "../../context/PostContext";
 import { StyledTealButton } from "../basics/StyledTealButton";
 import { StyledForm } from "./StyledCreatePostForm";
 
@@ -12,11 +13,18 @@ const maxRow = 10;
 function CreatePostForm() {
   const [title, setTitle] = useState<string>();
   const [content, setContent] = useState<string>();
+  const { createPost } = usePost();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-  const handleAddPost = (e: React.FormEvent<HTMLFormElement>) => {
-    //61dc3a622f8ecad1bc1367b2
+  const handleAddPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const newPost = {
+      title,
+      content,
+      categoryId: "61dc3a622f8ecad1bc1367b2",
+    };
+    const result = await createPost(newPost);
+    console.log("here ", result);
   };
 
   return (
