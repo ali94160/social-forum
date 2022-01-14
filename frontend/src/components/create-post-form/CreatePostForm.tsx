@@ -15,6 +15,7 @@ function CreatePostForm() {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const handleAddPost = (e: React.FormEvent<HTMLFormElement>) => {
+    //61dc3a622f8ecad1bc1367b2
     e.preventDefault();
   };
 
