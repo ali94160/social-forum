@@ -11,7 +11,7 @@ const user2Login = {
 }
 
 // wrong credentials
-const user3Login = {
+const user3WrongLogin = {
   email: "blabla@haha.se",
   password: "123"
 }
@@ -43,7 +43,7 @@ const bannedUser = {
 module.exports = {
   user1Login,
   user2Login,
-  user3Login,
+  user3WrongLogin,
   newUser,
   user1,
   user2,

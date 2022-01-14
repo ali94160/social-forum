@@ -49,6 +49,4 @@ describe("Test user authentication - Register", () => {
     });
   });
 
-
-
 });

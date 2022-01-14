@@ -2,7 +2,7 @@ const app = require('../../../app');
 const supertest = require('supertest');
 const request = supertest(app);
 const session = require('supertest-session');
-const { user1, user2, user1Login, user2Login, user3Login, bannedUser } = require('./mock_data');
+const { user1, user1Login, user2Login, user3WrongLogin, bannedUser } = require('./mock_data');
 const roles = require('../../../models/role');
 
 
@@ -42,7 +42,7 @@ describe("Test user authentication - Login", () => {
   describe("Wrong credentials", () => {
   
     test('/api/login - No one is logged in', async () => {
-      const res = await request.post("/api/login").send(user3Login);
+      const res = await request.post("/api/login").send(user3WrongLogin);
   
       expect(res.statusCode).toBe(400)
     });
