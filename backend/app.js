@@ -36,3 +36,5 @@ app.use(floodControl);
 app.listen(process.env.PORT, () => {
   console.log("app started: ", process.env.PORT);
 });
+
+module.exports = app;
