@@ -16,23 +16,24 @@ function Avatar({ justify, margin, backgroundColor }: Props) {
   const menuItems = [
     { title: "Add post", method: () => {} },
     { title: "My posts", method: () => {} },
-    { title: "Logout", method: logout },
+    {
+      title: "Logout",
+      method: () => {
+        setShowDropDown(false);
+        logout();
+      },
+    },
   ];
-
-  const test = () => {
-    console.log("inne");
-    setShowDropDown(!showDropDown);
-  };
 
   return (
     <>
       <StyledAvatar
-        onClick={test}
+        onClick={() => setShowDropDown(!showDropDown)}
         justify={justify}
         margin={margin}
         backgroundcolor={backgroundColor}
       >
-        A
+        {user && user.username.charAt(0).toUpperCase()}
       </StyledAvatar>
       <DropDownMenu menuItems={menuItems} />
     </>

@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useDropDown } from "../../context/DropDownContext";
+import { StyledMenu } from "./StyledDropDownMenu";
 
 interface Props {
   menuItems: {
@@ -17,19 +17,17 @@ function DropDownMenu({ menuItems }: Props) {
   };
 
   return (
-    <Menu
+    <StyledMenu
       id="basic-menu"
-      open={showDropDown ? showDropDown : false}
+      open={showDropDown}
       onClose={handleClose}
-      MenuListProps={{
-        "aria-labelledby": "basic-button",
-      }}
+      autoFocus={false}
       anchorOrigin={{
         vertical: "top",
         horizontal: "right",
       }}
       transformOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
     >
@@ -38,7 +36,7 @@ function DropDownMenu({ menuItems }: Props) {
           {item.title}
         </MenuItem>
       ))}
-    </Menu>
+    </StyledMenu>
   );
 }
 
