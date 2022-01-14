@@ -12,10 +12,14 @@ const maxRow = 10;
 function CreatePostForm() {
   const [title, setTitle] = useState<string>();
   const [content, setContent] = useState<string>();
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+
+  const handleAddPost = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
 
   return (
-    <StyledForm>
+    <StyledForm onSubmit={(e) => handleAddPost(e)}>
       <h3>Create a post</h3>
       <div>
         <BasicTextField
@@ -43,7 +47,7 @@ function CreatePostForm() {
         options={categories}
         handleChange={(value: string) => setSelectedCategory(value)}
       />
-      <StyledTealButton>Post</StyledTealButton>
+      <StyledTealButton type="submit">Post</StyledTealButton>
     </StyledForm>
   );
 }
