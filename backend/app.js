@@ -1,6 +1,7 @@
 global.mongoose = require("mongoose");
 const express = require("express");
 const session = require("express-session");
+const { startSession } = require('mongoose');
 const allApis = require('./api');
 const floodControl = require("./middlewares/floodControl.js");
 
@@ -22,19 +23,24 @@ app.use(
 
 allApis(app);
 
+
 global.mongoose
   .connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+  }).then(() => {
+    if (global.mongoose.connection.readyState === 1 && process.env.NODE_ENV !== 'test') {
+    console.log('Db is connected!')
+  }
   })
-  .then(() => {
-    console.log("connected to mongoose");
-  });
 
 app.use(floodControl);
 
-app.listen(process.env.PORT, () => {
-  console.log("app started: ", process.env.PORT);
-});
+// so test doesnt use this port
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(process.env.PORT, () => {
+    console.log("app started: ", process.env.PORT);
+  });
+}
 
 module.exports = app;
