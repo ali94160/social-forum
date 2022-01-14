@@ -10,10 +10,20 @@ interface Props {
   }[];
 }
 
+interface MenuItem {
+  title: string;
+  method: () => void;
+}
+
 function DropDownMenu({ menuItems }: Props) {
   const { showDropDown, setShowDropDown } = useDropDown();
   const handleClose = () => {
     setShowDropDown(!showDropDown);
+  };
+
+  const handleClick = (item: MenuItem) => {
+    item.method();
+    setShowDropDown(false);
   };
 
   return (
@@ -32,7 +42,7 @@ function DropDownMenu({ menuItems }: Props) {
       }}
     >
       {menuItems.map((item) => (
-        <MenuItem onClick={() => item.method()} key={item.title}>
+        <MenuItem onClick={() => handleClick(item)} key={item.title}>
           {item.title}
         </MenuItem>
       ))}
