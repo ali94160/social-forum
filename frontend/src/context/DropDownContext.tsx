@@ -9,7 +9,7 @@ const DropDownContext = createContext<any>(null);
 export const useDropDown = () => useContext(DropDownContext);
 
 const DropDownContextProvider: FC<Props> = ({ children }: Props) => {
-  const [showDropDown, setShowDropDown] = useState<Boolean>(false);
+  const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
   const values = {
     showDropDown,

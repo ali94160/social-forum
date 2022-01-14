@@ -55,12 +55,11 @@ function Nav() {
               </StyledButton>
             ))}
           </StyledBox>
-          {!user && (
+          {!user ? (
             <StyledButton justify="end" onClick={toggleAuthModal}>
               Login
             </StyledButton>
-          )}
-          {user && (
+          ) : (
             <Avatar
               justify="end"
               margin="0 1rem 0 0"
