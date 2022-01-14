@@ -1,3 +1,5 @@
+const postModel = require("../models/post");
+
 module.exports = function (app) {
   app.post("/api/user/posts", async (req, res) => {
     if (!req.session?.user) {
@@ -15,7 +17,7 @@ module.exports = function (app) {
       return;
     } catch (error) {
       res.sendStatus(400);
+      return;
     }
-    res.sendStatus(400);
   });
 };

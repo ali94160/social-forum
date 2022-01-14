@@ -4,6 +4,7 @@ import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import { usePost } from "../../context/PostContext";
 import { StyledTealButton } from "../basics/StyledTealButton";
 import { StyledForm } from "./StyledCreatePostForm";
+import { useHistory } from "react-router-dom";
 
 // shall be removed
 const categories = ["Meme", "Trollololo", "Cooking", "Economic"];
@@ -11,6 +12,7 @@ const minRow = 5;
 const maxRow = 10;
 
 function CreatePostForm() {
+  const history = useHistory();
   const [title, setTitle] = useState<string>();
   const [content, setContent] = useState<string>();
   const { createPost } = usePost();
@@ -23,8 +25,8 @@ function CreatePostForm() {
       content,
       categoryId: "61dc3a622f8ecad1bc1367b2",
     };
-    const result = await createPost(newPost);
-    console.log("here ", result);
+    await createPost(newPost);
+    history.push("/");
   };
 
   return (
