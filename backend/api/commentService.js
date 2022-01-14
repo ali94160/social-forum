@@ -13,7 +13,7 @@ app.post(
     async (req, res) => {
       try {
         let comment = new commentModel({
-            content: 'test blabla',
+            content: 'test blabla ',
             writeId: req.session.user._id,
             createdDate: new Date().getTime(),
             postId: null
