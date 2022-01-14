@@ -1,11 +1,8 @@
 const postModel = require("../models/post");
+const { authUserLoggedIn } = require("../middlewares/acl");
 
 module.exports = function (app) {
-  app.post("/api/user/posts", async (req, res) => {
-    if (!req.session?.user) {
-      res.sendStatus(401);
-      return;
-    }
+  app.post("/api/user/posts", authUserLoggedIn, async (req, res) => {
     try {
       let newPost = new postModel({
         ...req.body,
