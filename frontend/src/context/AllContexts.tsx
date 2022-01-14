@@ -1,6 +1,7 @@
 import React from "react";
+import DropDownContextProvider from "./DropDownContext";
 import ModalContextProvider from "./ModalContext";
-import AuthContextProvider from "./AuthContext"
+import AuthContextProvider from "./AuthContext";
 
 interface Props {
   children: JSX.Element;
@@ -9,9 +10,11 @@ interface Props {
 function AllContexts({ children }: Props) {
   return (
     <>
-      <AuthContextProvider>
-        <ModalContextProvider>{children}</ModalContextProvider>
-      </AuthContextProvider>
+      <DropDownContextProvider>
+        <AuthContextProvider>
+          <ModalContextProvider>{children}</ModalContextProvider>
+        </AuthContextProvider>
+      </DropDownContextProvider>
     </>
   );
 }
