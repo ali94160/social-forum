@@ -2,18 +2,9 @@ const app = require('../../../app');
 const supertest = require('supertest');
 const request = supertest(app);
 const session = require('supertest-session');
-const { user1, user2, user1Login, user2Login, user3Login } = require('./mock_data');
+const { user1, user2, user1Login, user2Login, user3Login, bannedUser } = require('./mock_data');
 const roles = require('../../../models/role');
-const mongoose = global.mongoose;
 
-
-// beforeAll(async () => {
-//   connection = await mongoose.connection.readyState =
-// })
-
-// afterAll(() => {
-//   mongoose.connection.close();
-// })
 
 describe("Test user authentication - Login", () => {
 
@@ -54,6 +45,15 @@ describe("Test user authentication - Login", () => {
       const res = await request.post("/api/login").send(user3Login);
   
       expect(res.statusCode).toBe(400)
+    });
+  });
+
+  describe('Email exists in banlist', () => {
+
+    test('/api/login - log in with banned email', async () => {
+      const res = await request.post('/api/login').send(bannedUser);
+
+      expect(res.statusCode).toBe(403);
     });
   });
 });
