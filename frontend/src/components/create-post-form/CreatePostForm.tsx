@@ -1,43 +1,47 @@
-import React, { BaseSyntheticEvent, useState } from "react";
+import React, { BaseSyntheticEvent, useEffect, useState } from "react";
+import BasicSelect from "../basics/basic-select/BasicSelect";
 import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import { StyledTealButton } from "../basics/StyledTealButton";
-import SelectCheckbox from "../selector-checkbox/SelectorCheckbox";
 import { StyledForm } from "./StyledCreatePostForm";
 
 // shall be removed
 const categories = ["Meme", "Trollololo", "Cooking", "Economic"];
+const minRow = 5;
+const maxRow = 10;
 
 function CreatePostForm() {
   const [title, setTitle] = useState<string>();
   const [content, setContent] = useState<string>();
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   return (
     <StyledForm>
       <h3>Create a post</h3>
-      <BasicTextField
-        value={title}
-        label="Title"
-        handleChange={(ev: BaseSyntheticEvent) => setTitle(ev.target.value)}
-        required
-      />
-      <BasicTextField
-        type="textarea"
-        value={content}
-        label="Content"
-        multiline
-        rows={5}
-        maxRows={10}
-        handleChange={(ev: BaseSyntheticEvent) => setContent(ev.target.value)}
-        required
-      />
-      <SelectCheckbox
-        label="Categories"
+      <div>
+        <BasicTextField
+          value={title}
+          label="Title"
+          handleChange={(ev: BaseSyntheticEvent) => setTitle(ev.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <BasicTextField
+          type="textarea"
+          value={content}
+          label="Content"
+          multiline
+          minRows={minRow}
+          maxRows={maxRow}
+          handleChange={(ev: BaseSyntheticEvent) => setContent(ev.target.value)}
+          required
+        />
+      </div>
+      <BasicSelect
+        value={selectedCategory}
+        label="Category"
         options={categories}
-        selected={selectedCategories}
-        setSelected={setSelectedCategories}
-        limitTags={3}
-        isRerender={false}
+        handleChange={(value: string) => setSelectedCategory(value)}
       />
       <StyledTealButton>Post</StyledTealButton>
     </StyledForm>

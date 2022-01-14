@@ -7,4 +7,7 @@ export const StyledForm = styled.form`
   background-color: var(--yellow);
   padding: 2%;
   border-radius: 10px;
+  > * {
+    margin-bottom: 20px;
+  }
 `;
