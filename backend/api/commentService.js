@@ -15,7 +15,7 @@ app.post(
         let comment = new commentModel({
             content: 'test blabla',
             writeId: req.session.user._id,
-            createdDate: Date.now(),
+            createdDate: new Date().getTime(),
             postId: null
         });
         await comment.save();
