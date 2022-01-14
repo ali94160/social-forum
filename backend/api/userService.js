@@ -1,10 +1,10 @@
 const crypto = require("crypto");
 const userModel = require("../models/user");
+const commentModel = require("../models/comment");
+const postModel = require("../models/post");
 const roles = require("../models/role");
-const { notBannedUser, userNotExists } = require("../middlewares/validation");
 const {
   authUserLoggedIn,
-  authUserNotLoggedIn,
   authRole,
 } = require("../middlewares/acl");
 
@@ -16,11 +16,12 @@ module.exports = user = (app) => {
     authRole([roles.USER]),
     async (req, res) => {
       const user = { ...req.session.user };
-      const password = req.body.password
+      const password = req.body.password;
 
       if(!password) {
-        res.json('where is password?');
-        // res.sendStatus(400); // bad request
+        res.status(403).json({
+          message: 'No password.',
+        })
         return;
       }
 
@@ -30,22 +31,28 @@ module.exports = user = (app) => {
         .digest("hex");
 
         if(user.password !== hash){
-          res.json('password not matchy match');
-          // res.sendStatus(400);
+          res.status(403).json({
+            message: 'Bad credentials.',
+          })
           return;
         }
         
         // if we made it all the way here all good, deleting user!
-        try{
-          // const userFromDb = await userModel.findByIdAndDelete(user._id);
-          const userFromDb = await userModel.findById(user._id).exec();
-          // res.sendStatus(200);
-          res.json('deleting user from db');
-        } catch(err){
-          res.json('smth went really wrong oj');
-          return;
-        }
+        // const userFromDb = await userModel.findByIdAndDelete(user._id);
+        const userFromDb = await userModel.findById(user._id).exec(); // uncomment above and delete this row
+
+        // now lets delete all posts + comments
+        const commentsFromDb = await commentModel.deleteMany({ writeId: user._id }); // returns {deletedCount: Number}
+        const postsFromDb = await postModel.deleteMany({ ownerId: user._id });
+
+        // logging out user
+        delete req.session.user;
+
+        res.status(200).json({
+          message: 'Success',
+          commentsDeleted: commentsFromDb.deletedCount,
+          postsDeleted: postsFromDb.deletedCount
+        })
     }
   );
-
 };
