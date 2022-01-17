@@ -14,7 +14,12 @@ interface Post {
   categoryId: String;
 }
 
+interface Id {
+  id: String;
+}
+
 function PostContextProvider({ children }: Props) {
+
   const createPost = async (newPost: Post) => {
     const response: Response = await fetch("/api/user/posts", {
       method: "POST",
@@ -27,7 +32,17 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
-  const values = { createPost };
+  const getPost = async ({id}: Id) => {
+    console.log('what is id', id);
+    const response: Response = await fetch('/api/posts/' + id);
+    const body = await response.json();
+    return { status: response.status, body }
+  }
+
+  const values = {
+    createPost,
+    getPost
+  };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;
 }
