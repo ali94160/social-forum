@@ -13,6 +13,12 @@ interface Post {
   title: string;
   content: string;
   categoryId: string;
+  commentLength: number;
+  createdDate: string;
+  ownerId: {
+    _id: string;
+    username: string;
+  };
 }
 
 function PostContextProvider({ children }: Props) {
