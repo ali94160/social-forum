@@ -1,6 +1,7 @@
 const postModel = require("../../models/post");
 const commentModel = require("../../models/comment");
 const { authUserLoggedIn } = require("../../middlewares/acl");
+const roles = require("../../models/role");
 
 module.exports = function (app) {
   app.get("/api/posts", async (req, res) => {
@@ -32,22 +33,23 @@ module.exports = function (app) {
   app.get("/api/posts/:id", async (req, res) => {
     let post;
     try {
-      data = await postModel.find({ _id: req.params.id })
+      data = await postModel
+        .find({ _id: req.params.id })
         .populate("categoryId")
         .populate("moderatorsIds", ["username"])
         .populate("ownerId", ["username", "roles"]);
       for (post of data) {
         const comments = await commentModel.find({ postId: req.params.id });
         const commentLength = comments.length;
-        post = { ...post._doc, comments, commentLength};
+        post = { ...post._doc, comments, commentLength };
       }
       res.status(200).json(post);
     } catch (e) {
       res.sendStatus(404);
-      return
+      return;
     }
-  })
-  
+  });
+
   app.post("/api/user/posts", authUserLoggedIn, async (req, res) => {
     if (!req.body) {
       res.sendStatus(403);
@@ -69,6 +71,31 @@ module.exports = function (app) {
     } catch (error) {
       res.sendStatus(400);
       return;
+    }
+  });
+
+  app.delete("/api/posts/:id", authUserLoggedIn, async (req, res) => {
+    let user = req.session.user;
+    let filter = {
+      _id: req.params.id,
+    };
+
+    // check ownerId if user is not an admin
+    if (!user.roles.includes(roles.ADMIN)) {
+      filter.ownerId = user._id;
+    }
+
+    try {
+      let post = await postModel.findOne(filter).lean();
+
+      // delete related comments and the post
+      await commentModel.deleteMany({ postId: post._id });
+      await postModel.deleteOne(filter);
+
+      res.sendStatus(200);
+
+    } catch (error) {
+      res.sendStatus(403);
     }
   });
 };
