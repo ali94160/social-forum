@@ -20,17 +20,14 @@ export const StyledRegisterButton = styled(Button)`
 }
 `;
 
-export const StyledForm = styled.form`
-`;
+export const StyledForm = styled.form``;
 
 export const StyledTextField = styled(TextField)`
   width: 100%;
-  `;
+`;
 
 export const StyledButtonContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 2%;
 `;
-
-

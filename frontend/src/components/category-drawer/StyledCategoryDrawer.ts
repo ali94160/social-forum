@@ -1,12 +1,6 @@
 import styled from "styled-components";
 
-import {
-  Box,
-  List,
-  ListItem,
-  Typography,
-  Drawer,
-} from "@mui/material";
+import { Box, List, ListItem, Typography, Drawer } from "@mui/material";
 
 export const StyledDrawerContainer = styled.div`
   background: var(--dark-teal);

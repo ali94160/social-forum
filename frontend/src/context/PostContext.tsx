@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { PostItem } from '../interfaces/Post';
 
 const PostContext = createContext<any>(null);
 
@@ -8,19 +9,14 @@ interface Props {
   children: any;
 }
 
-interface Post {
-  title: String;
-  content: String;
-  categoryId: String;
-}
-
 interface Id {
   id: String;
 }
 
 function PostContextProvider({ children }: Props) {
+  const [posts, setPosts] = useState<null | PostItem[]>(null);
 
-  const createPost = async (newPost: Post) => {
+  const createPost = async (newPost: PostItem) => {
     const response: Response = await fetch("/api/user/posts", {
       method: "POST",
       headers: {
@@ -38,11 +34,24 @@ function PostContextProvider({ children }: Props) {
     const body = await response.json();
     return { status: response.status, body }
   }
-
-  const values = {
-    createPost,
-    getPost
+    
+  const getPosts = async (ascDate: boolean, ascTitle: boolean) => {
+    const response: Response = await fetch(
+      `/api/posts?createdDate=${ascDate ? "asc" : "desc"}&title=${
+        ascTitle ? "asc" : "desc"
+      }`
+    );
+    const result = await response.json();
+    setPosts(result);
+    return response.status === 200;
   };
+
+    const values = {
+      createPost,
+      getPosts,
+      posts,
+      getPost
+    };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;
 }
