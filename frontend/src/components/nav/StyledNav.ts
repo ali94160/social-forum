@@ -8,13 +8,17 @@ interface buttonProps {
 }
 
 export const StyledAppBar = styled(AppBar)`
-  background: var(--dark-teal) !important;
+  &&& {
+    background: var(--dark-teal);
+  }
 `;
 
 export const StyledButton = styled(Button)<buttonProps>`
-  color: var(--menu-text-color) !important;
-  text-transform: capitalize !important;
   justify-self: ${(props) => (props.justify ? props.justify : "")};
+  &&& {
+    color: var(--menu-text-color);
+    text-transform: capitalize;
+  }
 `;
 
 export const StyledTypography = styled(Typography)`
@@ -22,11 +26,13 @@ export const StyledTypography = styled(Typography)`
 `;
 
 export const StyledToolBar = styled(Toolbar)`
-  margin: 0 !important;
-  padding: 0 !important;
   width: 100vw;
-  display: grid !important;
   grid-template-columns: auto auto 1fr;
+  &&& {
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
 `;
 export const StyledBox = styled(Box)`
   flex-grow: 1;

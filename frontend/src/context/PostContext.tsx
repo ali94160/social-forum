@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { PostItem } from '../interfaces/Post';
 
 const PostContext = createContext<any>(null);
 
@@ -8,23 +9,10 @@ interface Props {
   children: any;
 }
 
-interface Post {
-  _id: string;
-  title: string;
-  content: string;
-  categoryId: string;
-  commentLength: number;
-  createdDate: string;
-  ownerId: {
-    _id: string;
-    username: string;
-  };
-}
-
 function PostContextProvider({ children }: Props) {
-  const [posts, setPosts] = useState<null | Post[]>(null);
+  const [posts, setPosts] = useState<null | PostItem[]>(null);
 
-  const createPost = async (newPost: Post) => {
+  const createPost = async (newPost: PostItem) => {
     const response: Response = await fetch("/api/user/posts", {
       method: "POST",
       headers: {

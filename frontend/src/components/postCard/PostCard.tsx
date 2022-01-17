@@ -10,29 +10,15 @@ import {
   StyledCommentWrapper,
   StyledCommentIcon,
 } from "./StyledPostCard";
+import { PostObj } from "../../interfaces/Post";
 
-interface Post {
-  post: {
-    _id: string;
-    title: string;
-    content: string;
-    categoryId: string;
-    commentLength: number;
-    createdDate: string;
-    ownerId: {
-      _id: string;
-      username: string;
-    };
-  };
-}
-
-function PostCard({ post }: Post) {
+function PostCard({ post }: PostObj) {
   const renderAvatar = () => (
     <StyledAvatarWrapper>
       <StyledAvatar>
-        {post.ownerId.username.charAt(0).toUpperCase()}
+        {post?.ownerId?.username.charAt(0).toUpperCase()}
       </StyledAvatar>
-      <StyledOwner>{post.ownerId.username}</StyledOwner>
+      <StyledOwner>{post?.ownerId?.username}</StyledOwner>
     </StyledAvatarWrapper>
   );
 

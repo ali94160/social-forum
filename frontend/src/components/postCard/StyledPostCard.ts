@@ -7,7 +7,7 @@ export const StyledCardWrapper = styled.div`
   width: 90%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 25% 1fr 1fr;
+  grid-template-columns: 20% 1fr 1fr;
   padding: 0.5rem;
   margin-bottom: 1rem;
 `;
@@ -15,14 +15,16 @@ export const StyledCardWrapper = styled.div`
 export const StyledAvatarWrapper = styled.div`
   align-self: center;
   text-align: center;
-  margin-right: 4rem;
+  margin-right: 4.5rem;
   display: grid;
 `;
 
 export const StyledAvatar = styled(Avatar)`
-  background: var(--dark-teal) !important;
-  margin: 0 !important;
-  justify-self: center !important;
+  &&& {
+    background: var(--dark-teal);
+    margin: 0;
+    justify-self: center;
+  }
 `;
 
 export const StyledOwner = styled.p`
@@ -56,8 +58,10 @@ export const StyledCommentWrapper = styled.div`
 `;
 
 export const StyledCommentIcon = styled(ChatIcon)`
-  font-size: 1.2rem !important;
   align-self: end;
+  &&& {
+    font-size: 1.2rem;
+  }
 `;
 
 export const StyledCommentLength = styled.p`
