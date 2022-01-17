@@ -1,25 +1,44 @@
 import React from "react";
 
-import { StyledTextField } from "./StyledBasicTextField"
+import { StyledTextField } from "./StyledBasicTextField";
 
 interface Props {
-  type?: string | "text";
-  placeholder?: string | "";
-  required?: boolean | false;
+  maxRows?: number | string;
+  minRows?: number | string;
+  multiline?: boolean | false;
   label?: string;
+  placeholder?: string | "";
+  rows?: number | string;
+  required?: boolean | false;
+  type?: string | "text";
   value?: any;
   handleChange: Function;
 }
 
-function BasicTextField({type, placeholder, label, value, required, handleChange}: Props) {
+function BasicTextField({
+  maxRows,
+  minRows,
+  multiline,
+  type,
+  placeholder,
+  label,
+  value,
+  rows,
+  required,
+  handleChange,
+}: Props) {
   return (
     <StyledTextField
+      multiline={multiline}
       type={type}
       value={value}
       label={label}
       placeholder={placeholder}
       onChange={(ev) => handleChange(ev)}
-      required = {required}
+      rows={rows}
+      maxRows={maxRows}
+      minRows={minRows}
+      required={required}
     />
   );
 }

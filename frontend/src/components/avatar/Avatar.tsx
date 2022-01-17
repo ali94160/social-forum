@@ -3,6 +3,7 @@ import { StyledAvatar } from "./StyledAvatar";
 import DropDownMenu from "../../components/dropDownMenu/DropDownMenu";
 import { useDropDown } from "../../context/DropDownContext";
 import { useAuth } from "../../context/AuthContext";
+import { useHistory } from "react-router-dom";
 
 interface Props {
   justify?: string;
@@ -11,10 +12,11 @@ interface Props {
 }
 
 function Avatar({ justify, margin, backgroundColor }: Props) {
+  const history = useHistory();
   const { showDropDown, setShowDropDown } = useDropDown();
   const { logout, user } = useAuth();
   const menuItems = [
-    { title: "Add post", method: () => {} },
+    { title: "Add post", method: () => history.push("/create-post") },
     { title: "My posts", method: () => {} },
     {
       title: "Logout",
