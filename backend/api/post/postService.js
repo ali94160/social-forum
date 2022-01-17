@@ -34,13 +34,14 @@ module.exports = function (app) {
     try {
       data = await postModel
         .find({ _id: req.params.id })
+        .lean()
         .populate("categoryId")
         .populate("moderatorsIds", ["username"])
         .populate("ownerId", ["username", "roles"]);
       for (post of data) {
         const comments = await commentModel.find({ postId: req.params.id });
         const commentLength = comments.length;
-        post = { ...post._doc, comments, commentLength };
+        post = { ...post, comments, commentLength };
       }
       res.status(200).json(post);
     } catch (e) {
