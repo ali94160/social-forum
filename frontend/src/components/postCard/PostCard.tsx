@@ -1,3 +1,16 @@
+import {
+  StyledCardWrapper,
+  StyledAvatarWrapper,
+  StyledAvatar,
+  StyledOwner,
+  StyledContentWrapper,
+  StyledTitle,
+  StyledContent,
+  StyledCommentLength,
+  StyledCommentWrapper,
+  StyledCommentIcon,
+} from "./StyledPostCard";
+
 interface Post {
   post: {
     _id: string;
@@ -9,9 +22,20 @@ interface Post {
 
 function PostCard({ post }: Post) {
   return (
-    <div>
-      <h1>{post.title}</h1>
-    </div>
+    <StyledCardWrapper>
+      <StyledAvatarWrapper>
+        <StyledAvatar>A</StyledAvatar>
+        <StyledOwner>Oscar</StyledOwner>
+      </StyledAvatarWrapper>
+      <StyledContentWrapper>
+        <StyledTitle>{post.title}</StyledTitle>
+        <StyledContent>{post.content}</StyledContent>
+      </StyledContentWrapper>
+      <StyledCommentWrapper>
+        <StyledCommentIcon />
+        <StyledCommentLength>100</StyledCommentLength>
+      </StyledCommentWrapper>
+    </StyledCardWrapper>
   );
 }
 
