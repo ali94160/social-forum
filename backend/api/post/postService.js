@@ -1,10 +1,18 @@
 const postModel = require("../../models/post");
+const commentModel = require("../../models/comment")
 
 module.exports = function (app) {
   app.get("/api/posts", async (req, res) => {
-    let posts;
+    let posts = [];
     try {
-      posts = await postModel.find({}).sort(req.query);
+      let data = await postModel.find({}).sort(req.query).lean().populate("ownerId", "username");
+      for (let post of data) {
+        let commentLength = await commentModel
+          .find({ postId: post._id })
+          .count();
+        let resPost = { ...post, commentLength };
+        posts.push(resPost)
+      }
     } catch (e) {
       res.sendStatus(400);
       return
