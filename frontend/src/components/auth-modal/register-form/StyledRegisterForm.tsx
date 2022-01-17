@@ -7,14 +7,14 @@ export const StyledInputContainer = styled(Box)`
 `;
 
 export const StyledLoginButton = styled(Button)`
-  &&& {
+  && {
     text-transform: none;
     color: var(--dark-teal);
   }
 `;
 
 export const StyledCloseButton = styled(Button)`
-  &&& {
+  && {
     background: grey;
     font-weight: bold;
   }

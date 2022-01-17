@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PostDetailPage from '../pages/post/PostDetailPage';
 import CreatePost from "../pages/create-post/CreatePost";
 import Home from "../pages/home/Home";
 
@@ -13,6 +14,7 @@ const AllRoutes = ({ children }: Props) => {
       <main>
         <Switch>
           <Route exact path="/create-post" component={CreatePost} />
+          <Route path="/posts/:id" exact={true} component={PostDetailPage} />
           <Route path="/" component={Home} />
         </Switch>
       </main>

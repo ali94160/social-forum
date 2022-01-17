@@ -7,17 +7,17 @@ export const StyledInputContainer = styled(Box)`
 `;
 
 export const StyledCloseButton = styled(Button)`
-  &&& {
-    background: grey;
-    font-weight: bold;
-  }
+&&{
+  background: grey;
+  font-weight: bold;
+}
 `;
 
 export const StyledRegisterButton = styled(Button)`
-  &&& {
-    text-transform: none;
-    color: var(--dark-teal);
-  }
+&&{
+  text-transform: none;
+  color: var(--dark-teal);
+}
 `;
 
 export const StyledForm = styled.form``;
