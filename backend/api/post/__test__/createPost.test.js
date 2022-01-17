@@ -1,6 +1,4 @@
 const app = require("../../../app");
-const supertest = require("supertest");
-const request = supertest(app);
 const session = require("supertest-session");
 const Post = require("../../../models/post");
 const { user1Login } = require("../../auth/__test__/mock_data");
