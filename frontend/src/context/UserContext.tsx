@@ -11,7 +11,7 @@ interface Props {
 
 function UserContextProvider({ children }: Props) {
 
-  const deleteSelf = async (password: String) => {
+  const deleteSelf = async (password: string) => {
     const response: Response = await fetch("/api/user/self", {
       method: "DELETE",
       headers: {
