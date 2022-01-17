@@ -8,7 +8,7 @@ const {
 module.exports = comment = (app) => {
 // post comment
 app.post(
-    "/api/postcomment",
+    "/api/comments",
     authUserLoggedIn,
     async (req, res) => {
       try {
