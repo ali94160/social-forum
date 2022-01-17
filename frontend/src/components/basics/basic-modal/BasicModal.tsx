@@ -4,7 +4,7 @@ import { StyledModal, StyledBox } from "./StyledBasicModal";
 
 type Props = {
   isOpen: boolean;
-  handleClose: Function;
+  handleClose: any;
   children?: JSX.Element | JSX.Element[];
 };
 
