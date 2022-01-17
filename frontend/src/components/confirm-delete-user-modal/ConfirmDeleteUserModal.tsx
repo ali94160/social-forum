@@ -40,7 +40,6 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
       <p>Enter your password to confirm</p>
 
       <StyledForm onSubmit={submitConfirm}>
-      <h3>Log in</h3>
       <small>* = required</small>
       <StyledInputContainer>
         <BasicVisibilityInput
