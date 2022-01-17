@@ -11,7 +11,8 @@ import {
   StyledForm,
   StyledInputContainer,
   StyledButtonContainer,
-  StyledErrorMsg
+  StyledErrorMsg,
+  StyledSuccessMsg
 } from "./StyledConfirmDeleteUser";
 
 type Props = {
@@ -26,6 +27,7 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
 
   const submitConfirm = async (ev: BaseSyntheticEvent) => {
     ev.preventDefault();
@@ -36,9 +38,11 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
     }
     setShowErrorMessage(false);
 
-    console.log('success')
-    // logout();
+    setShowSuccessMessage(true);
 
+    setTimeout(() => {
+      logout();
+    }, 3000);
   };
 
   const handleCloseModal = () => {
@@ -71,6 +75,13 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
       {showErrorMessage && (
         <StyledInputContainer>
          <StyledErrorMsg>Wrong password!</StyledErrorMsg>
+        </StyledInputContainer>
+      )}
+
+      {showSuccessMessage && (
+        <StyledInputContainer>
+         <StyledSuccessMsg>Successfully deleted user and all its data.
+           <p>Logging out in 3 sec.</p></StyledSuccessMsg>
         </StyledInputContainer>
       )}
 
