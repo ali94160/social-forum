@@ -1,4 +1,3 @@
-const crypto = require("crypto");
 const userModel = require("../../models/user");
 const roles = require("../../models/role");
 const { notBannedUser, userNotExists } = require("../../middlewares/validation");
@@ -7,6 +6,7 @@ const {
   authUserNotLoggedIn,
   authRole,
 } = require("../../middlewares/acl");
+const { hashUtil } = require('../utils')
 
 module.exports = user = (app) => {
   //login
@@ -15,12 +15,9 @@ module.exports = user = (app) => {
     authUserNotLoggedIn,
     notBannedUser,
     async (req, res) => {
-      const hash = crypto
-        .createHmac("sha256", process.env.SECRET)
-        .update(req.body?.password)
-        .digest("hex");
-
+      const hash = hashUtil(req.body?.password);
       let user;
+
       try {
         user = await userModel.findOne({
           email: req.body.email,
@@ -56,10 +53,7 @@ module.exports = user = (app) => {
     notBannedUser,
     userNotExists,
     async (req, res) => {
-      const hash = crypto
-        .createHmac("sha256", process.env.SECRET)
-        .update(req.body?.password)
-        .digest("hex");
+      const hash = hashUtil(req.body?.password);
 
       try {
         let user = new userModel({

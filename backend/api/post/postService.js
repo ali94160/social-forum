@@ -35,13 +35,14 @@ module.exports = function (app) {
     try {
       data = await postModel
         .find({ _id: req.params.id })
+        .lean()
         .populate("categoryId")
         .populate("moderatorsIds", ["username"])
         .populate("ownerId", ["username", "roles"]);
       for (post of data) {
         const comments = await commentModel.find({ postId: req.params.id });
         const commentLength = comments.length;
-        post = { ...post._doc, comments, commentLength };
+        post = { ...post, comments, commentLength };
       }
       res.status(200).json(post);
     } catch (e) {
@@ -74,6 +75,21 @@ module.exports = function (app) {
     }
   });
 
+  app.get("/api/user/posts", authUserLoggedIn, async (req, res) => {
+    const userId = req.session.user._id;
+    try {
+      const posts = await postModel.find({ ownerId: userId }).lean();
+      if (!posts) {
+        res.sendStatus(404);
+        return;
+      }
+      res.status(200).json(posts);
+      return;
+    } catch (error) {
+      res.sendStatus(400);
+    }
+  });
+
   app.delete("/api/posts/:id", authUserLoggedIn, async (req, res) => {
     let user = req.session.user;
     let filter = {
@@ -91,7 +107,6 @@ module.exports = function (app) {
 
       res.sendStatus(200);
       return;
-
     } catch (error) {
       res.sendStatus(403);
       return;
