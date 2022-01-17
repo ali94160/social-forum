@@ -52,8 +52,8 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
 
     return (
     <BasicModal isOpen={isConfirmDeleteModal} handleClose={handleCloseModal}>
-      <h1>Delete user</h1>
-      <p>NOTE: this will delete user and all its data.</p>
+      <h1>Delete my account</h1>
+      <p>NOTE: this will delete your account. All posts and comments will remain, user will be changed to null</p>
       <p>Enter your password to confirm</p>
 
       <StyledForm onSubmit={submitConfirm}>

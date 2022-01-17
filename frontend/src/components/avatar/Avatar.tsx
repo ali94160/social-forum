@@ -24,7 +24,7 @@ function Avatar({ justify, margin, backgroundColor }: Props) {
     { title: "Add post", method: () => history.push("/create-post") },
     { title: "My posts", method: () => {} },
     {
-      title: "Delete user",
+      title: "Delete my account",
       method: () => {
         setShowDropDown(false);
         toggleConfirmDeleteModal();
