@@ -66,7 +66,7 @@ module.exports = function (app) {
         res.sendStatus(400);
         return;
       }
-      res.sendStatus(200);
+      res.status(200).json(newPost);
       return;
     } catch (error) {
       res.sendStatus(400);
@@ -80,22 +80,21 @@ module.exports = function (app) {
       _id: req.params.id,
     };
 
-    // check ownerId if user is not an admin
     if (!user.roles.includes(roles.ADMIN)) {
       filter.ownerId = user._id;
     }
 
     try {
       let post = await postModel.findOne(filter).lean();
-
-      // delete related comments and the post
       await commentModel.deleteMany({ postId: post._id });
       await postModel.deleteOne(filter);
 
       res.sendStatus(200);
+      return;
 
     } catch (error) {
       res.sendStatus(403);
+      return;
     }
   });
 };
