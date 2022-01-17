@@ -21,20 +21,32 @@ interface Post {
 }
 
 function PostCard({ post }: Post) {
+  const renderAvatar = () => (
+    <StyledAvatarWrapper>
+      <StyledAvatar>A</StyledAvatar>
+      <StyledOwner>Oscar</StyledOwner>
+    </StyledAvatarWrapper>
+  );
+
+  const renderContent = () => (
+    <StyledContentWrapper>
+      <StyledTitle>{post.title}</StyledTitle>
+      <StyledContent>{post.content}</StyledContent>
+    </StyledContentWrapper>
+  );
+
+  const renderComment = () => (
+    <StyledCommentWrapper>
+      <StyledCommentIcon />
+      <StyledCommentLength>100</StyledCommentLength>
+    </StyledCommentWrapper>
+  );
+
   return (
     <StyledCardWrapper>
-      <StyledAvatarWrapper>
-        <StyledAvatar>A</StyledAvatar>
-        <StyledOwner>Oscar</StyledOwner>
-      </StyledAvatarWrapper>
-      <StyledContentWrapper>
-        <StyledTitle>{post.title}</StyledTitle>
-        <StyledContent>{post.content}</StyledContent>
-      </StyledContentWrapper>
-      <StyledCommentWrapper>
-        <StyledCommentIcon />
-        <StyledCommentLength>100</StyledCommentLength>
-      </StyledCommentWrapper>
+      {renderAvatar()}
+      {renderContent()}
+      {renderComment()}
     </StyledCardWrapper>
   );
 }
