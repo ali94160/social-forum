@@ -23,7 +23,6 @@ const style = {
 
 export default function BasicModal({ children, isOpen, handleClose }: Props) {
   return (
-    <div>
       <StyledModal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -39,6 +38,5 @@ export default function BasicModal({ children, isOpen, handleClose }: Props) {
           <StyledBox sx={style}>{children}</StyledBox>
         </Fade>
       </StyledModal>
-    </div>
   );
 }

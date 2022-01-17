@@ -3,7 +3,6 @@ import React, { BaseSyntheticEvent, useState } from "react";
 import { Button, Checkbox } from "@mui/material";
 
 import {
-  StyledButton,
   StyledCloseButton,
   StyledRegisterButton,
   StyledForm,
@@ -14,6 +13,7 @@ import BasicTextField from "../../basics/basic-text-field/BasicTextField";
 import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
 import { useModal } from "../../../context/ModalContext";
 import { useAuth } from "../../../context/AuthContext";
+import { StyledTealButton } from "../../basics/StyledTealButton";
 
 interface Props {
   toggleRegister: Function;
@@ -21,15 +21,14 @@ interface Props {
 }
 
 function LoginForm({ toggleRegister, handleClose }: Props) {
-  const { login, whoAmI,user } = useAuth();
+  const { login, whoAmI, user } = useAuth();
   const submitLogin = async (ev: BaseSyntheticEvent) => {
     ev.preventDefault();
     const isSucceed = await login({ email, password });
     if (isSucceed) {
-      whoAmI()
-      handleClose()
+      whoAmI();
+      handleClose();
       return;
-      
     }
     setShowErrorMessage(true);
   };
@@ -73,14 +72,12 @@ function LoginForm({ toggleRegister, handleClose }: Props) {
         </StyledRegisterButton>
       </StyledInputContainer>
       {showErrorMessage && (
-        <StyledInputContainer>
-          Bad credentials!
-        </StyledInputContainer>
+        <StyledInputContainer>Bad credentials!</StyledInputContainer>
       )}
       <StyledButtonContainer>
-        <StyledButton type="submit" variant="contained">
+        <StyledTealButton type="submit" variant="contained">
           Log in
-        </StyledButton>
+        </StyledTealButton>
         <StyledCloseButton
           type="button"
           variant="contained"

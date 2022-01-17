@@ -5,11 +5,11 @@ import { Checkbox } from "@mui/material";
 import {
   StyledInputContainer,
   StyledLoginButton,
-  StyledButton,
   StyledCloseButton,
   StyledButtonContainer,
 } from "./StyledRegisterForm";
 import { useAuth } from "../../../context/AuthContext";
+import { StyledTealButton } from "../../basics/StyledTealButton";
 
 interface Props {
   toggleRegister: Function;
@@ -122,9 +122,9 @@ function RegisterForm({ toggleRegister, handleClose }: Props) {
         </StyledInputContainer>
       )}
       <StyledButtonContainer>
-        <StyledButton type="submit" variant="contained">
+        <StyledTealButton type="submit" variant="contained">
           Register
-        </StyledButton>
+        </StyledTealButton>
         <StyledCloseButton
           type="button"
           variant="contained"
