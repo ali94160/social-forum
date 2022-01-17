@@ -7,26 +7,27 @@ export const StyledInputContainer = styled(Box)`
 `;
 
 export const StyledCloseButton = styled(Button)`
-  background: grey !important;
-  font-weight: bold !important;
+&&{
+  background: grey;
+  font-weight: bold;
+}
 `;
 
 export const StyledRegisterButton = styled(Button)`
-  text-transform: none !important;
-  color: var(--dark-teal) !important;
+&&{
+  text-transform: none;
+  color: var(--dark-teal);
+}
 `;
 
-export const StyledForm = styled.form`
-`;
+export const StyledForm = styled.form``;
 
 export const StyledTextField = styled(TextField)`
   width: 100%;
-  `;
+`;
 
 export const StyledButtonContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 2%;
 `;
-
-

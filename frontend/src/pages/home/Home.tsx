@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { usePost } from "../../context/PostContext";
+import PostCard from "../../components/postCard/PostCard";
+import LoadingSkeleton from "../../components/skeleton/LoadingSkeleton";
+import { PostItem } from "../../interfaces/Post";
 
 function Home() {
-  return <div>Home</div>;
+  const { getPosts, posts } = usePost();
+
+  useEffect(() => {
+    getPosts(true, false);
+  }, []);
+
+  return (
+    <div>
+      {posts ? (
+        posts.map((post: PostItem) => <PostCard key={post._id} post={post} />)
+      ) : (
+        <LoadingSkeleton />
+      )}
+    </div>
+  );
 }
 
 export default Home;
