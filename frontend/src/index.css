@@ -1,12 +1,3 @@
-body {
-  margin: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 :root {
   --dark-yellow: #FFC045;
   --yellow: #F2D395;
@@ -16,6 +7,17 @@ body {
   --light-teal: #749DAA;
   --menu-text-color: white;
   --shadow: rgb(6, 83, 111, 0.6);
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: var(--dark-teal);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
