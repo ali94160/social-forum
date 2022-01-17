@@ -17,9 +17,9 @@ describe("Get one post based on id", () => {
     expect(res.body.ownerId.password).not.toBeDefined();
   })
 
-  test("So post has all requied fields", async () => {
+  test("That post has all required fields", async () => {
     const res = await request.get("/api/posts/" + postId);
-    expect(res.body).toHaveProperty('title', 'content', 'createdDate', 'ownerId');
+    expect(res.body).toHaveProperty('title', 'content', 'createdDate');
   })
 
   test("To get a post with a non existing id", async () => {
