@@ -8,10 +8,10 @@ const {
   authRole,
 } = require("../../middlewares/acl");
 
-const hashUtil = (req) => {
+const hashUtil = (password) => {
   return crypto
   .createHmac("sha256", process.env.SECRET)
-  .update(req.body?.password)
+  .update(password)
   .digest("hex");
 }
 
@@ -22,7 +22,7 @@ module.exports = user = (app) => {
     authUserNotLoggedIn,
     notBannedUser,
     async (req, res) => {
-      const hash = hashUtil(req);
+      const hash = hashUtil(req.body?.password);
       let user;
 
       try {
@@ -60,7 +60,7 @@ module.exports = user = (app) => {
     notBannedUser,
     userNotExists,
     async (req, res) => {
-      const hash = hashUtil(req);
+      const hash = hashUtil(req.body?.password);
 
       try {
         let user = new userModel({
