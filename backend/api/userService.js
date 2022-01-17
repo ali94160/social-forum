@@ -45,9 +45,6 @@ module.exports = user = (app) => {
         const commentsFromDb = await commentModel.deleteMany({ writeId: user._id }); // returns {deletedCount: Number}
         const postsFromDb = await postModel.deleteMany({ ownerId: user._id });
 
-        // logging out user
-        delete req.session.user;
-
         res.status(200).json({
           message: 'Success',
           commentsDeleted: commentsFromDb.deletedCount,
