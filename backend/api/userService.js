@@ -9,5 +9,4 @@ const {
 } = require("../middlewares/acl");
 
 module.exports = user = (app) => {
-
 };

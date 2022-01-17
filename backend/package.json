@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "test": "jest"
   },
   "dependencies": {
     "crypto": "^1.0.1",
