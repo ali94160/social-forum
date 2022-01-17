@@ -1,13 +1,11 @@
 import React, { BaseSyntheticEvent, useState } from "react";
 
 import BasicModal from "../basics/basic-modal/BasicModal";
-import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import BasicVisibilityInput from "../basics/basic-visibility-input/BasicVisibilityInput";
 
 import {
   StyledButton,
   StyledCloseButton,
-  StyledRegisterButton,
   StyledForm,
   StyledInputContainer,
   StyledButtonContainer,
@@ -54,6 +52,7 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
           required
         />
       </StyledInputContainer>
+
       {showErrorMessage && (
         <StyledInputContainer>
           Bad credentials!
@@ -73,8 +72,6 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
         </StyledCloseButton>
       </StyledButtonContainer>
       </StyledForm>
-
-
     </BasicModal>
     )
 }
