@@ -38,3 +38,7 @@ export const StyledErrorMsg = styled.p`
   color: red;
 `;
 
+export const StyledSuccessMsg = styled.p`
+  color: green;
+`;
+
