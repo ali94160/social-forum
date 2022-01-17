@@ -20,9 +20,7 @@ function Home() {
   const { getPosts, posts } = usePost();
 
   useEffect(() => {
-    getPosts((a: any, b: any) => {
-      return a.createdDate - b.createdDate;
-    });
+    getPosts(true, false);
   }, []);
 
   return (

@@ -36,14 +36,12 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
-  const getPosts = async (sort: () => any) => {
-    const response: Response = await fetch("/api/posts", {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(sort),
-    });
+  const getPosts = async (ascDate: boolean, ascTitle: boolean) => {
+    const response: Response = await fetch(
+      `/api/posts?createdDate=${ascDate ? "asc" : "desc"}&title=${
+        ascTitle ? "asc" : "desc"
+      }`
+    );
     const result = await response.json();
     setPosts(result);
     return response.status === 200;
