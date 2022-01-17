@@ -8,8 +8,11 @@ interface Props {
 }
 
 export const StyledAvatar = styled(Avatar)<Props>`
-  justify-self: ${(props) => (props.justify ? props.justify : "")};
-  margin: ${(props) => (props.margin ? props.margin : "")};
-  background: ${(props) =>
-    props.backgroundcolor ? props.backgroundcolor : ""} !important;
+    
+    justify-self: ${(props) => (props.justify ? props.justify : "")};
+    margin: ${(props) => (props.margin ? props.margin : "")};
+    && {
+    background: ${(props) =>
+      props.backgroundcolor ? props.backgroundcolor : ""};
+    }
 `;
