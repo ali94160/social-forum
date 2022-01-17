@@ -56,25 +56,12 @@ function AuthContextProvider({ children }: Props) {
     }
   };
 
-  const verifyPassword = async (password: String) => {
-    const response: Response = await fetch("/api/verifyPassword", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(password),
-    });
-
-    return response.status === 200;
-  }
-
   const values = {
     login,
     register,
     whoAmI,
     user,
     logout,
-    verifyPassword
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

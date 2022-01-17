@@ -90,21 +90,4 @@ module.exports = user = (app) => {
       res.json(user);
     }
   );
-
-  //verify password
-  app.post(
-    "/api/verifyPassword",
-    authUserLoggedIn,
-    async (req, res) => {
-      const hash = hashUtil(req);
-      const user = { ...req.session.user };
-
-      if(user.password !== hash){
-        res.sendStatus(403);
-        return;
-      }
-      
-      res.sendStatus(200);
-    }
-  );
 };
