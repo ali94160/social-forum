@@ -1,5 +1,6 @@
 import React, { BaseSyntheticEvent, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useUser } from "../../context/UserContext";
 
 import BasicModal from "../basics/basic-modal/BasicModal";
 import BasicVisibilityInput from "../basics/basic-visibility-input/BasicVisibilityInput";
@@ -10,6 +11,7 @@ import {
   StyledForm,
   StyledInputContainer,
   StyledButtonContainer,
+  StyledErrorMsg
 } from "./StyledConfirmDeleteUser";
 
 type Props = {
@@ -18,7 +20,8 @@ type Props = {
   };
 
 export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleConfirmDeleteModal }: Props) {
-  const { verifyPassword } = useAuth();
+  const { deleteSelf } = useUser();
+  const { logout } = useAuth();
 
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -26,8 +29,16 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
 
   const submitConfirm = async (ev: BaseSyntheticEvent) => {
     ev.preventDefault();
-    const res = await verifyPassword({password});
-    console.log(res, 'true or false?')
+    const isSucceed = await deleteSelf({ password });
+    if (!isSucceed) {
+    setShowErrorMessage(true);
+      return;
+    }
+    setShowErrorMessage(false);
+
+    console.log('success')
+    // logout();
+
   };
 
   const handleCloseModal = () => {
@@ -59,7 +70,7 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
 
       {showErrorMessage && (
         <StyledInputContainer>
-          Bad credentials!
+         <StyledErrorMsg>Wrong password!</StyledErrorMsg>
         </StyledInputContainer>
       )}
 
