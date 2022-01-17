@@ -11,7 +11,7 @@ module.exports = function (app) {
       let newPost = new postModel({
         ...req.body,
         createdDate: Date.now(),
-        ownerId: req.session.user.id,
+        ownerId: req.session.user._id,
       });
       const result = await newPost.save();
       if (!result) {
