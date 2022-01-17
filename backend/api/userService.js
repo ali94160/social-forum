@@ -38,8 +38,7 @@ module.exports = user = (app) => {
         }
         
         // if we made it all the way here all good, deleting user!
-        // const userFromDb = await userModel.findByIdAndDelete(user._id);
-        const userFromDb = await userModel.findById(user._id).exec(); // uncomment above and delete this row
+        const userFromDb = await userModel.findByIdAndDelete(user._id);
 
         // now lets delete all posts + comments
         const commentsFromDb = await commentModel.deleteMany({ writeId: user._id }); // returns {deletedCount: Number}
