@@ -1,4 +1,5 @@
 import React, { BaseSyntheticEvent, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 import BasicModal from "../basics/basic-modal/BasicModal";
 import BasicVisibilityInput from "../basics/basic-visibility-input/BasicVisibilityInput";
@@ -17,13 +18,16 @@ type Props = {
   };
 
 export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleConfirmDeleteModal }: Props) {
+  const { verifyPassword } = useAuth();
+
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
 
   const submitConfirm = async (ev: BaseSyntheticEvent) => {
     ev.preventDefault();
-    console.log('hey');
+    const res = await verifyPassword({password});
+    console.log(res, 'true or false?')
   };
 
   const handleCloseModal = () => {
