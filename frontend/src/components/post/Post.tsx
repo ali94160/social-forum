@@ -8,7 +8,6 @@ function Post() {
     <StyledPost>
       <StyledGrid container spacing={2}>
 
-        {/* <Grid item xs={4} sm container> */}
         <Grid
           item xs={2}
           container
@@ -22,15 +21,13 @@ function Post() {
             <Grid item xs>
               #username
             </Grid>
-          </Grid>
-        {/* </Grid> */}
+        </Grid>
+        
         <Grid
           item xs={8}
           container
           direction="column"
           spacing={2}
-          // justifyContent="center"
-          // alignItems="center"
           >    
           <Grid item xs>
             #title
@@ -48,6 +45,7 @@ function Post() {
         <Grid item xs={4}>
           #posted_at
         </Grid>
+        
       </StyledGrid> 
     </StyledPost>
   )

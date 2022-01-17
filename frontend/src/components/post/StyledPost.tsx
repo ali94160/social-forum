@@ -5,7 +5,6 @@ import Grid from '@mui/material/Grid';
 export const StyledPost = styled(Card)`
 && {
     background-color: var(--yellow); 
-    /* max-width: min-content; */
     width: 100;
     max-height: fit-content;
     margin: 100px 40px;
@@ -19,6 +18,3 @@ export const StyledGrid = styled(Grid)`
   }
 `;
 
-export const StyledGridItem = styled(Grid)`
-
-`;
