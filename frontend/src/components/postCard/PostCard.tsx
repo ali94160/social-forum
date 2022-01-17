@@ -29,8 +29,10 @@ interface Post {
 function PostCard({ post }: Post) {
   const renderAvatar = () => (
     <StyledAvatarWrapper>
-      <StyledAvatar>A</StyledAvatar>
-      <StyledOwner>Oscar</StyledOwner>
+      <StyledAvatar>
+        {post.ownerId.username.charAt(0).toUpperCase()}
+      </StyledAvatar>
+      <StyledOwner>{post.ownerId.username}</StyledOwner>
     </StyledAvatarWrapper>
   );
 
@@ -44,7 +46,7 @@ function PostCard({ post }: Post) {
   const renderComment = () => (
     <StyledCommentWrapper>
       <StyledCommentIcon />
-      <StyledCommentLength>100</StyledCommentLength>
+      <StyledCommentLength>{post.commentLength}</StyledCommentLength>
     </StyledCommentWrapper>
   );
 

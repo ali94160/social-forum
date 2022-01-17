@@ -7,17 +7,22 @@ export const StyledCardWrapper = styled.div`
   width: 90%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 25% 1fr 1fr;
   padding: 0.5rem;
   margin-bottom: 1rem;
 `;
 
 export const StyledAvatarWrapper = styled.div`
   align-self: center;
+  text-align: center;
+  margin-right: 4rem;
+  display: grid;
 `;
 
 export const StyledAvatar = styled(Avatar)`
   background: var(--dark-teal) !important;
+  margin: 0 !important;
+  justify-self: center !important;
 `;
 
 export const StyledOwner = styled.p`
@@ -28,12 +33,20 @@ export const StyledOwner = styled.p`
 export const StyledContentWrapper = styled.div``;
 
 export const StyledTitle = styled.p`
+  max-width: 50vw;
   font-weight: bold;
   font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const StyledContent = styled.p`
+  max-width: 50vw;
   font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const StyledCommentWrapper = styled.div`

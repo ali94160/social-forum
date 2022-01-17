@@ -45,7 +45,6 @@ function PostContextProvider({ children }: Props) {
       body: JSON.stringify(sort),
     });
     const result = await response.json();
-    console.log(result);
     setPosts(result);
     return response.status === 200;
   };
