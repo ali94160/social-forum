@@ -24,3 +24,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+div.App {
+  min-height: 100vh;
+  background-color: var(--dark-teal);
+  display: grid;
+  grid-template-rows: 1fr 10fr;
+}
