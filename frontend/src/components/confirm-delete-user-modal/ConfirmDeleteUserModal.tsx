@@ -87,7 +87,7 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
 
       <StyledButtonContainer>
         <StyledButton type="submit" variant="contained">
-          Delete user
+          Delete my account
         </StyledButton>
         <StyledCloseButton
           type="button"
