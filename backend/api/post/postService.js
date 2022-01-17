@@ -76,7 +76,7 @@ module.exports = function (app) {
   app.get("/api/user/posts", authUserLoggedIn, async (req, res) => {
     const userId = req.session.user._id;
     try {
-      const posts = await postModel.find({ ownerId: userId });
+      const posts = await postModel.find({ ownerId: userId }).lean();
       if (!posts) {
         res.sendStatus(404);
         return;
