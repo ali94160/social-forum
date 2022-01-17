@@ -2,8 +2,24 @@ import { StyledPost, StyledGrid } from './StyledPost';
 import Avatar from '../avatar/Avatar';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
+import { useEffect, useState } from 'react';
 
-function Post() {
+import { usePost } from '../../context/PostContext';
+
+interface Props {
+  id: any;
+  post: Post;
+}
+
+interface Post {
+
+
+}
+
+function Post({ id, post }: Props) {
+    
+  
+
   return (
     <StyledPost>
       <StyledGrid container spacing={2}>
@@ -51,4 +67,4 @@ function Post() {
   )
 }
 
-export default Post
+export default Post;
