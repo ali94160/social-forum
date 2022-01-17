@@ -41,13 +41,18 @@ module.exports = user = (app) => {
         const userFromDb = await userModel.findByIdAndDelete(user._id);
 
         // now lets delete all posts + comments
-        const commentsFromDb = await commentModel.deleteMany({ writeId: user._id }); // returns {deletedCount: Number}
-        const postsFromDb = await postModel.deleteMany({ ownerId: user._id });
+        const commentsFromDb = await commentModel.updateMany({ writeId: user._id }, {"$set":{"writeId": null}});
+        
+        const postsFromDb = await postModel.updateMany({ ownerId: user._id }, {"$set":{"ownerId": null}});
+
+        delete req.session.user // log out user (in case we use Postman)
 
         res.status(200).json({
           message: 'Success',
-          commentsDeleted: commentsFromDb.deletedCount,
-          postsDeleted: postsFromDb.deletedCount
+          commentsFound: commentsFromDb.matchedCount,
+          commentsModified: commentsFromDb.modifiedCount,
+          postsFound: postsFromDb.matchedCount,
+          postsModified: postsFromDb.modifiedCount
         })
     }
   );
