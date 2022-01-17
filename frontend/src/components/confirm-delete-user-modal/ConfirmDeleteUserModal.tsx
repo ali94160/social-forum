@@ -17,7 +17,7 @@ import {
 
 type Props = {
   isConfirmDeleteModal: boolean;
-  toggleConfirmDeleteModal: any;
+  toggleConfirmDeleteModal: Function;
   };
 
 export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleConfirmDeleteModal }: Props) {
