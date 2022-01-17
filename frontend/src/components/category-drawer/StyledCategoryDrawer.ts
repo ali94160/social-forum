@@ -34,5 +34,7 @@ export const StyledListItem = styled(ListItem)`
 `;
 
 export const StyledText = styled(Typography)`
-  font-weight: bolder !important;
+  && {
+    font-weight: bolder;
+  }
 `;
