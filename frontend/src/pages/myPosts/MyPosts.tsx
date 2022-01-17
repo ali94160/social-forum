@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { usePost } from "../../context/PostContext";
+import PostCard from "../../components/postCard/PostCard";
+import { PostItem } from "../../interfaces/Post";
 
 function MyPosts() {
-  return <div>my posts..</div>;
+  const { myPosts, getMyPosts } = usePost();
+
+  useEffect(() => {
+    getMyPosts();
+  }, []);
+
+  return (
+    <div>
+      {myPosts &&
+        myPosts.map((post: PostItem) => (
+          <PostCard key={post._id} post={post} isMyPostPage={true}/>
+        ))}
+    </div>
+  );
 }
 
 export default MyPosts;

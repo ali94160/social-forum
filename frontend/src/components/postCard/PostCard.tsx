@@ -9,10 +9,11 @@ import {
   StyledCommentLength,
   StyledCommentWrapper,
   StyledCommentIcon,
+  StyledDots,
 } from "./StyledPostCard";
 import { PostObj } from "../../interfaces/Post";
 
-function PostCard({ post }: PostObj) {
+function PostCard({ post, isMyPostPage }: PostObj) {
   const renderAvatar = () => (
     <StyledAvatarWrapper>
       <StyledAvatar>
@@ -31,8 +32,9 @@ function PostCard({ post }: PostObj) {
 
   const renderComment = () => (
     <StyledCommentWrapper>
-      <StyledCommentIcon />
-      <StyledCommentLength>{post.commentLength}</StyledCommentLength>
+      {isMyPostPage && <StyledDots />}
+        <StyledCommentIcon />
+        <StyledCommentLength>{post.commentLength}</StyledCommentLength>
     </StyledCommentWrapper>
   );
 

@@ -76,13 +76,26 @@ module.exports = function (app) {
 
   app.get("/api/user/posts", authUserLoggedIn, async (req, res) => {
     const userId = req.session.user._id;
+      let myPosts = [];
     try {
-      const posts = await postModel.find({ ownerId: userId }).lean();
-      if (!posts) {
+      const posts = await postModel
+        .find({ ownerId: userId })
+        .lean()
+        .populate("ownerId", "username");
+
+      for (let post of posts) {
+        let commentLength = await commentModel
+          .find({ postId: post._id })
+          .count();
+        let resPost = { ...post, commentLength };
+        myPosts.push(resPost);
+      }
+
+      if (!myPosts) {
         res.sendStatus(404);
         return;
       }
-      res.status(200).json(posts);
+      res.status(200).json(myPosts);
       return;
     } catch (error) {
       res.sendStatus(400);

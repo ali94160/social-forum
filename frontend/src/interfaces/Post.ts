@@ -11,6 +11,7 @@ export interface PostObj {
       username: string;
     };
   };
+  isMyPostPage?: boolean;
 }
 
 export interface PostItem {

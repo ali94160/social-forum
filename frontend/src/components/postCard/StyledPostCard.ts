@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Avatar from "@mui/material/Avatar";
 import ChatIcon from "@mui/icons-material/Chat";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 export const StyledCardWrapper = styled.div`
   background: var(--light-teal);
@@ -68,4 +69,8 @@ export const StyledCommentLength = styled.p`
   margin: 0;
   font-size: 1rem;
   align-self: end;
+`;
+
+export const StyledDots = styled(MoreVertIcon)`
+  align-self: start;
 `;
