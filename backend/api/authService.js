@@ -8,6 +8,13 @@ const {
   authRole,
 } = require("../middlewares/acl");
 
+const hashUtil = (req) => {
+  return crypto
+  .createHmac("sha256", process.env.SECRET)
+  .update(req.body?.password)
+  .digest("hex");
+}
+
 module.exports = user = (app) => {
   //login
   app.post(
@@ -15,12 +22,9 @@ module.exports = user = (app) => {
     authUserNotLoggedIn,
     notBannedUser,
     async (req, res) => {
-      const hash = crypto
-        .createHmac("sha256", process.env.SECRET)
-        .update(req.body?.password)
-        .digest("hex");
-
+      const hash = hashUtil(req);
       let user;
+
       try {
         user = await userModel.findOne({
           email: req.body.email,
@@ -56,10 +60,7 @@ module.exports = user = (app) => {
     notBannedUser,
     userNotExists,
     async (req, res) => {
-      const hash = crypto
-        .createHmac("sha256", process.env.SECRET)
-        .update(req.body?.password)
-        .digest("hex");
+      const hash = hashUtil(req);
 
       try {
         let user = new userModel({
@@ -87,6 +88,23 @@ module.exports = user = (app) => {
       delete user.email;
       delete user.password;
       res.json(user);
+    }
+  );
+
+  //verify password
+  app.post(
+    "/api/verifyPassword",
+    authUserLoggedIn,
+    async (req, res) => {
+      const hash = hashUtil(req);
+      const user = { ...req.session.user };
+
+      if(user.password !== hash){
+        res.sendStatus(403);
+        return;
+      }
+      
+      res.sendStatus(200);
     }
   );
 };
