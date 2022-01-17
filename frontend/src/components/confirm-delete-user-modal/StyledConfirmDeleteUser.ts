@@ -34,4 +34,7 @@ export const StyledButtonContainer = styled.div`
   grid-gap: 2%;
 `;
 
+export const StyledErrorMsg = styled.p`
+  color: red;
+`;
 
