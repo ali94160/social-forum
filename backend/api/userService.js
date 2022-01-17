@@ -1,4 +1,3 @@
-const crypto = require("crypto");
 const userModel = require("../models/user");
 const commentModel = require("../models/comment");
 const postModel = require("../models/post");
@@ -7,6 +6,7 @@ const {
   authUserLoggedIn,
   authRole,
 } = require("../middlewares/acl");
+const { hashUtil } = require('./utils')
 
 module.exports = user = (app) => {
   // delete your self
@@ -25,10 +25,7 @@ module.exports = user = (app) => {
         return;
       }
 
-      const hash = crypto
-        .createHmac("sha256", process.env.SECRET)
-        .update(password)
-        .digest("hex");
+      const hash = hashUtil(req.body?.password);
 
         if(user.password !== hash){
           res.status(403).json({
@@ -40,7 +37,7 @@ module.exports = user = (app) => {
         // if we made it all the way here all good, deleting user!
         const userFromDb = await userModel.findByIdAndDelete(user._id);
 
-        // now lets delete all posts + comments
+        // now lets update comments and posts
         const commentsFromDb = await commentModel.updateMany({ writeId: user._id }, {"$set":{"writeId": null}});
         
         const postsFromDb = await postModel.updateMany({ ownerId: user._id }, {"$set":{"ownerId": null}});

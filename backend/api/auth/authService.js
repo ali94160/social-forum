@@ -1,4 +1,3 @@
-const crypto = require("crypto");
 const userModel = require("../../models/user");
 const roles = require("../../models/role");
 const { notBannedUser, userNotExists } = require("../../middlewares/validation");
@@ -7,13 +6,7 @@ const {
   authUserNotLoggedIn,
   authRole,
 } = require("../../middlewares/acl");
-
-const hashUtil = (password) => {
-  return crypto
-  .createHmac("sha256", process.env.SECRET)
-  .update(password)
-  .digest("hex");
-}
+const { hashUtil } = require('../utils')
 
 module.exports = user = (app) => {
   //login
