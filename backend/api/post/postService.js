@@ -27,10 +27,14 @@ module.exports = function (app) {
   app.get("/api/posts/:id", async (req, res) => {
     let post;
     try {
-      data = await postModel.find({ _id: req.params.id }).populate(["ownerId", "categoryId"]);
+      data = await postModel.find({ _id: req.params.id })
+        .populate("categoryId")
+        .populate("moderatorsIds", ["username"])
+        .populate("ownerId", ["username", "roles"]);
       for (post of data) {
         let comments = await commentModel.find({ postId: req.params.id });
-        post = { ...post._doc, comments};
+        let commentLength = comments.length;
+        post = { ...post._doc, comments, commentLength};
       }
       res.status(200).json(post);
     } catch (e) {
