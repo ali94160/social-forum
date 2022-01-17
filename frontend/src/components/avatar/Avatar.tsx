@@ -17,7 +17,7 @@ function Avatar({ justify, margin, backgroundColor }: Props) {
   const { logout, user } = useAuth();
   const menuItems = [
     { title: "Add post", method: () => history.push("/create-post") },
-    { title: "My posts", method: () => {} },
+    { title: "My posts", method: () => history.push("/myPosts") },
     {
       title: "Logout",
       method: () => {
