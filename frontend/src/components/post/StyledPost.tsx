@@ -30,4 +30,13 @@ export const StyledBottomGrid = styled(Grid)`
     }
 `;
 
+export const StyledAvatarGrid = styled(Grid)`
+  text-align: center;
+`;
+
+export const StyledTitleGrid = styled(Grid)`
+  font-weight: 800;
+  font-size: larger;
+`;
+
 

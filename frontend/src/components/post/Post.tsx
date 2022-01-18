@@ -1,39 +1,43 @@
-import { StyledPost, StyledGrid, StyledLeftGrid, StyledBottomGrid } from './StyledPost';
-import Avatar from '../avatar/Avatar';
+import { StyledPost, StyledGrid, StyledLeftGrid, StyledBottomGrid, StyledAvatarGrid, StyledTitleGrid } from './StyledPost';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
 import { User } from '../../interfaces/User';
+import { PostBla } from '../../interfaces/Post';
 import { StyledAvatar } from '../postCard/StyledPostCard'
 
 interface Props {
   id: any;
-  post: any;
+  post: PostBla | undefined;
 }
 
-function Post({ id, post }: Props) {
-  const date = post.createdDate?.substr(0, 10);
-  const time = new Date(post.createdDate);
-  const [moderators, setModerators] = useState('');
 
+// behåller id ifall man vill använda vid redigering av post??
+
+function Post({ id, post }: Props) {
+  const date = post?.createdDate?.substr(0, 10);
+  const time = post && new Date(post.createdDate);
+  const [moderators, setModerators] = useState('');
+  
+  console.log('post? ', post);
   useEffect(() => {
     handleModerators()
-  }, [post.moderatorsIds])
+  }, [post?.moderatorsIds])
 
   const handleModerators = () => {
     let str = '';
-    if (!post.moderatorsIds?.length) {
+    if (!post?.moderatorsIds?.length) {
       str += 'none';
     } else {
-      post.moderatorsIds?.map((m: User, i: number) => {
+      post?.moderatorsIds?.map((m: User, i: number) => {
         if (i === 0) {
           str += m.username;
           return;
         }
-        if (post.moderatorsIds.length > 1 && i === post.moderatorsIds.length - 1) {
+        if (post?.moderatorsIds.length > 1 && i === post?.moderatorsIds.length - 1) {
           str += ' and ';
           str += m.username;
-        } else if(post.moderatorsIds.length > 2) {
+        } else if(post?.moderatorsIds.length > 2) {
           str += ', ';
           str += m.username;
         }
@@ -53,14 +57,12 @@ function Post({ id, post }: Props) {
           spacing={2}
           justifyContent="center"
           alignItems="center">
-            <Grid item xs>
-              <StyledAvatar>
+            <StyledAvatarGrid item xs>
+              <StyledAvatar style={{margin: '0 auto', marginBottom: '10px'}}>
                 {post?.ownerId?.username.charAt(0).toUpperCase()}
-              </StyledAvatar>
-            </Grid>
-            <Grid item xs>
-              {post.ownerId?.username}
-            </Grid>
+            </StyledAvatar>
+            {post?.ownerId?.username}
+            </StyledAvatarGrid>
         </Grid>
         
         <Grid
@@ -69,11 +71,11 @@ function Post({ id, post }: Props) {
           direction="column"
           spacing={2}
           >    
+          <StyledTitleGrid item xs>
+            {post?.title}
+          </StyledTitleGrid>
           <Grid item xs>
-            {post.title}
-          </Grid>
-          <Grid item xs>
-            {post.content}
+            {post?.content}
           </Grid>
         </Grid>
         <StyledLeftGrid item xs={2}>
@@ -90,7 +92,7 @@ function Post({ id, post }: Props) {
             Post moderators: {moderators}
           </Grid>
           <StyledLeftGrid item xs={4}>
-            {date} {time.getHours()}:{time.getMinutes()}
+            {date} {time?.getHours()}:{time?.getMinutes()}
           </StyledLeftGrid>
         </StyledBottomGrid>
         
