@@ -24,14 +24,14 @@ module.exports = user = (app) => {
           password: hash,
         });
       } catch (error) {
-        res.sendStatus(400);
+        res.sendStatus(401);
       }
       if (user) {
         req.session.user = user;
         res.sendStatus(200);
         return;
       }
-      res.sendStatus(400);
+      res.sendStatus(401);
     }
   );
 
