@@ -3,7 +3,7 @@ import Avatar from '../avatar/Avatar';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
-import { User} from '../../interfaces/User';
+import { User } from '../../interfaces/User';
 import { StyledAvatar } from '../postCard/StyledPostCard'
 
 interface Props {
