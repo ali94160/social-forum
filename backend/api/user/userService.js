@@ -19,19 +19,17 @@ module.exports = user = (app) => {
       const password = req.body.password;
 
       if(!password) {
-        res.status(403).json({
+        return res.status(403).json({
           message: 'No password.',
-        })
-        return;
+        });
       }
 
       const hash = hashUtil(req.body?.password);
 
         if(user.password !== hash){
-          res.status(403).json({
+          return res.status(403).json({
             message: 'Bad credentials.',
-          })
-          return;
+          });
         }
         
         // if we made it all the way here all good, deleting user!
