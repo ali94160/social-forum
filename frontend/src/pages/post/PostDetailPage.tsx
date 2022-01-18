@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { usePost } from '../../context/PostContext';
 import LoadingDetailedSkeleton from '../../components/skeleton/LoadingDetailedSkeleton';
-import { PostBla } from '../../interfaces/Post';
+import { PostItem } from '../../interfaces/Post';
 
 function PostDetailPage() {
   const id = useParams();
   const { getPost } = usePost();
   const [status, setStatus] = useState(0);
-  const [post, setPost] = useState<PostBla | undefined>();
+  const [post, setPost] = useState<PostItem | undefined>();
 
   useEffect(() => {
     handlePost();

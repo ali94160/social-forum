@@ -46,7 +46,6 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
   );
 
   const handleDetailPage = () => {
-    console.log('im clicking', post._id)
     history.push(`/posts/${post._id}`);
   }
 

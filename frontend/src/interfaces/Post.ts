@@ -23,19 +23,8 @@ export interface PostItem {
   categoryId: string;
   commentLength: number;
   createdDate: string;
-  ownerId?: User;
-  moderatorsIds?: [User];
+  ownerId: User;
+  moderatorsIds: [User];
   comments?: [string] // change when comments interface has been added 
 }
 
-export interface PostBla {
-  _id: string;
-  title: string;
-  content: string;
-  categoryId: string;
-  commentLength: number;
-  createdDate: string;
-  ownerId: User;
-  moderatorsIds: [User];
-  comments: [string];
-}

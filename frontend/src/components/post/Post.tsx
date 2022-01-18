@@ -3,12 +3,12 @@ import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
 import { User } from '../../interfaces/User';
-import { PostBla } from '../../interfaces/Post';
-import { StyledAvatar } from '../postCard/StyledPostCard'
+import { PostItem } from '../../interfaces/Post';
+import { StyledAvatar } from '../post-card/StyledPostCard';
 
 interface Props {
   id: any;
-  post: PostBla | undefined;
+  post: PostItem | undefined;
 }
 
 
