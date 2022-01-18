@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ConfirmDeleteUserModal from "../confirm-delete-user-modal/ConfirmDeleteUserModal";
 import { StyledAvatar } from "./StyledAvatar";
-import DropDownMenu from "../../components/dropDownMenu/DropDownMenu";
+import DropDownMenu from "../drop-down-menu/DropDownMenu";
 import { useDropDown } from "../../context/DropDownContext";
 import { useAuth } from "../../context/AuthContext";
 import { useHistory } from "react-router-dom";

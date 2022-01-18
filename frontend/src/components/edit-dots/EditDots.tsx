@@ -3,7 +3,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { StyledDots, StyledBtn } from "./StyledEditDots";
 import { usePost } from "../../context/PostContext";
-import ConfirmModal from "../confirmModal/ConfirmModal";
+import ConfirmModal from "../confirm-modal/ConfirmModal";
 
 interface Props {
   postId: string;
