@@ -11,8 +11,11 @@ import {
   StyledCommentIcon,
 } from "./StyledPostCard";
 import { PostObj } from "../../interfaces/Post";
+import { useHistory } from 'react-router-dom';
 
 function PostCard({ post }: PostObj) {
+  const history = useHistory();
+
   const renderAvatar = () => (
     <StyledAvatarWrapper>
       <StyledAvatar>
@@ -36,8 +39,13 @@ function PostCard({ post }: PostObj) {
     </StyledCommentWrapper>
   );
 
+  const handleDetailPage = () => {
+    console.log('im clicking', post._id)
+    history.push(`/posts/${post._id}`);
+  }
+
   return (
-    <StyledCardWrapper>
+    <StyledCardWrapper onClick={handleDetailPage}>
       {renderAvatar()}
       {renderContent()}
       {renderComment()}

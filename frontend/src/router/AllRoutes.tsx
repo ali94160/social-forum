@@ -14,7 +14,7 @@ const AllRoutes = ({ children }: Props) => {
       <main>
         <Switch>
           <Route exact path="/create-post" component={CreatePost} />
-          <Route path="/posts/:id" exact={true} component={PostDetailPage} />
+          <Route exact path="/posts/:id" component={PostDetailPage} />
           <Route path="/" component={Home} />
         </Switch>
       </main>
