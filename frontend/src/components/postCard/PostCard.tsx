@@ -9,13 +9,18 @@ import {
   StyledCommentLength,
   StyledCommentWrapper,
   StyledCommentIcon,
+  StyledDots,
+  StyledCommentSection,
 } from "./StyledPostCard";
 import { PostObj } from "../../interfaces/Post";
 import { useHistory } from 'react-router-dom';
+import EditDots from "../../components/editDots/EditDots";
 
 function PostCard({ post }: PostObj) {
   const history = useHistory();
 
+
+function PostCard({ post, isInMyPostPage }: PostObj) {
   const renderAvatar = () => (
     <StyledAvatarWrapper>
       <StyledAvatar>
@@ -34,8 +39,11 @@ function PostCard({ post }: PostObj) {
 
   const renderComment = () => (
     <StyledCommentWrapper>
-      <StyledCommentIcon />
-      <StyledCommentLength>{post.commentLength}</StyledCommentLength>
+      {isInMyPostPage && <EditDots postId={post._id} />}
+      <StyledCommentSection>
+        <StyledCommentIcon />
+        <StyledCommentLength>{post.commentLength}</StyledCommentLength>
+      </StyledCommentSection>
     </StyledCommentWrapper>
   );
 

@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import PostDetailPage from '../pages/post/PostDetailPage';
+import PostDetailPage from "../pages/post/PostDetailPage";
 import CreatePost from "../pages/create-post/CreatePost";
 import Home from "../pages/home/Home";
+import MyPost from "../pages/myPosts/MyPosts";
 
 interface Props {
   children: JSX.Element[];
@@ -14,7 +15,8 @@ const AllRoutes = ({ children }: Props) => {
       <main>
         <Switch>
           <Route exact path="/create-post" component={CreatePost} />
-          <Route exact path="/posts/:id" component={PostDetailPage} />
+          <Route path="/posts/:id" exact={true} component={PostDetailPage} />
+          <Route path="/my-posts" exact={true} component={MyPost} />
           <Route path="/" component={Home} />
         </Switch>
       </main>

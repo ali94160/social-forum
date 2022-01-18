@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { PostItem } from '../interfaces/Post';
+import { PostItem } from "../interfaces/Post";
 
 const PostContext = createContext<any>(null);
 
@@ -15,6 +15,7 @@ interface Id {
 
 function PostContextProvider({ children }: Props) {
   const [posts, setPosts] = useState<null | PostItem[]>(null);
+  const [myPosts, setMyPosts] = useState<null | PostItem[]>(null);
 
   const createPost = async (newPost: PostItem) => {
     const response: Response = await fetch("/api/user/posts", {
@@ -29,7 +30,6 @@ function PostContextProvider({ children }: Props) {
   };
 
   const getPost = async ({id}: Id) => {
-    console.log('what is id', id);
     const response: Response = await fetch('/api/posts/' + id);
     const body = await response.json();
     return { status: response.status, body }
@@ -46,12 +46,32 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
-    const values = {
-      createPost,
-      getPosts,
-      posts,
-      getPost
-    };
+  const getMyPosts = async () => {
+    const response: Response = await fetch("/api/user/posts");
+    const result = await response.json();
+    setMyPosts(result);
+    return response.status === 200;
+  };
+
+  const deletePost = async (postId: string) => {
+    const response: Response = await fetch(`/api/posts/${postId}`, {
+      method: "DELETE",
+    });
+    if (response.status === 200) {
+      getMyPosts();
+    }
+    return response.status === 200;
+  };
+
+  const values = {
+    createPost,
+    getPosts,
+    posts,
+    myPosts,
+    getMyPosts,
+    deletePost,
+    getPost
+  };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;
 }
