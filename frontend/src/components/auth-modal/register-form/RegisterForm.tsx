@@ -122,9 +122,6 @@ function RegisterForm({ toggleRegister, handleClose }: Props) {
         </StyledInputContainer>
       )}
       <StyledButtonContainer>
-        <StyledTealButton type="submit" variant="contained">
-          Register
-        </StyledTealButton>
         <StyledCloseButton
           type="button"
           variant="contained"
@@ -132,6 +129,9 @@ function RegisterForm({ toggleRegister, handleClose }: Props) {
         >
           Cancel
         </StyledCloseButton>
+        <StyledTealButton type="submit" variant="contained">
+          Register
+        </StyledTealButton>
       </StyledButtonContainer>
     </form>
   );
