@@ -47,7 +47,7 @@ module.exports = function (app) {
 
     // post comment for testing purposes
     app.post(
-    "/api/comments",
+    "/api/comments/test",
     authUserLoggedIn,
     async (req, res) => {
       try {
