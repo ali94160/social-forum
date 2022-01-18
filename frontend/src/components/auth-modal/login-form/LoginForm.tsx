@@ -75,9 +75,6 @@ function LoginForm({ toggleRegister, handleClose }: Props) {
         <StyledInputContainer>Bad credentials!</StyledInputContainer>
       )}
       <StyledButtonContainer>
-        <StyledTealButton type="submit" variant="contained">
-          Log in
-        </StyledTealButton>
         <StyledCloseButton
           type="button"
           variant="contained"
@@ -85,6 +82,9 @@ function LoginForm({ toggleRegister, handleClose }: Props) {
         >
           Cancel
         </StyledCloseButton>
+        <StyledTealButton type="submit" variant="contained">
+          Log in
+        </StyledTealButton>
       </StyledButtonContainer>
     </StyledForm>
   );
