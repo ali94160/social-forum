@@ -77,12 +77,13 @@ module.exports = function (app) {
 
   app.get("/api/user/posts", authUserLoggedIn, async (req, res) => {
     const userId = req.session.user._id;
-      let myPosts = [];
+    let myPosts = [];
     try {
       const posts = await postModel
         .find({ ownerId: userId })
         .lean()
-        .populate("ownerId", "username");
+        .populate("ownerId", "username")
+        .exec();
 
       for (let post of posts) {
         let commentLength = await commentModel
