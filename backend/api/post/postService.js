@@ -112,7 +112,7 @@ module.exports = function (app) {
       await postModel.replaceOne({ _id: req.params.id}, updatedPost)
       res.status(200).json(updatedPost);
     } catch (error) {
-      return res.sendStatus(403);
+      return res.sendStatus(404);
     }
   })
 
