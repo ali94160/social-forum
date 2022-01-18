@@ -1,6 +1,7 @@
 const postModel = require("../../models/post");
 const commentModel = require("../../models/comment");
 const { authUserLoggedIn } = require("../../middlewares/acl");
+const { isPostOwner } = require("../../middlewares/postOwner");
 const roles = require("../../models/role");
 
 module.exports = function (app) {
@@ -10,8 +11,10 @@ module.exports = function (app) {
       let data = await postModel
         .find({})
         .sort(req.query)
+        .collation({ locale: "en" })
         .lean()
-        .populate("ownerId", "username");
+        .populate("ownerId", "username")
+        .exec();
       for (let post of data) {
         let commentLength = await commentModel
           .find({ postId: post._id })
@@ -31,21 +34,21 @@ module.exports = function (app) {
   });
 
   app.get("/api/posts/:id", async (req, res) => {
-    let post;
     try {
-      data = await postModel
-        .find({ _id: req.params.id })
+      let post = await postModel
+        .findOne({ _id: req.params.id })
         .lean()
         .populate("categoryId")
         .populate("moderatorsIds", ["username"])
-        .populate("ownerId", ["username", "roles"]);
-      for (post of data) {
-        const comments = await commentModel.find({ postId: req.params.id });
-        const commentLength = comments.length;
-        post = { ...post, comments, commentLength };
-      }
+        .populate("ownerId", ["username", "roles"])
+        .exec();
+      
+      const comments = await commentModel.find({ postId: req.params.id });
+      const commentLength = comments.length;
+
+      post = { ...post, comments, commentLength };
       res.status(200).json(post);
-    } catch (e) {
+    } catch (error) {
       res.sendStatus(404);
       return;
     }
@@ -103,6 +106,17 @@ module.exports = function (app) {
       res.sendStatus(400);
     }
   });
+
+  app.put("/api/posts/:id", authUserLoggedIn, isPostOwner, async (req, res) => {
+    try {
+      const post = await postModel.findOne({ _id: req.params.id }).lean().exec();
+      const updatedPost = { ...post, ...req.body }
+      await postModel.replaceOne({ _id: req.params.id}, updatedPost)
+      res.status(200).json(updatedPost);
+    } catch (error) {
+      return res.sendStatus(404);
+    }
+  })
 
   app.delete("/api/posts/:id", authUserLoggedIn, async (req, res) => {
     let user = req.session.user;
