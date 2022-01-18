@@ -27,7 +27,7 @@ export default function BasicModal({ children, isOpen, handleClose }: Props) {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={isOpen}
-        onClose={handleClose}
+        onClose={(ev) => handleClose(ev)}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{

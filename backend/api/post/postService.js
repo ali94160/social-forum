@@ -1,6 +1,7 @@
 const postModel = require("../../models/post");
 const commentModel = require("../../models/comment");
 const { authUserLoggedIn } = require("../../middlewares/acl");
+const roles = require("../../models/role");
 
 module.exports = function (app) {
   app.get("/api/posts", async (req, res) => {
@@ -66,7 +67,7 @@ module.exports = function (app) {
         res.sendStatus(400);
         return;
       }
-      res.sendStatus(200);
+      res.status(200).json(newPost);
       return;
     } catch (error) {
       res.sendStatus(400);
@@ -99,6 +100,29 @@ module.exports = function (app) {
       return;
     } catch (error) {
       res.sendStatus(400);
+    }
+  });
+
+  app.delete("/api/posts/:id", authUserLoggedIn, async (req, res) => {
+    let user = req.session.user;
+    let filter = {
+      _id: req.params.id,
+    };
+
+    if (!user.roles.includes(roles.ADMIN)) {
+      filter.ownerId = user._id;
+    }
+
+    try {
+      let post = await postModel.findOne(filter).lean();
+      await commentModel.deleteMany({ postId: post._id });
+      await postModel.deleteOne(filter);
+
+      res.sendStatus(200);
+      return;
+    } catch (error) {
+      res.sendStatus(403);
+      return;
     }
   });
 };
