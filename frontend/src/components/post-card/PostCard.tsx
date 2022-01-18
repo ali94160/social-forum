@@ -14,8 +14,15 @@ import {
 } from "./StyledPostCard";
 import { PostObj } from "../../interfaces/Post";
 import EditDots from "../edit-dots/EditDots";
+import { useHistory } from "react-router-dom";
 
 function PostCard({ post, isInMyPostPage }: PostObj) {
+
+  const history = useHistory();
+  const toPostDetails = () => {
+    history.push(`/posts/${post._id}`)
+  } 
+
   const renderAvatar = () => (
     <StyledAvatarWrapper>
       <StyledAvatar>
@@ -43,7 +50,7 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
   );
 
   return (
-    <StyledCardWrapper>
+    <StyledCardWrapper onClick={toPostDetails}>
       {renderAvatar()}
       {renderContent()}
       {renderComment()}
