@@ -2,23 +2,14 @@ import { StyledPost, StyledGrid } from './StyledPost';
 import Avatar from '../avatar/Avatar';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
-import { useEffect, useState } from 'react';
-
-import { usePost } from '../../context/PostContext';
+import { PostEx } from '../../interfaces/Post';
 
 interface Props {
   id: any;
-  post: Post;
-}
-
-interface Post {
-
-
+  post: any;
 }
 
 function Post({ id, post }: Props) {
-    
-  
 
   return (
     <StyledPost>
