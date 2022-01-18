@@ -7,6 +7,7 @@ import {
   StyledCancelButton,
   StyledBtnWrapper,
   StyledTitle,
+  StyledText,
 } from "./StyledConfirmModal";
 
 interface Props {
@@ -27,9 +28,11 @@ function ConfirmModal({ openModal, setOpenModal, handleDeletePost }: Props) {
       aria-describedby="modal-modal-description"
     >
       <StyledBox>
-        <StyledTitle>
-          Are you sure you want to continue this process?
-        </StyledTitle>
+        <StyledTitle>Delete post</StyledTitle>
+        <StyledText>
+          NOTE: This will delete your post, content, comments and moderators
+          permanently.
+        </StyledText>
         <StyledBtnWrapper>
           <StyledCancelButton onClick={() => setOpenModal(false)}>
             No

@@ -9,7 +9,8 @@ export const StyledBox = styled(Box)`
     padding: 2rem;
     transform: translate(-50%, -50%);
     width: 400;
-    background: white;
+    background: var(--yellow);
+    border-radius: 0.7rem;
   }
 `;
 
@@ -18,6 +19,12 @@ export const StyledTitle = styled.p`
   font-size: 1.5rem;
   margin: 0;
   padding: 0;
+`;
+
+export const StyledText = styled.p`
+  font-size: 1.1rem;
+  color: grey;
+  margin-top: 0.7rem;
 `;
 
 export const StyledBtnWrapper = styled.div`
@@ -43,8 +50,8 @@ export const StyledCancelButton = styled.button`
   width: 45%;
   border: none;
   border-radius: 3px;
-  background: lightgrey;
-  color: black;
+  background: grey;
+  color: white;
   padding: 1rem;
   text-decoration: none;
   outline: none;
