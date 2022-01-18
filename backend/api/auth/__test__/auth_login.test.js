@@ -44,7 +44,7 @@ describe("Test user authentication - Login", () => {
     test('/api/login - No one is logged in', async () => {
       const res = await request.post("/api/login").send(user3WrongLogin);
   
-      expect(res.statusCode).toBe(400)
+      expect(res.statusCode).toBe(401)
     });
   });
 
