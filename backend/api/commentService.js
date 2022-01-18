@@ -14,7 +14,7 @@ app.post(
       try {
         let comment = new commentModel({
             content: 'test blabla ',
-            writeId: req.session.user._id,
+            writerId: req.session.user._id,
             createdDate: Date.now(),
             postId: null
         });
