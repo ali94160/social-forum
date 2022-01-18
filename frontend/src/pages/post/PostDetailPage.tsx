@@ -30,8 +30,6 @@ function PostDetailPage() {
     return;
   }
 
-
-
   return (
     <div>
       <Post id={id} post={post} />

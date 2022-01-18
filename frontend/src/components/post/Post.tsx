@@ -19,7 +19,6 @@ function Post({ id, post }: Props) {
   const time = post && new Date(post.createdDate);
   const [moderators, setModerators] = useState('');
   
-  console.log('post? ', post);
   useEffect(() => {
     handleModerators()
   }, [post?.moderatorsIds])
