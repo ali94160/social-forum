@@ -3,6 +3,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { StyledDots, StyledBtn } from "./StyledEditDots";
 import { usePost } from "../../context/PostContext";
+import ConfirmModal from "../confirm-modal/ConfirmModal";
 
 interface Props {
   postId: string;
@@ -11,6 +12,7 @@ interface Props {
 function EditDots({ postId }: Props) {
   const { deletePost } = usePost();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [openModal, setOpenModal] = React.useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -21,6 +23,11 @@ function EditDots({ postId }: Props) {
 
   const handleDeletePost = async () => {
     await deletePost(postId);
+    setOpenModal(false);
+  };
+
+  const handleOpenConfirmModal = () => {
+    setOpenModal(true);
     setAnchorEl(null);
   };
 
@@ -36,7 +43,7 @@ function EditDots({ postId }: Props) {
     >
       <MenuItem onClick={handleClose}>Handle moderators</MenuItem>
       <MenuItem onClick={handleClose}>Edit post</MenuItem>
-      <MenuItem onClick={handleDeletePost}>Delete post</MenuItem>
+      <MenuItem onClick={handleOpenConfirmModal}>Delete post</MenuItem>
     </Menu>
   );
 
@@ -52,6 +59,11 @@ function EditDots({ postId }: Props) {
         <StyledDots />
       </StyledBtn>
       {renderMenu()}
+      <ConfirmModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        handleDeletePost={handleDeletePost}
+      />
     </>
   );
 }
