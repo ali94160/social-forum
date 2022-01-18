@@ -13,7 +13,7 @@ import {
   StyledCommentSection,
 } from "./StyledPostCard";
 import { PostObj } from "../../interfaces/Post";
-import EditDots from "../../components/editDots/EditDots";
+import EditDots from "../edit-dots/EditDots";
 
 function PostCard({ post, isInMyPostPage }: PostObj) {
   const renderAvatar = () => (
