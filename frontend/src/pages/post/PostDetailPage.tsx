@@ -17,7 +17,6 @@ function PostDetailPage() {
   const handlePost = async () => {
     const res = await getPost(id);
     setStatus(res.status);
-    console.log('what is post', res.body);
     if (res.status === 200) {
       setPost(res.body);
     }
@@ -27,6 +26,7 @@ function PostDetailPage() {
     return <LoadingDetailedSkeleton />;
   } else if (status === 404) {
     // LÄGG TILL 404 SIDAAAAA
+    return;
   }
 
 
