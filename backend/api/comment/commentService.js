@@ -7,18 +7,21 @@ module.exports = function (app) {
       res.sendStatus(403);
       return;
     }
+    console.log("after first check");
     try {
       let newComment = new commentModel({
         ...req.body,
         createdDate: Date.now(),
         writeId: req.session.user._id,
       });
+      console.log("created comment: ", newComment);
       const result = await newComment.save();
+      console.log("result: ", result);
       if (!result) {
         res.sendStatus(400);
         return;
       }
-      res.status(200);
+      res.sendStatus(200);
       return;
     } catch (error) {
       res.sendStatus(400);
