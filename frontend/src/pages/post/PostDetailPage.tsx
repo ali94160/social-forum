@@ -2,7 +2,7 @@ import Post from '../../components/post/Post';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { usePost } from '../../context/PostContext';
-import CircularProgress from '@mui/material/CircularProgress';
+import LoadingDetailedSkeleton from '../../components/skeleton/LoadingDetailedSkeleton';
 
 function PostDetailPage() {
   const id = useParams();
@@ -16,16 +16,18 @@ function PostDetailPage() {
 
   const handlePost = async () => {
     const res = await getPost(id);
-    console.log('post', res.body)
     setStatus(res.status);
+    console.log('what is post', res.body);
     if (res.status === 200) {
       setPost(res.body);
     }
   }
 
-  if (status === 0 || status === 404) {
-    return <CircularProgress />;
-  } 
+  if (status === 0 || status === 401) {
+    return <LoadingDetailedSkeleton />;
+  } else if (status === 404) {
+    // LÄGG TILL 404 SIDAAAAA
+  }
 
 
 
