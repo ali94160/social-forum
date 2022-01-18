@@ -1,3 +1,5 @@
+
+
 export interface RegisterUser {
   email: string;
   username: string;
@@ -10,6 +12,7 @@ export interface LoginUser {
 }
 
 export interface User {
-  id: string;
+  _id: string;
   username: string;
+  roles?: [string];
 }
