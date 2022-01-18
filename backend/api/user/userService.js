@@ -36,7 +36,7 @@ module.exports = user = (app) => {
         const userFromDb = await userModel.findByIdAndDelete(user._id);
 
         // now lets update comments and posts
-        const commentsFromDb = await commentModel.updateMany({ writeId: user._id }, {"$set":{"writeId": null}});
+        const commentsFromDb = await commentModel.updateMany({ writerId: user._id }, {"$set":{"writerId": null}});
         
         const postsFromDb = await postModel.updateMany({ ownerId: user._id }, {"$set":{"ownerId": null}});
 

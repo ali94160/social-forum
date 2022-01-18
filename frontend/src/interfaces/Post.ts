@@ -1,3 +1,5 @@
+import { User } from './User';
+
 export interface PostObj {
   post: {
     _id: string;
@@ -21,8 +23,8 @@ export interface PostItem {
   categoryId: string;
   commentLength: number;
   createdDate: string;
-  ownerId?: {
-    _id: string;
-    username: string;
-  };
+  ownerId: User;
+  moderatorsIds: [User];
+  comments?: [string] // change when comments interface has been added 
 }
+

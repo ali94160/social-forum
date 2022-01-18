@@ -9,6 +9,10 @@ interface Props {
   children: any;
 }
 
+interface Id {
+  id: String;
+}
+
 function PostContextProvider({ children }: Props) {
   const [posts, setPosts] = useState<null | PostItem[]>(null);
   const [myPosts, setMyPosts] = useState<null | PostItem[]>(null);
@@ -25,6 +29,12 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
+  const getPost = async ({id}: Id) => {
+    const response: Response = await fetch('/api/posts/' + id);
+    const body = await response.json();
+    return { status: response.status, body }
+  }
+    
   const getPosts = async (ascDate: boolean, ascTitle: boolean) => {
     const response: Response = await fetch(
       `/api/posts?createdDate=${ascDate ? "asc" : "desc"}&title=${
@@ -60,6 +70,7 @@ function PostContextProvider({ children }: Props) {
     myPosts,
     getMyPosts,
     deletePost,
+    getPost
   };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;
