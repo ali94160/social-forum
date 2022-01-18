@@ -1,20 +1,20 @@
-const test_user = {
+const testUser = {
   username: "tester",
   email: "test@test.se",
   password: "123"
 };
 
-const test_login = {
+const testLogin = {
   email: "test@test.se",
   password: "123"
 };
 
-const wrong_confirmation_password = {
+const wrongConfirmationPassword = {
   password: "12345"
 }
 
-const correct_confirmation_password = {
+const correctConfirmationPassword = {
   password: "123"
 }
 
-module.exports = { test_user, test_login, wrong_confirmation_password, correct_confirmation_password };
+module.exports = { testUser, testLogin, wrongConfirmationPassword, correctConfirmationPassword };
