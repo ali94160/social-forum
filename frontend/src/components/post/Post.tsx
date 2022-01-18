@@ -45,6 +45,10 @@ function Post({ id, post }: Props) {
     setModerators(str);
   }
 
+  const handleEdit = () => {
+    console.log('i want to edit ', post?._id)
+  }
+
   return (
     <StyledPost>
       <StyledGrid container spacing={2}>
@@ -78,7 +82,7 @@ function Post({ id, post }: Props) {
           </Grid>
         </Grid>
         <StyledLeftGrid item xs={2}>
-          <EditIcon />
+          <EditIcon onClick={handleEdit} />
         </StyledLeftGrid>
 
         <StyledBottomGrid
