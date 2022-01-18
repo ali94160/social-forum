@@ -1,6 +1,7 @@
 const postModel = require("../../models/post");
 const commentModel = require("../../models/comment");
 const { authUserLoggedIn } = require("../../middlewares/acl");
+const { isPostOwner } = require("../../middlewares/postOwner");
 
 module.exports = function (app) {
   app.get("/api/posts", async (req, res) => {
@@ -88,4 +89,15 @@ module.exports = function (app) {
       res.sendStatus(400);
     }
   });
+
+  app.put("/api/posts/:id", authUserLoggedIn, isPostOwner, async (req, res) => {
+    try {
+      const post = await postModel.findOne({ _id: req.params.id }).lean().exec();
+      const updatedPost = { ...post, ...req.body }
+      await postModel.replaceOne({ _id: req.params.id}, updatedPost)
+      res.status(200).json(updatedPost);
+    } catch (e) {
+      return res.sendStatus(403);
+    }
+  })
 };

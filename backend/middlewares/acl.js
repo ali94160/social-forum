@@ -1,5 +1,3 @@
-const postModel = require("../models/post");
-
 function authUserNotLoggedIn(req, res, next) {
   if (req.session?.user) {
     res.sendStatus(400);
@@ -35,18 +33,8 @@ function authRole(roles) {
   }
 }
 
-async function isPostOwner(req, res, next) {
-  post = await postModel.findOne({ _id: req.params.id }).lean();
-  if (post.ownerId._id !== req.session.user._id) {
-    return res.sendStatus(401);
-  }
-  next()
-}
-
-
 module.exports = {
   authUserNotLoggedIn,
   authUserLoggedIn,
-  authRole,
-  isPostOwner
+  authRole
 }
