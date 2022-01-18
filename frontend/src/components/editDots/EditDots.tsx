@@ -2,14 +2,25 @@ import React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { StyledDots, StyledBtn } from "./StyledEditDots";
+import { usePost } from "../../context/PostContext";
 
-function EditDots() {
+interface Props {
+  postId: string;
+}
+
+function EditDots({ postId }: Props) {
+  const { deletePost } = usePost();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDeletePost = async () => {
+    await deletePost(postId);
     setAnchorEl(null);
   };
 
@@ -25,7 +36,7 @@ function EditDots() {
     >
       <MenuItem onClick={handleClose}>Handle moderators</MenuItem>
       <MenuItem onClick={handleClose}>Edit post</MenuItem>
-      <MenuItem onClick={handleClose}>Delete post</MenuItem>
+      <MenuItem onClick={handleDeletePost}>Delete post</MenuItem>
     </Menu>
   );
 

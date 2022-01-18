@@ -34,7 +34,7 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
 
   const renderComment = () => (
     <StyledCommentWrapper>
-      {isInMyPostPage && <EditDots />}
+      {isInMyPostPage && <EditDots postId={post._id} />}
       <StyledCommentSection>
         <StyledCommentIcon />
         <StyledCommentLength>{post.commentLength}</StyledCommentLength>

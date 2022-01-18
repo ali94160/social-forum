@@ -43,7 +43,24 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
-  const values = { createPost, getPosts, posts, myPosts, getMyPosts };
+  const deletePost = async (postId: string) => {
+    const response: Response = await fetch(`/api/posts/${postId}`, {
+      method: "DELETE",
+    });
+    if (response.status === 200) {
+      getMyPosts();
+    }
+    return response.status === 200;
+  };
+
+  const values = {
+    createPost,
+    getPosts,
+    posts,
+    myPosts,
+    getMyPosts,
+    deletePost,
+  };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;
 }
