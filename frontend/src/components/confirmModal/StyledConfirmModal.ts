@@ -9,7 +9,7 @@ export const StyledBox = styled(Box)`
     padding: 2rem;
     transform: translate(-50%, -50%);
     width: 400;
-    background: var(--yellow);
+    background: white;
     border-radius: 0.7rem;
   }
 `;

@@ -34,12 +34,12 @@ function ConfirmModal({ openModal, setOpenModal, handleDeletePost }: Props) {
           permanently.
         </StyledText>
         <StyledBtnWrapper>
-          <StyledCancelButton onClick={() => setOpenModal(false)}>
-            No
-          </StyledCancelButton>
           <StyledDeleteButton onClick={handleDeletePost}>
             Yes
           </StyledDeleteButton>
+          <StyledCancelButton onClick={() => setOpenModal(false)}>
+            No
+          </StyledCancelButton>
         </StyledBtnWrapper>
       </StyledBox>
     </Modal>
