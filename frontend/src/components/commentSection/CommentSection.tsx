@@ -3,6 +3,7 @@ import {
   StyledWrapper,
   StyledCommentField,
   StyledBtn,
+  StyledAvatar,
 } from "./StyledCommentSection";
 
 function CommentSection() {
@@ -14,6 +15,7 @@ function CommentSection() {
   };
   return (
     <StyledWrapper>
+      <StyledAvatar>H</StyledAvatar>
       <StyledCommentField
         id="outlined-multiline-flexible"
         multiline

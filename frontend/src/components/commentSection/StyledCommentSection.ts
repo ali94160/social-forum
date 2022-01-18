@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
+import Avatar from "@mui/material/Avatar";
 
 export const StyledWrapper = styled.div`
   display: flex;
@@ -26,4 +27,11 @@ export const StyledBtn = styled.button`
   text-transform: uppercase;
   letter-spacing: 3px;
   outline: none;
+`;
+
+export const StyledAvatar = styled(Avatar)`
+  && {
+    background: var(--light-teal);
+    align-self: center;
+  }
 `;
