@@ -17,14 +17,16 @@ describe("Test to add a comment", () => {
 
   test("/api/comments - user is logged in", async () => {
     await testSession.post("/api/login").send(user1Login);
+    const user = await testSession.get("/api/whoAmI");
     const res = await testSession.post("/api/comments").send(newComment);
     const comment = await CommentModel.findOne({
       comment: newComment.comment,
     });
     await CommentModel.findOneAndDelete({ comment: newComment.comment });
-
     expect(res.statusCode).toBe(200);
     expect(comment._id).toBeDefined();
+    expect(comment.postId + "").toMatch(newComment.postId + "");
+    expect(comment.writeId + "").toMatch(user.body._id + "");
     expect(comment.comment).toEqual(newComment.comment);
   });
 });
