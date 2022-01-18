@@ -54,23 +54,31 @@ export const StyledContent = styled.p`
 
 export const StyledCommentWrapper = styled.div`
   justify-self: end;
-  display: flex;
-  gap: 0.4rem;
+  display: grid;
+  grid-template-columns: 1fr;
 `;
 
 export const StyledCommentIcon = styled(ChatIcon)`
   align-self: end;
   &&& {
     font-size: 1.2rem;
+    display: inline-block;
   }
 `;
 
 export const StyledCommentLength = styled.p`
   margin: 0;
+  display: inline-block;
   font-size: 1rem;
   align-self: end;
 `;
 
 export const StyledDots = styled(MoreVertIcon)`
   align-self: start;
+  justify-self: end;
+`;
+
+export const StyledCommentSection = styled.div`
+  display: flex;
+  gap: 0.4rem;
 `;

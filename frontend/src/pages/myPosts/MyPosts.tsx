@@ -14,7 +14,7 @@ function MyPosts() {
     <div>
       {myPosts &&
         myPosts.map((post: PostItem) => (
-          <PostCard key={post._id} post={post} isMyPostPage={true}/>
+          <PostCard key={post._id} post={post} isInMyPostPage={true} />
         ))}
     </div>
   );
