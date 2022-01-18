@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { usePost } from "../../context/PostContext";
-import PostCard from "../../components/postCard/PostCard";
+import PostCard from "../../components/post-card/PostCard";
 import { PostItem } from "../../interfaces/Post";
 
 function MyPosts() {

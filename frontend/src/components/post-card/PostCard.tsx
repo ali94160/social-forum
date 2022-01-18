@@ -14,7 +14,7 @@ import {
 } from "./StyledPostCard";
 import { PostObj } from "../../interfaces/Post";
 import { useHistory } from 'react-router-dom';
-import EditDots from "../../components/editDots/EditDots";
+import EditDots from "../edit-dots/EditDots";
 
 function PostCard({ post, isInMyPostPage }: PostObj) {
   const history = useHistory();
