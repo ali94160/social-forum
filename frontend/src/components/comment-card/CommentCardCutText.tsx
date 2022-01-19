@@ -3,21 +3,21 @@ import { Grid } from "@mui/material";
 import { CommentItem } from "../../interfaces/Comment";
 import {
   StyledCard,
-  LeftGrid,
-  RightGrid,
+  StyledContainer,
+  AvatarContainer,
+  TopGrid,
   StyledName,
   StyledDate,
   StyledComment,
-} from "./StyledCommentCard";
+} from "./StyledCommentCardCutText";
 import BasicAvatar from "../basics/basic-avatar/BasicAvatar";
-import { trimString } from "../../utils/helper-methods";
 
 interface Props {
   comment: CommentItem;
   isMyPost?: boolean;
 }
 
-function CommentCard({ comment, isMyPost }: Props) {
+function CommentCardCutText({ comment, isMyPost }: Props) {
   console.log(comment.createdDate);
 
   const created = new Date(comment.createdDate);
@@ -25,26 +25,26 @@ function CommentCard({ comment, isMyPost }: Props) {
   const time = created.toLocaleTimeString().substring(0, 5);
   return (
     <StyledCard>
-      <Grid container>
-        <LeftGrid item xs={3} sm={2} lg={1}>
-          <BasicAvatar username={comment?.writerId?.username} />
-          <StyledName>
-            {comment?.writerId?.username
-              ? trimString(comment.writerId.username, 8)
-              : "Null user"}
-          </StyledName>
-        </LeftGrid>
-        <RightGrid item xs={9} sm={10} lg={11}>
+      <StyledContainer container>
+        <TopGrid>
+          <AvatarContainer>
+            <BasicAvatar username={comment?.writerId?.username} />
+            <StyledName>
+              {comment?.writerId?.username
+                ? trimString(comment.writerId.username, 8)
+                : "Null user"}
+            </StyledName>
+          </AvatarContainer>
           <StyledComment>{comment.content}</StyledComment>
-        </RightGrid>
+        </TopGrid>
         <Grid container>
           <StyledDate>
             {date} {time}
           </StyledDate>
         </Grid>
-      </Grid>
+      </StyledContainer>
     </StyledCard>
   );
 }
 
-export default CommentCard;
+export default CommentCardCutText;

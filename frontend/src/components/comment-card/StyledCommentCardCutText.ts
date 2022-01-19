@@ -8,23 +8,22 @@ export const StyledCard = styled(Card)`
     height: fit-content;
     min-height: 10vh;
     margin: 2vh auto;
-    padding: 1%;
-    padding-top: 1rem;
   }
 `;
 
-export const StyledAvatarContainer = styled.div`
-  margin-top: calc(0.1% + 2px);
+export const StyledContainer = styled(Grid)`
+  padding: 1%;
 `;
 
-export const LeftGrid = styled(Grid)`
-  height: 100%;
-  margin: 1%;
+export const AvatarContainer = styled.div`
+  margin: 0.5rem 2rem;
+  float: left;
 `;
 
-export const RightGrid = styled(Grid)`
+export const TopGrid = styled(Grid)`
+  /* background-color: pink; */
   height: 100%;
-  margin: 1%;
+  margin: 1% 2%;
 `;
 
 export const StyledName = styled.p`
@@ -38,14 +37,11 @@ export const StyledDate = styled.div`
   text-align: right;
   width: 100%;
   height: 100%;
-  margin-top: 2%;
 `;
 
-export const StyledComment = styled.div`
+export const StyledComment = styled.span`
   overflow-wrap: break-word;
   word-wrap: break-word;
   hyphens: auto;
   height: 100%;
-  /* margin-top: 1rem; */
-  margin-right: 1rem;
 `;

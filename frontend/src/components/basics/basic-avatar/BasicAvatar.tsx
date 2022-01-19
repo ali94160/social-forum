@@ -13,7 +13,7 @@ function BasicAvatar({ username, backgroundColor, color }: Props) {
   return (
     <>
       <StyledAvatar backgroundcolor={backgroundColor} color={color} >
-        {getFirstCap(username)}
+        {username && getFirstCap(username)}
       </StyledAvatar>
     </>
   );

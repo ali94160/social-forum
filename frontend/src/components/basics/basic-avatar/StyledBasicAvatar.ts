@@ -7,8 +7,8 @@ interface Props {
 }
 
 export const StyledAvatar = styled(Avatar)<Props>`
-  &&& {
-    margin: 0;
+  && {
+    margin: 0 auto;
     justify-self: center;
     color: ${(props) => (props.color ? props.color : "white")};
     background: ${(props) =>

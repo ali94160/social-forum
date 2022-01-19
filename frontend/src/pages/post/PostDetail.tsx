@@ -35,11 +35,8 @@ function PostDetailPage() {
     <div>
       <Post id={id} post={post} />
       {post?.comments && post?.comments.length > 0
-        ?
-        <CommentList comments={post.comments}/>
-        : <div>
-          There are nothing here Q_Q
-      </div>
+        ? <CommentList comments={post.comments}/>
+        : <p>There are nothing here O_Q</p>
       }
     </div>
   )
