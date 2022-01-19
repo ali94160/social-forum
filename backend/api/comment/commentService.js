@@ -38,9 +38,9 @@ module.exports = function (app) {
                   return res.status(500).json({ message: 'There was an error deleting the comment', error: err })
                 }
                 if(!comment){
-                  return res.status(403).json({ message: 'No rights / comment not found' })
+                  return res.sendStatus(403);
                 }
-            res.status(200).json({message: 'Successfully deleted', comment});
+            res.sendStatus(200);
         });
     })
 
