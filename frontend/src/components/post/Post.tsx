@@ -17,6 +17,7 @@ import BasicSelect from "../basics/basic-select/BasicSelect";
 import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import { usePost } from '../../context/PostContext';
 import { useUser } from '../../context/UserContext';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface Props {
   post: PostItem | null;
@@ -69,9 +70,7 @@ function Post({post}: Props) {
     setModerators(str);
   }
 
-
   const handleEdit = async () => {
-    console.log('i want to edit ', post?._id)
     if (edit) {
       const status = await updatePost({
         _id: post?._id,
@@ -150,7 +149,8 @@ function Post({post}: Props) {
         <StyledLeftGrid item xs={2}>
           {isPostOwner ? (!edit ?
             <EditIcon onClick={handleEdit} />
-            : <CheckIcon onClick={handleEdit} />) : ''}
+            : <><CheckIcon onClick={handleEdit} sx={{marginBottom: '15px'}} /><br/>
+              <CloseIcon onClick={() => setEdit(!edit)} /></>) : ''}
         </StyledLeftGrid>
 
         <StyledBottomGrid
