@@ -1,7 +1,7 @@
 const postModel = require("../../models/post");
 const commentModel = require("../../models/comment");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
-const { isPostOwner, handleModerator } = require("../../middlewares/postOwner");
+const { isPostOwner, handleModerator, handlePostOwnerRole } = require("../../middlewares/postOwner");
 const roles = require("../../models/role");
 
 module.exports = function (app) {
@@ -74,6 +74,7 @@ module.exports = function (app) {
         res.sendStatus(400);
         return;
       }
+      handlePostOwnerRole(req);
       res.status(200).json(newPost);
       return;
     } catch (error) {
