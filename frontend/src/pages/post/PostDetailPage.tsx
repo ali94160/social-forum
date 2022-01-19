@@ -3,11 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { usePost } from '../../context/PostContext';
 import LoadingDetailedSkeleton from '../../components/skeleton/LoadingDetailedSkeleton';
+import { useAuth } from '../../context/AuthContext';
 
 function PostDetailPage() {
   const id = useParams();
   const { getPost, post } = usePost();
   const [status, setStatus] = useState(0);
+  const { user } = useAuth();
 
   useEffect(() => {
     handlePost();
@@ -29,9 +31,11 @@ function PostDetailPage() {
     return;
   }
 
+  console.log('what is user', user)
+
   return (
     <div>
-      <Post post={post} />
+      <Post post={post} me={user} />
       
     </div>
   )

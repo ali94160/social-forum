@@ -18,14 +18,16 @@ import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import { usePost } from '../../context/PostContext';
 import { useUser } from '../../context/UserContext';
 import CloseIcon from '@mui/icons-material/Close';
+import { User } from '../../interfaces/User';
 
 interface Props {
   post: PostItem | null;
+  me: User;
 }
 // shall be removed
 const categories = ["Meme", "Trollololo", "Cooking", "Economic"];
 
-function Post({post}: Props) {
+function Post({post, me}: Props) {
   const date = post?.createdDate?.substr(0, 10);
   const time = post && new Date(post.createdDate);
   const [moderators, setModerators] = useState('');
@@ -37,15 +39,11 @@ function Post({post}: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const { updatePost } = usePost();
   const [status, setStatus] = useState(0);
-  const { whoAmI, me } = useUser();
+  // const { whoAmI, me } = useUser();
   const [isPostOwner, setIsPostOwner] = useState(false);
 
   console.log('what is post', post);
   console.log('what is me', me);
-
-  useEffect(() => {
-    getWhoAmI();
-  }, []);
 
   useEffect(() => {
     handleIsPostOwner();
@@ -58,11 +56,9 @@ function Post({post}: Props) {
   const handleIsPostOwner = () => {
     if (me && me._id === post?.ownerId._id) {
       setIsPostOwner(true);
+    } else {
+      setIsPostOwner(false);
     }
-  }
-
-  const getWhoAmI = async () => {
-    await whoAmI();
   }
 
   const handleModeratorStr = () => {
@@ -71,6 +67,7 @@ function Post({post}: Props) {
   }
 
   const handleEdit = async () => {
+    setEdit(!edit);
     if (edit) {
       const status = await updatePost({
         _id: post?._id,
@@ -80,7 +77,9 @@ function Post({post}: Props) {
       });
       setStatus(status);
     }
-    setEdit(!edit);
+    if (status === 200) {
+      setEdit(!edit); 
+    }
   }
 
   return (

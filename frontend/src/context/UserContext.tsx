@@ -10,7 +10,6 @@ interface Props {
 }
 
 function UserContextProvider({ children }: Props) {
-  const [me, setMe] = useState({});
 
   const deleteSelf = async (password: string) => {
     const response: Response = await fetch("/api/user/self", {
@@ -24,18 +23,8 @@ function UserContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
-  const whoAmI = async () => {
-    const response: Response = await fetch("/api/whoAmI");
-    const body = await response.json();
-    if (response.status === 200) {
-      setMe(body);
-    }
-  }
-
   const values = {
-    deleteSelf,
-    whoAmI,
-    me
+    deleteSelf
   };
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
