@@ -8,7 +8,7 @@ export const StyledCard = styled(Card)`
     height: fit-content;
     min-height: 10vh;
     margin: 2vh auto;
-    padding: 1%;
+    /* padding: 1%; */
     padding-top: 1rem;
   }
 `;
@@ -45,7 +45,7 @@ export const StyledDate = styled.div`
   text-align: right;
   width: 100%;
   height: 100%;
-  margin-top: 2%;
+  margin: 2%;
 `;
 
 export const StyledComment = styled.div`

@@ -24,18 +24,20 @@ function CommentCard({ comment, ownerId, moderators }: Props) {
   const created = new Date(comment.createdDate);
   const date = created.toLocaleDateString();
   const time = created.toLocaleTimeString().substring(0, 5);
-
-  let role = "User"
   const isOwner = comment.writerId._id === ownerId;
-  let isModerator;
-  if (isOwner) {
-  }
-  else {
-    role = "Post-owner"
+  let isModerator = false;
+  if (!isOwner) {
     isModerator = moderators.some(moderator => moderator._id === comment.writerId._id);
-    if (isModerator) {
-      role = "Post-moderator"
-    }
+  }
+
+  const getRole = () => {
+    if (isOwner)
+      return "Post-owner"
+    
+    if (isModerator)
+      return "Post-moderator"
+    
+    return "User";
   }
 
   const getUsername = () => {
@@ -51,7 +53,7 @@ function CommentCard({ comment, ownerId, moderators }: Props) {
           <BasicAvatar username={comment?.writerId?.username} />
           <StyledName>
             {getUsername()}
-            <StyledRole>{role}</StyledRole>
+            <StyledRole>{getRole()}</StyledRole>
           </StyledName>
         </LeftGrid>
         <RightGrid item xs={8} sm={9} lg={10}>
