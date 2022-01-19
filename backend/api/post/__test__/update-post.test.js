@@ -1,8 +1,9 @@
 const app = require("../../../app");
 const session = require("supertest-session");
 const Post = require("../../../models/post");
-const { user1Login } = require("../../auth/__test__/mock_data");
-const { post } = require("./mock_data");
+const { user1Login, wrongPostId } = require("../../auth/__test__/mock_data");
+const { post, updPost } = require("./mock_data");
+const roles = require('../../../models/role');
 
 describe("Test if a user can update their post", () => {
   let testSession = null;
@@ -11,7 +12,21 @@ describe("Test if a user can update their post", () => {
     testSession = session(app);
   });
 
-  test('/api/posts/id user can successfully update their post', () => {
+  test('/api/posts/id logged in user can successfully update their post', async () => {
+    await testSession.post('/api/login').send(user1Login);
+    const user = await testSession.get('/api/whoAmI');
+    const res = await testSession.post('/api/user/posts').send(post);
+    
+    const updRes = await testSession.put(`/api/posts/${res.body._id}`).send(updPost);
+
+    expect(updRes.statusCode).toBe(200);
+    expect(updRes.body.title).toEqual(updPost.title);
+    expect(updRes.body.content).toEqual(updPost.content);
+    expect(user.body.roles).toContain(roles.POSTOWNER);
+
+  });
+
+  test('/api/posts/id user cannot update because post not exists', () => {
 
   });
 
@@ -23,20 +38,4 @@ describe("Test if a user can update their post", () => {
 
   });
 
-  test('/api/posts/id user cannot update post they don\'t own', () => {
-
-  });
-
-
-  // test("To not allow a unauthorized user to create a post", async () => {
-  //   const res = await testSession.post("/api/user/posts").send(post);
-  //   expect(res.statusCode).toBe(401);
-  // });
-
-  // test("To successfully create a post", async () => {
-  //   await testSession.post("/api/login").send(user1Login);
-  //   const res = await testSession.post("/api/user/posts").send(post);
-  //   await Post.findOneAndDelete({ title: post.title });
-  //   expect(res.statusCode).toBe(200);
-  // });
 });

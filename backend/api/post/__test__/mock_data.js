@@ -4,6 +4,12 @@ const post = {
   categoryId: "61dc3a622f8ecad1bc1367b2",
 };
 
+const updPost = {
+  title: "new post title",
+  content: "new content",
+  categoryId: "61dc3a622f8ecad1bc1367b2",
+}
+
 const user2Login = {
   email: "post-tester@haha.se",
   username: "post-tester",
@@ -17,4 +23,6 @@ const user1Login = {
 
 const postId = "61e51b44d7e4aef1f1fc1005"
 
-module.exports = { post, postId, user2Login, user1Login };
+const wrongPostId = "62e51b44d7e4aef1f1fc1005"
+
+module.exports = { post, postId, user2Login, user1Login, updPost, wrongPostId };
