@@ -119,7 +119,7 @@ module.exports = function (app) {
         .exec();
       delete req.body.moderatorsIds
       const updatedPost = { ...post, ...req.body };
-      await postModel.replaceOne({ _id: req.params.id }, updatedPost);
+      const res = await postModel.replaceOne({ _id: req.params.id }, updatedPost);
       res.status(200).json(updatedPost);
     } catch (error) {
       return res.sendStatus(404);
