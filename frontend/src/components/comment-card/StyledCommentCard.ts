@@ -8,7 +8,6 @@ export const StyledCard = styled(Card)`
     height: fit-content;
     min-height: 10vh;
     margin: 2vh auto;
-    /* padding: 1%; */
     padding-top: 1rem;
   }
 `;
@@ -53,6 +52,5 @@ export const StyledComment = styled.div`
   word-wrap: break-word;
   hyphens: auto;
   height: 100%;
-  /* margin-top: 1rem; */
   margin-right: 1rem;
 `;

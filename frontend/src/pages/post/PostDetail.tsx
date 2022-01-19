@@ -17,9 +17,6 @@ function PostDetailPage() {
   const [status, setStatus] = useState(0);
   const [post, setPost] = useState<PostItem | undefined>();
 
-  console.log(post);
-  
-
   useEffect(() => {
     handlePost();
   }, []);
