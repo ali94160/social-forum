@@ -6,9 +6,9 @@ import TextField from '@mui/material/TextField';
 export const StyledPost = styled(Card)`
 && {
     background-color: var(--yellow); 
-    width: 100;
+    width: 90%;
     max-height: fit-content;
-    margin: 20px 40px;
+    margin: 2rem auto;
     padding-bottom: 10px;
   }
 `;

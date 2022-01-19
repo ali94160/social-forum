@@ -43,7 +43,11 @@ module.exports = function (app) {
         .populate("ownerId", ["username", "roles"])
         .exec();
       
-      const comments = await commentModel.find({ postId: req.params.id });
+      const comments = await commentModel
+        .find({ postId: req.params.id }, ["_id", "content", "createdDate"])
+        .populate("writerId", ["_id", "username"])
+        .exec();
+      
       const commentLength = comments.length;
 
       post = { ...post, comments, commentLength };

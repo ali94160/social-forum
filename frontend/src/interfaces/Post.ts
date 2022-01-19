@@ -1,3 +1,4 @@
+import { CommentItem } from './Comment';
 import { User } from './User';
 
 export interface PostObj {
@@ -25,7 +26,7 @@ export interface PostItem {
   createdDate: string;
   ownerId: User;
   moderatorsIds: [User];
-  comments?: [string] // change when comments interface has been added 
+  comments?: CommentItem[] // change when comments interface has been added 
 }
 
 export interface UpdatePost {

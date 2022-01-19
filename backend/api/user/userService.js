@@ -19,26 +19,24 @@ module.exports = user = (app) => {
       const password = req.body.password;
 
       if(!password) {
-        res.status(403).json({
+        return res.status(403).json({
           message: 'No password.',
-        })
-        return;
+        });
       }
 
       const hash = hashUtil(req.body?.password);
 
         if(user.password !== hash){
-          res.status(403).json({
+          return res.status(403).json({
             message: 'Bad credentials.',
-          })
-          return;
+          });
         }
         
         // if we made it all the way here all good, deleting user!
         const userFromDb = await userModel.findByIdAndDelete(user._id);
 
         // now lets update comments and posts
-        const commentsFromDb = await commentModel.updateMany({ writeId: user._id }, {"$set":{"writeId": null}});
+        const commentsFromDb = await commentModel.updateMany({ writerId: user._id }, {"$set":{"writerId": null}});
         
         const postsFromDb = await postModel.updateMany({ ownerId: user._id }, {"$set":{"ownerId": null}});
 

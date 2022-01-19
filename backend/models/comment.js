@@ -7,9 +7,10 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  writeId: {
+  writerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: User
+    ref: User,
+    required: true
   },
   createdDate: {
     type: Date,

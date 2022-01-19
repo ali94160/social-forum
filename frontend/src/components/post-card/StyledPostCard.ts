@@ -11,6 +11,11 @@ export const StyledCardWrapper = styled.div`
   grid-template-columns: 20% 1fr 1fr;
   padding: 0.5rem;
   margin-bottom: 1rem;
+
+  :hover{
+    opacity: 0.8;
+    cursor: pointer;
+  }
 `;
 
 export const StyledAvatarWrapper = styled.div`
