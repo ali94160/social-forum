@@ -28,3 +28,10 @@ export interface PostItem {
   comments?: [string] // change when comments interface has been added 
 }
 
+export interface UpdatePost {
+  _id: string;
+  title: string;
+  content: string;
+  categoryId: string;
+}
+
