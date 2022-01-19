@@ -11,7 +11,7 @@ module.exports = function (app) {
       let newComment = new commentModel({
         ...req.body,
         createdDate: Date.now(),
-        writeId: req.session.user._id,
+        writerId: req.session.user._id,
       });
       const result = await newComment.save();
       if (!result) {
