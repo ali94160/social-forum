@@ -9,16 +9,21 @@ import {
 } from './StyledPost';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, BaseSyntheticEvent } from 'react';
 import { PostItem } from '../../interfaces/Post';
 import { StyledAvatar } from '../post-card/StyledPostCard';
 import { formatModStr } from './HandleModerators';
 import CheckIcon from '@mui/icons-material/Check';
+import BasicSelect from "../basics/basic-select/BasicSelect";
+import BasicTextField from "../basics/basic-text-field/BasicTextField";
 
 interface Props {
   id: any;
   post: PostItem | undefined;
 }
+
+// shall be removed
+const categories = ["Meme", "Trollololo", "Cooking", "Economic"];
 
 
 // behåller id ifall man vill använda vid redigering av post??
@@ -31,7 +36,8 @@ function Post({ id, post }: Props) {
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
   const hours = time?.getHours();
-  const minutes = (time?.getMinutes() < 10 ? '0' : '') + time?.getMinutes();
+  const minutes = (time && time?.getMinutes() < 10 ? '0' : '') + time?.getMinutes();
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   
   
   useEffect(() => {
@@ -79,26 +85,40 @@ function Post({ id, post }: Props) {
           >    
           <StyledTitleGrid item xs>
             {!edit ? post?.title :
-              <StyledOutlinedInput
-                placeholder={post?.title}
+              <BasicTextField
+                label="Title"
+                fullWidth={true}
+                defaultValue={post?.title}
                 inputProps={{
                   maxLength: 40,
                 }}
-                onChange={(e) => setNewTitle(e.target.value)}
+                handleChange={(e: BaseSyntheticEvent) => setNewTitle(e.target.value)}
+                required
               />}
           </StyledTitleGrid>
           <Grid item xs>
             {!edit ? post?.content :
-              <StyledOutlinedInput
-                placeholder={post?.content}
+              <BasicTextField
+                label="Content"
                 multiline
+                fullWidth={true}
+                defaultValue={post?.content}
                 rows={8}
-                inputProps={{
-                  maxLength: 1000,
-                }}
-                onChange={(e) => setNewContent(e.target.value)}
+                inputProps={{maxLength: 1000}}
+                handleChange={(e: BaseSyntheticEvent) => setNewContent(e.target.value)}
+                required
               />}
           </Grid>
+          {edit &&
+            <Grid item xs>
+              <BasicSelect
+                label="Category"
+                value={selectedCategory}
+                options={categories}
+                handleChange={(value: string) => setSelectedCategory(value)}
+              />
+          </Grid>
+          }
         </Grid>
 
         <StyledLeftGrid item xs={2}>
@@ -120,6 +140,8 @@ function Post({ id, post }: Props) {
             {date} {hours}:{minutes}
           </StyledLeftGrid>
         </StyledBottomGrid>
+
+        
         
       </StyledGrid> 
     </StyledPost>
