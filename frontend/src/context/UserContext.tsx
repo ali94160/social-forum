@@ -23,8 +23,15 @@ function UserContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
+  const whoAmI = async () => {
+    const response: Response = await fetch("/api/whoAmI");
+    const body = await response.json();
+    return { status: response.status, body };
+  }
+
   const values = {
     deleteSelf,
+    whoAmI
   };
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
