@@ -12,7 +12,7 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div style={{ height: "90vh" }}>
       {posts ? (
         posts.map((post: PostItem) => <PostCard key={post._id} post={post} />)
       ) : (

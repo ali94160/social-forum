@@ -25,6 +25,12 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
+  const getPost = async (id: string) => {
+    const response: Response = await fetch('/api/posts/' + id);
+    const body = await response.json();
+    return { status: response.status, body }
+  }
+    
   const getPosts = async (ascDate: boolean, ascTitle: boolean) => {
     const response: Response = await fetch(
       `/api/posts?createdDate=${ascDate ? "asc" : "desc"}&title=${
@@ -60,6 +66,7 @@ function PostContextProvider({ children }: Props) {
     myPosts,
     getMyPosts,
     deletePost,
+    getPost
   };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;
