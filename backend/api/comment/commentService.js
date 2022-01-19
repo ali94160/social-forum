@@ -12,7 +12,7 @@ module.exports = function (app) {
           let newComment = new commentModel({
             ...req.body,
             createdDate: Date.now(),
-            writeId: req.session.user._id,
+            writerId: req.session.user._id,
           });
           const result = await newComment.save();
           if (!result) {
@@ -32,13 +32,13 @@ module.exports = function (app) {
     authUserLoggedIn, authRole([roles.USER]),
     async (req, res) => {
         const user = { ...req.session.user };
-        commentModel.findOneAndDelete({ _id: req.params.id, writeId: user._id },
+        commentModel.findOneAndDelete({ _id: req.params.id, writerId: user._id },
             (err, comment) => {
                 if(err) {
-                    return res.status(500).json({message: 'There was an error deleting the comment', error: err})
+                  return res.status(500).json({ message: 'There was an error deleting the comment', error: err })
                 }
                 if(!comment){
-                    return res.status(403).json({message: 'No rights / comment not found'})
+                  return res.status(403).json({ message: 'No rights / comment not found' })
                 }
             res.status(200).json({message: 'Successfully deleted', comment});
         });
