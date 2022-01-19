@@ -5,7 +5,7 @@ import Avatar from "@mui/material/Avatar";
 export const StyledWrapper = styled.div`
   display: flex;
   gap: 1rem;
-  width: 95%;
+  width: 90vw;
   margin: 0 auto;
 `;
 
@@ -13,7 +13,7 @@ export const StyledCommentField = styled(TextField)`
   &&& {
     width: 100%;
     outline: none;
-    background: white;
+    background: var(--dark-blue);
     border: none;
     text-decoration: none;
   }
@@ -22,16 +22,16 @@ export const StyledCommentField = styled(TextField)`
 export const StyledBtn = styled.button`
   border: none;
   padding: 1rem;
-  background: white;
+  background: var(--light-blue);
   font-size: 1rem;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   outline: none;
 `;
 
 export const StyledAvatar = styled(Avatar)`
   && {
-    background: var(--light-teal);
+    background: var(--dark-blue);
     align-self: center;
   }
 `;
