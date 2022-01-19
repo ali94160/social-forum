@@ -35,21 +35,35 @@ module.exports = function (app) {
     async (req, res) => {
       const user = { ...req.session.user };
       const id = req.params.id;
-      const comment = await Comment.findOne({ _id: id }).exec();
-      const post = await Post.findOne({ _id: comment.postId }).exec();
-      // check if user is admin
-      if (req.session.user.roles.includes(roles.ADMIN)) {
-        // delete
-      }
-
-      // check if user is owner
-      if (user.roles.includes(roles.POSTOWNER)) {
-        const isOwner = post.ownerId === user._id
-      }
-      
-      try {
+      try { 
+        const comment = await Comment.findOne({ _id: id }).exec();
+        const post = await Post.findOne({ _id: comment.postId }).exec();
+        // check if user is admin
+        if (user.roles.includes(roles.ADMIN)) {
+          // delete
+        }
         
-      } catch (error) {}
+        // check if user is owner
+        if (user.roles.includes(roles.POSTOWNER)) {
+          const isOwner = post.ownerId.toString() === user._id
+          if (isOwner) {
+            // delete
+          }
+        }
+        
+        // check if user is moderator
+        if (user.roles.includes(roles.POSTMODERATOR) && post.moderatorIds.length > 0) {
+          const isModerator = post.moderatorsIds.includes(user._id)
+          if (isModerator) {
+            // delete
+          }
+        }
+      }
+      catch (error) {
+        res.sendStatus(400)
+        return;
+      }
+      res.sendStatus(200)
     }
   );
 
