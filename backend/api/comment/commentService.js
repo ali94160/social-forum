@@ -35,7 +35,7 @@ module.exports = function (app) {
         commentModel.findOneAndDelete({ _id: req.params.id, writerId: user._id },
             (err, comment) => {
                 if(err) {
-                  return res.status(500).json({ message: 'There was an error deleting the comment', error: err })
+                  return res.sendStatus(500);
                 }
                 if(!comment){
                   return res.sendStatus(403);
