@@ -32,7 +32,7 @@ function PostDetailPage() {
 
   return (
     <div>
-      <Post id={id} post={post} />
+      <Post post={post} />
       
     </div>
   )

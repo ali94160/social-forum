@@ -15,28 +15,26 @@ import { formatModStr } from './HandleModerators';
 import CheckIcon from '@mui/icons-material/Check';
 import BasicSelect from "../basics/basic-select/BasicSelect";
 import BasicTextField from "../basics/basic-text-field/BasicTextField";
+import { usePost } from '../../context/PostContext';
 
 interface Props {
-  id: any;
   post: PostItem | undefined;
 }
-
 // shall be removed
 const categories = ["Meme", "Trollololo", "Cooking", "Economic"];
 
-
-// behåller id ifall man vill använda vid redigering av post??
-
-function Post({ id, post }: Props) {
+function Post({post}: Props) {
   const date = post?.createdDate?.substr(0, 10);
   const time = post && new Date(post.createdDate);
   const [moderators, setModerators] = useState('');
   const [edit, setEdit] = useState(false);
-  const [newTitle, setNewTitle] = useState('');
-  const [newContent, setNewContent] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
   const hours = time?.getHours();
   const minutes = (time && time?.getMinutes() < 10 ? '0' : '') + time?.getMinutes();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const { updatePost } = usePost();
+  const [status, setStatus] = useState(0);
   
   
   useEffect(() => {
@@ -51,8 +49,12 @@ function Post({ id, post }: Props) {
   const handleEdit = async () => {
     console.log('i want to edit ', post?._id)
     if (edit) {
-      console.log('new title', newTitle);
-      console.log('new content', newContent);
+      const status = await updatePost({
+        title,
+        content,
+        categoryId: null
+      });
+      setStatus(status);
     }
     setEdit(!edit);
   }
@@ -91,7 +93,7 @@ function Post({ id, post }: Props) {
                 inputProps={{
                   maxLength: 40,
                 }}
-                handleChange={(e: BaseSyntheticEvent) => setNewTitle(e.target.value)}
+                handleChange={(e: BaseSyntheticEvent) => setTitle(e.target.value)}
                 required
               />}
           </StyledTitleGrid>
@@ -104,7 +106,7 @@ function Post({ id, post }: Props) {
                 defaultValue={post?.content}
                 rows={8}
                 inputProps={{maxLength: 1000}}
-                handleChange={(e: BaseSyntheticEvent) => setNewContent(e.target.value)}
+                handleChange={(e: BaseSyntheticEvent) => setContent(e.target.value)}
                 required
               />}
           </Grid>
