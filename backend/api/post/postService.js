@@ -113,14 +113,17 @@ module.exports = function (app) {
 
   app.put("/api/posts/:id", authUserLoggedIn, isPostOwner, async (req, res) => {
     try {
-      const post = await postModel.findOne({ _id: req.params.id }).lean().exec();
-      const updatedPost = { ...post, ...req.body }
-      await postModel.replaceOne({ _id: req.params.id}, updatedPost)
+      const post = await postModel
+        .findOne({ _id: req.params.id })
+        .lean()
+        .exec();
+      const updatedPost = { ...post, ...req.body };
+      await postModel.replaceOne({ _id: req.params.id }, updatedPost);
       res.status(200).json(updatedPost);
     } catch (error) {
       return res.sendStatus(404);
     }
-  })
+  });
 
   app.delete("/api/posts/:id", authUserLoggedIn, async (req, res) => {
     let user = req.session.user;
