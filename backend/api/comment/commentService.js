@@ -1,4 +1,5 @@
-const commentModel = require("../../models/comment");
+const Comment = require("../../models/comment");
+const Post = require("../../models/post")
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
 const roles = require("../../models/role");
 
@@ -9,7 +10,7 @@ module.exports = function (app) {
       return;
     }
     try {
-      let newComment = new commentModel({
+      let newComment = new Comment({
         ...req.body,
         createdDate: Date.now(),
         writerId: req.session.user._id,
@@ -34,16 +35,16 @@ module.exports = function (app) {
     async (req, res) => {
       const user = { ...req.session.user };
       const id = req.params.id;
-      const comment = await commentModel.findOne({ _id: id }).exec();
+      const comment = await Comment.findOne({ _id: id }).exec();
+      const post = await Post.findOne({ _id: comment.postId }).exec();
       // check if user is admin
-      if (req.params.roles.includes(roles.ADMIN)) {
+      if (req.session.user.roles.includes(roles.ADMIN)) {
         // delete
       }
-      console.log(comment);
 
       // check if user is owner
-      if (req.params.roles.includes(roles.POSTOWNER)) {
-        const isOwner = comment.ownerId === user._id;
+      if (user.roles.includes(roles.POSTOWNER)) {
+        const isOwner = post.ownerId === user._id
       }
       
       try {
@@ -59,7 +60,7 @@ module.exports = function (app) {
     authRole([roles.USER]),
     async (req, res) => {
       const user = { ...req.session.user };
-      commentModel.findOneAndDelete(
+      Comment.findOneAndDelete(
         { _id: req.params.id, writerId: user._id },
         (err, comment) => {
           if (err) {
@@ -77,7 +78,7 @@ module.exports = function (app) {
   // post comment for testing purposes
   app.post("/api/comments/test", authUserLoggedIn, async (req, res) => {
     try {
-      let comment = new commentModel({
+      let comment = new Comment({
         content: "test blabla ",
         writeId: req.session.user._id,
         createdDate: Date.now(),
