@@ -43,9 +43,5 @@ const randomComment = async () => {return await commentModel.findOne({}).exec();
       });
     });
 
-    afterAll(async function () {
-      await testSession.post("/api/logout")
-      testSession = null;
-  });
 
   });
