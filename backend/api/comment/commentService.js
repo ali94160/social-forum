@@ -27,7 +27,32 @@ module.exports = function (app) {
     }
   });
 
-  // ta bort sin kommentar
+  app.delete(
+    "/api/comments/:id",
+    authUserLoggedIn,
+    authRole([roles.ADMIN, roles.POSTOWNER, roles.POSTMODERATOR]),
+    async (req, res) => {
+      const user = { ...req.session.user };
+      const id = req.params.id;
+      const comment = await commentModel.findOne({ _id: id }).exec();
+      // check if user is admin
+      if (req.params.roles.includes(roles.ADMIN)) {
+        // delete
+      }
+      console.log(comment);
+
+      // check if user is owner
+      if (req.params.roles.includes(roles.POSTOWNER)) {
+        const isOwner = comment.ownerId === user._id;
+      }
+      
+      try {
+        
+      } catch (error) {}
+    }
+  );
+
+  // user remove their own comment
   app.delete(
     "/api/user/comments/:id",
     authUserLoggedIn,
