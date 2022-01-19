@@ -42,12 +42,6 @@ if (process.env.NODE_ENV !== 'test') {
   });
 }
 
-// close mongoose connection if we running tests
-if (process.env.NODE_ENV === 'test') {
-  afterAll(async function () {
-    mongoose.connection.close();
-});
-}
 module.exports = app;
 
 

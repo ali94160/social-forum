@@ -1,4 +1,5 @@
 const app = require("../../../app");
+const mongoose = global.mongoose;
 const supertest = require("supertest");
 const request = supertest(app);
 const session = require("supertest-session");
@@ -42,6 +43,12 @@ const randomComment = async () => {return await commentModel.findOne({}).exec();
         expect(res.statusCode).toBe(500);
       });
     });
+
+    afterAll(async function () {
+      await testSession.post("/api/logout")
+      testSession = null;
+      mongoose.connection.close();
+  });
 
 
   });
