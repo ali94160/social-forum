@@ -4,21 +4,18 @@ import {
   StyledLeftGrid,
   StyledBottomGrid,
   StyledAvatarGrid,
-  StyledTitleGrid
 } from './StyledPost';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
-import { useEffect, useState, BaseSyntheticEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { PostItem } from '../../interfaces/Post';
 import { StyledAvatar } from '../post-card/StyledPostCard';
 import { formatModStr } from './HandleModerators';
 import CheckIcon from '@mui/icons-material/Check';
-import BasicSelect from "../basics/basic-select/BasicSelect";
-import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import { usePost } from '../../context/PostContext';
-import { useUser } from '../../context/UserContext';
 import CloseIcon from '@mui/icons-material/Close';
 import { User } from '../../interfaces/User';
+import EditForm from './EditForm';
 
 interface Props {
   post: PostItem | null;
@@ -39,7 +36,6 @@ function Post({post, me}: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const { updatePost } = usePost();
   const [status, setStatus] = useState(0);
-  // const { whoAmI, me } = useUser();
   const [isPostOwner, setIsPostOwner] = useState(false);
 
   console.log('what is post', post);
@@ -106,43 +102,16 @@ function Post({post, me}: Props) {
           container
           direction="column"
           spacing={2}
-          >    
-          <StyledTitleGrid item xs>
-            {!edit ? post?.title :
-              <BasicTextField
-                label="Title"
-                fullWidth={true}
-                defaultValue={post?.title}
-                inputProps={{
-                  maxLength: 40,
-                }}
-                handleChange={(e: BaseSyntheticEvent) => setTitle(e.target.value)}
-                required
-              />}
-          </StyledTitleGrid>
-          <Grid item xs>
-            {!edit ? post?.content :
-              <BasicTextField
-                label="Content"
-                multiline
-                fullWidth={true}
-                defaultValue={post?.content}
-                rows={8}
-                inputProps={{maxLength: 1000}}
-                handleChange={(e: BaseSyntheticEvent) => setContent(e.target.value)}
-                required
-              />}
-          </Grid>
-          {edit &&
-            <Grid item xs>
-              <BasicSelect
-                label="Category"
-                value={selectedCategory}
-                options={categories}
-                handleChange={(value: string) => setSelectedCategory(value)}
-              />
-          </Grid>
-          }
+        >
+          <EditForm
+            post={post}
+            edit={edit}
+            setTitle={setTitle}
+            setContent={setContent}
+            setSelectedCategory={setSelectedCategory}
+            categories={categories}
+            selectedCategory={selectedCategory}
+          />
         </Grid>
 
         <StyledLeftGrid item xs={2}>
@@ -166,8 +135,6 @@ function Post({post, me}: Props) {
           </StyledLeftGrid>
         </StyledBottomGrid>
 
-        
-        
       </StyledGrid> 
     </StyledPost>
   )
