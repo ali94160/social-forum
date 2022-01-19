@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { StyledDots, StyledBtn } from "./StyledEditDots";
 import { usePost } from "../../context/PostContext";
 import ConfirmModal from "../confirm-modal/ConfirmModal";
-import SearchModal from '../search-modal/SearchModal';
+import SearchModal from "../search-modal/SearchModal";
 
 interface Props {
   postId: string;
@@ -33,9 +33,14 @@ function EditDots({ postId }: Props) {
     setAnchorEl(null);
   };
 
+  const handleOpenSearchModal = () => {
+    setOpenSearchModal(true);
+    setAnchorEl(null);
+  };
+
   const handleCloseSearchModal = () => {
-    setOpenSearchModal(false)
-  }
+    setOpenSearchModal(false);
+  };
 
   const renderMenu = () => (
     <Menu
@@ -47,7 +52,7 @@ function EditDots({ postId }: Props) {
         "aria-labelledby": "basic-button",
       }}
     >
-      <MenuItem onClick={handleClose}>Handle moderators</MenuItem>
+      <MenuItem onClick={handleOpenSearchModal}>Handle moderators</MenuItem>
       <MenuItem onClick={handleClose}>Edit post</MenuItem>
       <MenuItem onClick={handleOpenConfirmModal}>Delete post</MenuItem>
     </Menu>

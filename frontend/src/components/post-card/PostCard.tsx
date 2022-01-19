@@ -13,7 +13,7 @@ import {
   StyledCommentSection,
 } from "./StyledPostCard";
 import { PostObj } from "../../interfaces/Post";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import EditDots from "../edit-dots/EditDots";
 
 function PostCard({ post, isInMyPostPage }: PostObj) {
@@ -47,7 +47,7 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
 
   const handleDetailPage = () => {
     history.push(`/posts/${post._id}`);
-  }
+  };
 
   return (
     <StyledCardWrapper onClick={handleDetailPage}>
