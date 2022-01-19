@@ -12,6 +12,9 @@ function PostDetailPage() {
   const [status, setStatus] = useState(0);
   const [post, setPost] = useState<PostItem | undefined>();
 
+  console.log(post);
+  
+
   useEffect(() => {
     handlePost();
   }, []);
@@ -35,7 +38,7 @@ function PostDetailPage() {
     <div>
       <Post id={id} post={post} />
       {post?.comments && post?.comments.length > 0
-        ? <CommentList comments={post.comments}/>
+        ? <CommentList comments={post.comments} ownerId={post.ownerId._id} moderators={post.moderatorsIds} />
         : <p>There are nothing here O_Q</p>
       }
     </div>

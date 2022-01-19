@@ -28,10 +28,18 @@ export const RightGrid = styled(Grid)`
 `;
 
 export const StyledName = styled.p`
+  font-size: 1.2rem;
   text-align: center;
   margin-top: 10%;
   width: 100%;
   height: 100%;
+`;
+
+export const StyledRole = styled.p`
+  font-size: 1rem;
+  margin: 0 auto;
+  padding: 0;
+  opacity: 0.8;
 `;
 
 export const StyledDate = styled.div`
