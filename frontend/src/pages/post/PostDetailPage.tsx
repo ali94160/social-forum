@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { usePost } from '../../context/PostContext';
 import LoadingDetailedSkeleton from '../../components/skeleton/LoadingDetailedSkeleton';
-import { PostItem } from '../../interfaces/Post';
 
 function PostDetailPage() {
   const id = useParams();

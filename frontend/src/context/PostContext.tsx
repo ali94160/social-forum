@@ -31,7 +31,6 @@ function PostContextProvider({ children }: Props) {
   };
 
   const getPost = async (data: Id) => {
-    console.log('what is id', data.id);
     const response: Response = await fetch('/api/posts/' + data.id);
     const body = await response.json();
     if (response.status === 200) {
@@ -96,7 +95,8 @@ function PostContextProvider({ children }: Props) {
     getMyPosts,
     deletePost,
     getPost,
-    updatePost
+    updatePost,
+    post
   };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;

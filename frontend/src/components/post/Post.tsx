@@ -16,7 +16,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import BasicSelect from "../basics/basic-select/BasicSelect";
 import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import { usePost } from '../../context/PostContext';
-import { PortraitTwoTone } from '@mui/icons-material';
+import { useUser } from '../../context/UserContext';
 
 interface Props {
   post: PostItem | null;
@@ -36,16 +36,39 @@ function Post({post}: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const { updatePost } = usePost();
   const [status, setStatus] = useState(0);
-  
+  const { whoAmI, me } = useUser();
+  const [isPostOwner, setIsPostOwner] = useState(false);
+
+  console.log('what is post', post);
+  console.log('what is me', me);
+
+  useEffect(() => {
+    getWhoAmI();
+  }, []);
+
+  useEffect(() => {
+    handleIsPostOwner();
+  }, [me])
   
   useEffect(() => {
     handleModeratorStr()
-  }, [post?.moderatorsIds])
+  }, [post?.moderatorsIds]);
+
+  const handleIsPostOwner = () => {
+    if (me && me._id === post?.ownerId._id) {
+      setIsPostOwner(true);
+    }
+  }
+
+  const getWhoAmI = async () => {
+    await whoAmI();
+  }
 
   const handleModeratorStr = () => {
     const str = formatModStr(post);
     setModerators(str);
   }
+
 
   const handleEdit = async () => {
     console.log('i want to edit ', post?._id)
@@ -125,9 +148,9 @@ function Post({post}: Props) {
         </Grid>
 
         <StyledLeftGrid item xs={2}>
-          {!edit ?
+          {isPostOwner ? (!edit ?
             <EditIcon onClick={handleEdit} />
-            : <CheckIcon onClick={handleEdit} />}
+            : <CheckIcon onClick={handleEdit} />) : ''}
         </StyledLeftGrid>
 
         <StyledBottomGrid
