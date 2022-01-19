@@ -30,8 +30,9 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
-  const getPost = async (data: Id) => {
-    const response: Response = await fetch('/api/posts/' + data.id);
+  const getPost = async (id: Id) => {
+    console.log('what is data', id)
+    const response: Response = await fetch('/api/posts/' + id);
     const body = await response.json();
     if (response.status === 200) {
       setPost(body);
