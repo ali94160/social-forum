@@ -27,7 +27,7 @@ export const RightGrid = styled(Grid)`
   margin: 1%;
 `;
 
-export const StyledName = styled.p`
+export const StyledName = styled.div`
   font-size: 1.2rem;
   text-align: center;
   margin-top: 10%;
@@ -35,10 +35,9 @@ export const StyledName = styled.p`
   height: 100%;
 `;
 
-export const StyledRole = styled.p`
+export const StyledRole = styled.div`
   font-size: 1rem;
   margin: 0 auto;
-  padding: 0;
   opacity: 0.8;
 `;
 
