@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 export const StyledPost = styled(Card)`
 && {
@@ -37,6 +38,10 @@ export const StyledAvatarGrid = styled(Grid)`
 export const StyledTitleGrid = styled(Grid)`
   font-weight: 800;
   font-size: larger;
+`;
+
+export const StyledOutlinedInput = styled(OutlinedInput)`
+  width: 400px;
 `;
 
 
