@@ -14,15 +14,13 @@ import { trimString } from "../../utils/helper-methods";
 
 interface Props {
   comment: CommentItem;
-  isMyPost?: boolean;
 }
 
-function CommentCard({ comment, isMyPost }: Props) {
-  console.log(comment.createdDate);
-
+function CommentCard({ comment }: Props) {
   const created = new Date(comment.createdDate);
   const date = created.toLocaleDateString();
   const time = created.toLocaleTimeString().substring(0, 5);
+
   return (
     <StyledCard>
       <Grid container>
@@ -34,9 +32,12 @@ function CommentCard({ comment, isMyPost }: Props) {
               : "Null user"}
           </StyledName>
         </LeftGrid>
-        <RightGrid item xs={9} sm={10} lg={11}>
+        <RightGrid item xs={8} sm={9} lg={10}>
           <StyledComment>{comment.content}</StyledComment>
         </RightGrid>
+        <Grid item xs={1}>
+            {/* space for edit dots */}
+        </Grid>
         <Grid container>
           <StyledDate>
             {date} {time}
