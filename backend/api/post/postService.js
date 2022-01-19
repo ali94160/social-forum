@@ -149,7 +149,7 @@ module.exports = function (app) {
       let post = await postModel.findOne(filter).lean();
       await commentModel.deleteMany({ postId: post._id });
       await postModel.deleteOne(filter);
-
+      handlePostOwnerRole(req)
       res.sendStatus(200);
       return;
     } catch (error) {
