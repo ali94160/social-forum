@@ -6,6 +6,8 @@ import LoadingDetailedSkeleton from "../../components/skeleton/LoadingDetailedSk
 import { PostItem } from "../../interfaces/Post";
 import CommentSection from "../../components/commentSection/CommentSection";
 import { useAuth } from "../../context/AuthContext";
+import CommentList from '../../components/comment-list/CommentList';
+
 
 function PostDetailPage() {
   // typescript doesnt recognize string nor undefined/null/empty object
@@ -38,6 +40,10 @@ function PostDetailPage() {
     <div>
       <Post id={id} post={post} />
       {user && <CommentSection username={user.username} postId={id} />}
+      {post?.comments && post?.comments.length > 0
+        ? <CommentList comments={post.comments} ownerId={post.ownerId._id} moderators={post.moderatorsIds} />
+        : <p>There are nothing here O_Q</p>
+      }
     </div>
   );
 }

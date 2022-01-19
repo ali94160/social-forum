@@ -43,7 +43,11 @@ module.exports = function (app) {
         .populate("ownerId", ["username", "roles"])
         .exec();
       
-      const comments = await commentModel.find({ postId: req.params.id });
+      const comments = await commentModel
+        .find({ postId: req.params.id }, ["_id", "content", "createdDate"])
+        .populate("writerId", ["_id", "username"])
+        .exec();
+      
       const commentLength = comments.length;
 
       post = { ...post, comments, commentLength };
@@ -109,15 +113,18 @@ module.exports = function (app) {
 
   app.put("/api/posts/:id", authUserLoggedIn, isPostOwner, async (req, res) => {
     try {
-      const post = await postModel.findOne({ _id: req.params.id }).lean().exec();
+      const post = await postModel
+        .findOne({ _id: req.params.id })
+        .lean()
+        .exec();
       delete req.body.moderatorsIds
-      const updatedPost = { ...post, ...req.body }
-      await postModel.replaceOne({ _id: req.params.id}, updatedPost)
+      const updatedPost = { ...post, ...req.body };
+      await postModel.replaceOne({ _id: req.params.id }, updatedPost);
       res.status(200).json(updatedPost);
     } catch (error) {
       return res.sendStatus(404);
     }
-  })
+  });
 
   app.put("/api/posts/:id/moderators", authUserLoggedIn, authRole([roles.POSTOWNER, roles.POSTMODERATOR]), handleModerator, async (req, res) => {
     try {

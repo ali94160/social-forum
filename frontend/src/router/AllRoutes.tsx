@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import PostDetailPage from "../pages/post/PostDetailPage";
+import PostDetailPage from "../pages/post/PostDetail";
 import CreatePost from "../pages/create-post/CreatePost";
 import Home from "../pages/home/Home";
-import MyPost from "../pages/myPosts/MyPosts";
+import MyPost from "../pages/my-posts/MyPosts";
 
 interface Props {
   children: JSX.Element[];

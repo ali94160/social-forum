@@ -26,7 +26,7 @@ describe("Test to add a comment", () => {
     expect(res.statusCode).toBe(200);
     expect(comment._id).toBeDefined();
     expect(comment.postId + "").toMatch(newComment.postId + "");
-    expect(comment.writeId + "").toMatch(user.body._id + "");
+    expect(comment.writerId + "").toMatch(user.body._id + "");
     expect(comment.comment).toEqual(newComment.comment);
   });
 });
