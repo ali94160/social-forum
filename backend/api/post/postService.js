@@ -1,6 +1,6 @@
 const postModel = require("../../models/post");
 const commentModel = require("../../models/comment");
-const { authUserLoggedIn } = require("../../middlewares/acl");
+const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
 const { isPostOwner } = require("../../middlewares/postOwner");
 const roles = require("../../models/role");
 
@@ -138,6 +138,14 @@ module.exports = function (app) {
     } catch (error) {
       res.sendStatus(403);
       return;
+    }
+  });
+
+  app.get('/api/posts/owner/:id', authUserLoggedIn, authRole([roles.POSTOWNER]), isPostOwner, async (req, res) => {
+    try {
+      return res.sendStatus(200);
+    } catch (err) {
+      return res.sendStatus(403);
     }
   });
 };
