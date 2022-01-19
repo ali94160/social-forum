@@ -39,16 +39,16 @@ const randomComment = async () => {return await commentModel.findOne({}).exec();
 
     describe("User creates a comment and then removes it", () => {
       test("/api/user/comments/:id", async () => {
-        const res = await testSession.delete("/api/user/comments/" + Math.random());
-        expect(res.statusCode).toBe(500);
+        const comment = await testSession.post("/api/comments").send(newComment);
+        const res = await testSession.delete("/api/user/comments/" + comment.body._id);
+        expect(res.statusCode).toBe(200);
       });
     });
 
+    
     afterAll(async function () {
       await testSession.post("/api/logout")
       testSession = null;
       mongoose.connection.close();
   });
-
-
   });

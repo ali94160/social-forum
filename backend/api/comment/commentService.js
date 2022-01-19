@@ -19,7 +19,7 @@ module.exports = function (app) {
         res.sendStatus(400);
         return;
       }
-      res.sendStatus(200);
+      res.status(200).json(result);
       return;
     } catch (error) {
       res.sendStatus(400);
