@@ -4,8 +4,7 @@ import {
   StyledLeftGrid,
   StyledBottomGrid,
   StyledAvatarGrid,
-  StyledTitleGrid,
-  StyledOutlinedInput
+  StyledTitleGrid
 } from './StyledPost';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
