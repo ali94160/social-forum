@@ -4,6 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { StyledDots, StyledBtn } from "./StyledEditDots";
 import { usePost } from "../../context/PostContext";
 import ConfirmModal from "../confirm-modal/ConfirmModal";
+import SearchModal from '../search-modal/SearchModal';
 
 interface Props {
   postId: string;
@@ -13,6 +14,7 @@ function EditDots({ postId }: Props) {
   const { deletePost } = usePost();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModal, setOpenModal] = React.useState(false);
+  const [openSearchModal, setOpenSearchModal] = React.useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,6 +32,10 @@ function EditDots({ postId }: Props) {
     setOpenModal(true);
     setAnchorEl(null);
   };
+
+  const handleCloseSearchModal = () => {
+    setOpenSearchModal(false)
+  }
 
   const renderMenu = () => (
     <Menu
@@ -63,6 +69,10 @@ function EditDots({ postId }: Props) {
         openModal={openModal}
         setOpenModal={setOpenModal}
         handleDeletePost={handleDeletePost}
+      />
+      <SearchModal
+        isOpen={openSearchModal}
+        handleClose={handleCloseSearchModal}
       />
     </>
   );

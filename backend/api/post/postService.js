@@ -42,12 +42,12 @@ module.exports = function (app) {
         .populate("moderatorsIds", ["username"])
         .populate("ownerId", ["username", "roles"])
         .exec();
-      
+
       const comments = await commentModel
         .find({ postId: req.params.id }, ["_id", "content", "createdDate"])
         .populate("writerId", ["_id", "username"])
         .exec();
-      
+
       const commentLength = comments.length;
 
       post = { ...post, comments, commentLength };
@@ -99,7 +99,6 @@ module.exports = function (app) {
         let resPost = { ...post, commentLength };
         myPosts.push(resPost);
       }
-
       if (!myPosts) {
         res.sendStatus(404);
         return;

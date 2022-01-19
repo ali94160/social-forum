@@ -45,6 +45,7 @@ function PostContextProvider({ children }: Props) {
   const getMyPosts = async () => {
     const response: Response = await fetch("/api/user/posts");
     const result = await response.json();
+    console.log(result)
     setMyPosts(result);
     return response.status === 200;
   };
