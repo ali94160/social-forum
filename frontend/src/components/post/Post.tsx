@@ -38,9 +38,6 @@ function Post({post, me}: Props) {
   const [status, setStatus] = useState(0);
   const [isPostOwner, setIsPostOwner] = useState(false);
 
-  console.log('what is post', post);
-  console.log('what is me', me);
-
   useEffect(() => {
     handleIsPostOwner();
   }, [me])
