@@ -39,7 +39,7 @@ async function handleModerator(req, res, next) {
     
     next()
   } catch (error) {
-    return res.sendStatus(400);
+    return res.sendStatus(404);
   }
 }
 
