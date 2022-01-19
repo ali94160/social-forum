@@ -28,6 +28,9 @@ code {
 div.App {
   min-height: 100vh;
   background-color: var(--dark-teal);
-  display: grid;
-  grid-template-rows: 1fr 10fr;
+}
+
+main {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 }

@@ -28,9 +28,18 @@ function CommentContextProvider({ children }: Props) {
     return res.status === 200;
   }
 
+  const getComments = async (postId: string) => {
+    const res: Response = await fetch("/api/post/comments/" + postId)
+    if (res.status === 200) {
+      return await res.json();
+    }
+    return [];
+  }
+
 
   const values = {
     addComment,
+    getComments,
   };
 
   return (
