@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { PostItem } from "../interfaces/Post";
+import { PostItem, UpdatePost } from "../interfaces/Post";
 
 const PostContext = createContext<any>(null);
 
@@ -10,7 +10,7 @@ interface Props {
 }
 
 interface Id {
-  id: String;
+  id: string;
 }
 
 function PostContextProvider({ children }: Props) {
@@ -29,9 +29,11 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
-  const getPost = async ({id}: Id) => {
-    const response: Response = await fetch('/api/posts/' + id);
+  const getPost = async (data: Id) => {
+    console.log('what is id', data.id);
+    const response: Response = await fetch('/api/posts/' + data.id);
     const body = await response.json();
+    console.log('what is body', body)
     return { status: response.status, body }
   }
     
@@ -63,6 +65,28 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
+  const updatePost = async (post: UpdatePost) => {
+    const updatePost = {
+      content: post.content,
+      title: post.title,
+      categoryId: post.categoryId
+    }
+    const response: Response = await fetch(`/api/posts/${post._id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updatePost)
+    });
+    // const body = await response.json();
+    // return { status: response.status, body }
+    if (response.status === 200) {
+      getPost({id: post._id});
+    } else {
+      return response.status;
+    }
+  }
+
   const values = {
     createPost,
     getPosts,
@@ -70,7 +94,8 @@ function PostContextProvider({ children }: Props) {
     myPosts,
     getMyPosts,
     deletePost,
-    getPost
+    getPost,
+    updatePost
   };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;
