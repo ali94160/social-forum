@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 
 export const StyledPost = styled(Card)`
 && {
@@ -38,5 +39,6 @@ export const StyledTitleGrid = styled(Grid)`
   font-weight: 800;
   font-size: larger;
 `;
+
 
 

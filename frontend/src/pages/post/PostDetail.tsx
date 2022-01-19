@@ -13,21 +13,20 @@ function PostDetailPage() {
   // typescript doesnt recognize string nor undefined/null/empty object
   const { id } = useParams<string | any>();
   const { user } = useAuth();
-  const { getPost } = usePost();
+  const { getPost, post } = usePost();
   const [status, setStatus] = useState(0);
-  const [post, setPost] = useState<PostItem | undefined>();
 
   useEffect(() => {
     handlePost();
   }, []);
 
+  useEffect(() => {
+  }, [post])
+
   const handlePost = async () => {
     const res = await getPost(id);
     setStatus(res.status);
-    if (res.status === 200) {
-      setPost(res.body);
-    }
-  };
+  }
 
   if (status === 0 || status === 401) {
     return <LoadingDetailedSkeleton />;
@@ -38,7 +37,7 @@ function PostDetailPage() {
 
   return (
     <div>
-      <Post id={id} post={post} />
+      <Post post={post} me={user} />
       {user && <CommentSection username={user.username} postId={id} />}
       {post?.comments && post?.comments.length > 0
         ? <CommentList comments={post.comments} ownerId={post.ownerId._id} moderators={post.moderatorsIds} />
