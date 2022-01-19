@@ -1,10 +1,19 @@
-import { StyledPost, StyledGrid, StyledLeftGrid, StyledBottomGrid, StyledAvatarGrid, StyledTitleGrid } from './StyledPost';
+import {
+  StyledPost,
+  StyledGrid,
+  StyledLeftGrid,
+  StyledBottomGrid,
+  StyledAvatarGrid,
+  StyledTitleGrid,
+  StyledOutlinedInput
+} from './StyledPost';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
-import { User } from '../../interfaces/User';
 import { PostItem } from '../../interfaces/Post';
 import { StyledAvatar } from '../post-card/StyledPostCard';
+import { formatModStr } from './HandleModerators';
+import CheckIcon from '@mui/icons-material/Check';
 
 interface Props {
   id: any;
@@ -18,35 +27,27 @@ function Post({ id, post }: Props) {
   const date = post?.createdDate?.substr(0, 10);
   const time = post && new Date(post.createdDate);
   const [moderators, setModerators] = useState('');
+  const [edit, setEdit] = useState(false);
+  const [newTitle, setNewTitle] = useState('');
+  const [newContent, setNewContent] = useState('');
+  
   
   useEffect(() => {
-    handleModerators()
+    handleModeratorStr()
   }, [post?.moderatorsIds])
 
-  const handleModerators = () => {
-    let str = '';
-    if (!post?.moderatorsIds?.length) {
-      str += 'none';
-    } else {
-      post?.moderatorsIds?.map((m: User, i: number) => {
-        if (i === 0) {
-          str += m.username;
-          return;
-        }
-        if (post?.moderatorsIds.length > 1 && i === post?.moderatorsIds.length - 1) {
-          str += ' and ';
-          str += m.username;
-        } else if(post?.moderatorsIds.length > 2) {
-          str += ', ';
-          str += m.username;
-        }
-      });
-    }
+  const handleModeratorStr = () => {
+    const str = formatModStr(post);
     setModerators(str);
   }
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     console.log('i want to edit ', post?._id)
+    if (edit) {
+      console.log('new title', newTitle);
+      console.log('new content', newContent);
+    }
+    setEdit(!edit);
   }
 
   return (
@@ -75,14 +76,31 @@ function Post({ id, post }: Props) {
           spacing={2}
           >    
           <StyledTitleGrid item xs>
-            {post?.title}
+            {!edit ? post?.title :
+              <StyledOutlinedInput
+                placeholder={post?.title}
+                inputProps={{
+                  maxLength: 40,
+                }}
+                onChange={(e) => setNewTitle(e.target.value)}
+              />}
           </StyledTitleGrid>
           <Grid item xs>
-            {post?.content}
+            {!edit ? post?.content :
+              <StyledOutlinedInput
+                placeholder={post?.content}
+                multiline
+                rows={8}
+                inputProps={{
+                  maxLength: 1000,
+                }}
+                onChange={(e) => setNewContent(e.target.value)}
+              />}
           </Grid>
         </Grid>
+
         <StyledLeftGrid item xs={2}>
-          <EditIcon onClick={handleEdit} />
+          {!edit ? <EditIcon onClick={handleEdit} /> : <CheckIcon onClick={handleEdit} />}
         </StyledLeftGrid>
 
         <StyledBottomGrid
