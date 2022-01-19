@@ -1,7 +1,7 @@
 import { User } from '../../interfaces/User';
 import { PostItem } from '../../interfaces/Post';
 
-export const formatModStr = (post: PostItem | undefined) => {
+export const formatModStr = (post: PostItem | null) => {
   let str = '';
     if (!post?.moderatorsIds?.length) {
       str += 'none';

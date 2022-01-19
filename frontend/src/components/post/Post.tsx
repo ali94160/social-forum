@@ -16,9 +16,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import BasicSelect from "../basics/basic-select/BasicSelect";
 import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import { usePost } from '../../context/PostContext';
+import { PortraitTwoTone } from '@mui/icons-material';
 
 interface Props {
-  post: PostItem | undefined;
+  post: PostItem | null;
 }
 // shall be removed
 const categories = ["Meme", "Trollololo", "Cooking", "Economic"];
@@ -50,9 +51,10 @@ function Post({post}: Props) {
     console.log('i want to edit ', post?._id)
     if (edit) {
       const status = await updatePost({
-        title,
-        content,
-        categoryId: null
+        _id: post?._id,
+        title: title? title : post?.title,
+        content: content? content : post?.content,
+        categoryId: null // ändra när category är på plats
       });
       setStatus(status);
     }

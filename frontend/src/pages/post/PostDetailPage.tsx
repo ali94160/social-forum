@@ -7,20 +7,20 @@ import { PostItem } from '../../interfaces/Post';
 
 function PostDetailPage() {
   const id = useParams();
-  const { getPost } = usePost();
+  const { getPost, post } = usePost();
   const [status, setStatus] = useState(0);
-  const [post, setPost] = useState<PostItem | undefined>();
 
   useEffect(() => {
     handlePost();
   }, []);
 
+  useEffect(() => {
+
+  }, [post])
+
   const handlePost = async () => {
     const res = await getPost(id);
     setStatus(res.status);
-    if (res.status === 200) {
-      setPost(res.body);
-    }
   }
 
   if (status === 0 || status === 401) {

@@ -16,6 +16,7 @@ interface Id {
 function PostContextProvider({ children }: Props) {
   const [posts, setPosts] = useState<null | PostItem[]>(null);
   const [myPosts, setMyPosts] = useState<null | PostItem[]>(null);
+  const [post, setPost] = useState<null | PostItem>(null);
 
   const createPost = async (newPost: PostItem) => {
     const response: Response = await fetch("/api/user/posts", {
@@ -33,8 +34,10 @@ function PostContextProvider({ children }: Props) {
     console.log('what is id', data.id);
     const response: Response = await fetch('/api/posts/' + data.id);
     const body = await response.json();
-    console.log('what is body', body)
-    return { status: response.status, body }
+    if (response.status === 200) {
+      setPost(body);
+    }
+    return response.status;
   }
     
   const getPosts = async (ascDate: boolean, ascTitle: boolean) => {
@@ -78,8 +81,6 @@ function PostContextProvider({ children }: Props) {
       },
       body: JSON.stringify(updatePost)
     });
-    // const body = await response.json();
-    // return { status: response.status, body }
     if (response.status === 200) {
       getPost({id: post._id});
     } else {
