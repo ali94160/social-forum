@@ -49,16 +49,17 @@ async function handleModerator(req, res, next) {
 
 async function handlePostOwnerRole(req) {
   try {
-    const posts = await postModel.find({ ownerId: req.session.user._id }).count().exec();
+    const user = req.session.user;
+    const posts = await postModel.find({ ownerId: user._id }).count().exec();
 
     if (posts > 0) {
-      await userModel.updateOne({ _id: req.session.user._id }, { $addToSet: { roles: role.POSTOWNER } }).lean().exec();
+      await userModel.updateOne({ _id: user._id }, { $addToSet: { roles: role.POSTOWNER } }).lean().exec();
       return;
     }
-    
-    await userModel.updateOne({ _id: req.session.user._id }, { $pull: { roles: role.POSTOWNER } }).lean().exec();
+
+    await userModel.updateOne({ _id: user._id }, { $pull: { roles: role.POSTOWNER } }).lean().exec();
   } catch (error) {
-    console.log('something went wrong')
+    console.error(error);
   }
 }
 
