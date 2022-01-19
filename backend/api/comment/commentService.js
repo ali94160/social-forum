@@ -36,27 +36,24 @@ module.exports = function (app) {
       const user = { ...req.session.user };
       try {
         const comment = await Comment.findOne({ _id: req.params.id }).exec();
-        const post = await Post.findOne({ _id: comment.postId }).exec();
+
+        let isAdmin = user.roles.includes(roles.ADMIN);
+        let isOwner;
+        let isModerator;
         
-        let hasAccess = user.roles.includes(roles.ADMIN);
-        
-        if (!hasAccess && user.roles.includes(roles.POSTOWNER)) {
-          hasAccess = post.ownerId.toString() === user._id;
+        if (!isAdmin) {
+          const post = await Post.findOne({ _id: comment.postId }).exec();
+          isOwner = post.ownerId.toString() === user._id;
+          if (!isOwner) { 
+            isModerator = post.moderatorsIds.includes(user._id);
+          }
         }
 
-        if (
-          !hasAccess &&
-          user.roles.includes(roles.POSTMODERATOR) &&
-          post.moderatorIds.length > 0
-        ) {
-          hasAccess = post.moderatorsIds.includes(user._id);
-        }
-
-        if (hasAccess) {
+        if (isAdmin || isOwner || isModerator) {
           await Comment.findOneAndDelete({ _id: req.params.id });
           res.sendStatus(200);
         } else {
-          res.sendStatus(400);
+          res.sendStatus(401);
         }
         return;
       } catch (error) {
