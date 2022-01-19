@@ -23,10 +23,13 @@ async function handleModerator(req, res, next) {
     }
 
     if (post.ownerId._id == req.session.user._id) {
+      // using Set to remove duplicated from array, and converting it back to an array
+      const moderatorsArray = Array.from(new Set(req.body.moderatorsIds));
+
       await postModel.updateOne({ _id: req.params.id },
         {
           $set: {
-            moderatorsIds: req.body.moderatorsIds
+            moderatorsIds: moderatorsArray
           }
         })
       return res.sendStatus(200);
