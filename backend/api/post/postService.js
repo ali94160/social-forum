@@ -11,8 +11,10 @@ module.exports = function (app) {
       let data = await postModel
         .find({})
         .sort(req.query)
+        .collation({ locale: "en" })
         .lean()
-        .populate("ownerId", "username");
+        .populate("ownerId", "username")
+        .exec();
       for (let post of data) {
         let commentLength = await commentModel
           .find({ postId: post._id })
