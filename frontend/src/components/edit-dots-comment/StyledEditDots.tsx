@@ -4,6 +4,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 export const StyledDots = styled(MoreVertIcon)`
   align-self: start;
   justify-self: end;
+  color: white;
 `;
 
 export const StyledBtn = styled.button`

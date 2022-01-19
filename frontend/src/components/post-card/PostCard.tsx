@@ -14,7 +14,7 @@ import {
 } from "./StyledPostCard";
 import { PostObj } from "../../interfaces/Post";
 import { useHistory } from 'react-router-dom';
-import EditDots from "../edit-dots-post/EditDotsPost";
+import EditDotsPost from "../edit-dots-post/EditDotsPost";
 
 function PostCard({ post, isInMyPostPage }: PostObj) {
   const history = useHistory();
@@ -37,7 +37,7 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
 
   const renderComment = () => (
     <StyledCommentWrapper>
-      {isInMyPostPage && <EditDots postId={post._id} />}
+      {isInMyPostPage && <EditDotsPost postId={post._id} />}
       <StyledCommentSection>
         <StyledCommentIcon />
         <StyledCommentLength>{post.commentLength}</StyledCommentLength>

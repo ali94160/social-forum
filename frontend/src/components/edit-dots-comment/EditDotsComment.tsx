@@ -2,15 +2,14 @@ import React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { StyledDots, StyledBtn } from "./StyledEditDots";
-import { usePost } from "../../context/PostContext";
+import { useComment } from "../../context/CommentContext";
 import ConfirmModal from "../confirm-modal/ConfirmModal";
 
 interface Props {
-  postId: string;
+  commentId: string;
 }
 
-function EditDots({ postId }: Props) {
-  const { deletePost } = usePost();
+function EditDotsComment({ commentId }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModal, setOpenModal] = React.useState(false);
   const open = Boolean(anchorEl);
@@ -21,8 +20,7 @@ function EditDots({ postId }: Props) {
     setAnchorEl(null);
   };
 
-  const handleDeletePost = async () => {
-    await deletePost(postId);
+  const handleDeleteComment = async () => {
     setOpenModal(false);
   };
 
@@ -41,9 +39,9 @@ function EditDots({ postId }: Props) {
         "aria-labelledby": "basic-button",
       }}
     >
-      <MenuItem onClick={handleClose}>Handle moderators</MenuItem>
-      <MenuItem onClick={handleClose}>Edit post</MenuItem>
-      <MenuItem onClick={handleOpenConfirmModal}>Delete post</MenuItem>
+      <MenuItem onClick={() => {console.log ('wow ban'); handleClose(); }}>Ban user</MenuItem>
+      <MenuItem onClick={() => {console.log ('wow delete'); handleClose(); }}>Delete comment</MenuItem>
+      {/* <MenuItem onClick={handleOpenConfirmModal}>Delete post</MenuItem> */}
     </Menu>
   );
 
@@ -59,13 +57,13 @@ function EditDots({ postId }: Props) {
         <StyledDots />
       </StyledBtn>
       {renderMenu()}
-      <ConfirmModal
+      {/* <ConfirmModal
         openModal={openModal}
         setOpenModal={setOpenModal}
-        handleDeletePost={handleDeletePost}
-      />
+        handleDeleteComment={handleDeleteComment}
+      /> */}
     </>
   );
 }
 
-export default EditDots;
+export default EditDotsComment;
