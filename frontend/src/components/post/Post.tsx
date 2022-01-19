@@ -30,6 +30,8 @@ function Post({ id, post }: Props) {
   const [edit, setEdit] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
+  const hours = time?.getHours();
+  const minutes = (time?.getMinutes() < 10 ? '0' : '') + time?.getMinutes();
   
   
   useEffect(() => {
@@ -100,7 +102,9 @@ function Post({ id, post }: Props) {
         </Grid>
 
         <StyledLeftGrid item xs={2}>
-          {!edit ? <EditIcon onClick={handleEdit} /> : <CheckIcon onClick={handleEdit} />}
+          {!edit ?
+            <EditIcon onClick={handleEdit} />
+            : <CheckIcon onClick={handleEdit} />}
         </StyledLeftGrid>
 
         <StyledBottomGrid
@@ -113,7 +117,7 @@ function Post({ id, post }: Props) {
             Post moderators: {moderators}
           </Grid>
           <StyledLeftGrid item xs={4}>
-            {date} {time?.getHours()}:{time?.getMinutes()}
+            {date} {hours}:{minutes}
           </StyledLeftGrid>
         </StyledBottomGrid>
         
