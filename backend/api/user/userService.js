@@ -55,16 +55,20 @@ module.exports = user = (app) => {
     }
   );
 
-  app.get("/api/user/:username", authUserLoggedIn, async (req, res) => {
-    const username = req.params.username;
-    try {
-      const userExists = await userModel
-        .findOne({ username: username })
-        .select("username");
+  app.get(
+    "/api/users/username/:username",
+    authUserLoggedIn,
+    async (req, res) => {
+      const username = req.params.username;
+      try {
+        const userExists = await userModel
+          .findOne({ username: username })
+          .select("username");
 
-      res.status(200).json(userExists);
-    } catch (error) {
-      res.sendStatus(400);
+        res.status(200).json(userExists);
+      } catch (error) {
+        res.sendStatus(400);
+      }
     }
-  });
+  );
 };
