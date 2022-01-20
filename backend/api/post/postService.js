@@ -150,6 +150,7 @@ module.exports = function (app) {
       await commentModel.deleteMany({ postId: post._id });
       await postModel.deleteOne(filter);
       handleRoles(req.session.user._id, roles.POSTOWNER, true);
+      post.moderatorsIds.map(id => handleRoles(id, roles.POSTMODERATOR, false));
       res.sendStatus(200);
       return;
     } catch (error) {
