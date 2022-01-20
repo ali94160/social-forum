@@ -3,7 +3,6 @@ const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
 const roles = require("../../models/role");
 
 module.exports = function (app) {
-
   app.post("/api/comments", authUserLoggedIn, async (req, res) => {
     if (!req.body) {
       res.sendStatus(403);
@@ -30,7 +29,10 @@ module.exports = function (app) {
 
   app.get("/api/post/comments/:postId", async (req, res) => {
     try {
-      let comments = await Comment.find({postId: req.params.postId})
+      let comments = await Comment.find({ postId: req.params.postId })
+        .populate("writerId", ["username"])
+        .lean()
+        .exec();
       if (comments.length > 0) {
         res.status(200).json(comments);
         return;
