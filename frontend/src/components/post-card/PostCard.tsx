@@ -18,7 +18,6 @@ import EditDots from "../edit-dots/EditDots";
 
 function PostCard({ post, isInMyPostPage }: PostObj) {
   const history = useHistory();
-
   const renderAvatar = () => (
     <StyledAvatarWrapper>
       <StyledAvatar>
@@ -37,7 +36,9 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
 
   const renderComment = () => (
     <StyledCommentWrapper>
-      {isInMyPostPage && <EditDots postId={post._id} />}
+      {isInMyPostPage && (
+        <EditDots postId={post._id} moderators={post.moderatorsIds} />
+      )}
       <StyledCommentSection>
         <StyledCommentIcon />
         <StyledCommentLength>{post.commentLength}</StyledCommentLength>

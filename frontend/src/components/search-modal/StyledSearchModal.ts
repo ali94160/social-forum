@@ -25,3 +25,13 @@ export const StyledUsername = styled.p`
   font-size: 1rem;
   margin: 0;
 `;
+
+export const StyledModeratorsWrapper = styled.div`
+
+`
+
+export const StyledModeratorsTitle = styled.p`
+  font-size: 1.3rem;
+  color: grey;
+  margin: 0.5rem 0;
+`;

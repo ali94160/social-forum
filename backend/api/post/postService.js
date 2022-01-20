@@ -90,6 +90,7 @@ module.exports = function (app) {
         .find({ ownerId: userId })
         .lean()
         .populate("ownerId", "username")
+        .populate("moderatorsIds", ["username"])
         .exec();
 
       for (let post of posts) {

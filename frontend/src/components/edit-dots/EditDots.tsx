@@ -5,12 +5,14 @@ import { StyledDots, StyledBtn } from "./StyledEditDots";
 import { usePost } from "../../context/PostContext";
 import ConfirmModal from "../confirm-modal/ConfirmModal";
 import SearchModal from "../search-modal/SearchModal";
+import { User } from "../../interfaces/User";
 
 interface Props {
   postId: string;
+  moderators: [User]
 }
 
-function EditDots({ postId }: Props) {
+function EditDots({ postId, moderators }: Props) {
   const { deletePost } = usePost();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModal, setOpenModal] = React.useState(false);
@@ -78,6 +80,7 @@ function EditDots({ postId }: Props) {
       <SearchModal
         isOpen={openSearchModal}
         handleClose={handleCloseSearchModal}
+        moderators={moderators}
       />
     </>
   );
