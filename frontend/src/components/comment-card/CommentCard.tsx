@@ -28,7 +28,7 @@ function CommentCard({ comment, ownerId, moderators }: Props) {
   const time = created.toLocaleTimeString().substring(0, 5);
   const { user } = useAuth();
   const isCommentOwner = comment?.writerId?._id === user?._id;
-  const isOwner = comment?.writerId?._id === ownerId; // post owner id
+  const isOwner = comment?.writerId?._id === ownerId; // ownerId = post owner id
   let isModerator = false;
   if (!isOwner) {
     isModerator = moderators.some(moderator => moderator._id === comment?.writerId?._id);
