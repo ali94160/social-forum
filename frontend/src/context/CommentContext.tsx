@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { CommentItem } from "../interfaces/Comment";
 
 const CommentContext = createContext<any>(null);
 
@@ -15,6 +16,7 @@ interface Comment {
 
 
 function CommentContextProvider({ children }: Props) {
+  const [comments, setComments] = useState<CommentItem[]>([]);
 
   const addComment = async (comment: Comment) => {
     const res: Response = await fetch("/api/comments", {
@@ -29,17 +31,20 @@ function CommentContextProvider({ children }: Props) {
   }
 
   const getComments = async (postId: string) => {
-    const res: Response = await fetch("/api/post/comments/" + postId)
-    if (res.status === 200) {
-      return await res.json();
+    const response: Response = await fetch("/api/post/comments/" + postId);
+    if (response.status === 200) {
+      const body = await response.json();
+      setComments(body);
+      return response.status;
     }
-    return [];
+    return response.status;
   }
 
 
   const values = {
     addComment,
     getComments,
+    comments
   };
 
   return (

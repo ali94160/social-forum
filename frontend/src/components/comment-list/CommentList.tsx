@@ -9,13 +9,11 @@ interface Props {
   moderators: User[];
 }
 
-
-
 function CommentList({ comments, ownerId, moderators }: Props) {
   return (
     <div>
       {comments.map((comment) => (
-        <CommentCard key={comment._id} comment={comment} ownerId={ownerId} moderators={moderators}/>
+        <CommentCard key={comment._id} comment={comment} ownerId={ownerId} moderators={moderators} />
       ))}
     </div>
   );

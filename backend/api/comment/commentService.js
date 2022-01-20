@@ -1,15 +1,16 @@
-const commentModel = require("../../models/comment");
+const Comment = require("../../models/comment");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
 const roles = require("../../models/role");
 
 module.exports = function (app) {
+
   app.post("/api/comments", authUserLoggedIn, async (req, res) => {
     if (!req.body) {
       res.sendStatus(403);
       return;
     }
     try {
-      let newComment = new commentModel({
+      let newComment = new Comment({
         ...req.body,
         createdDate: Date.now(),
         writerId: req.session.user._id,
@@ -27,6 +28,21 @@ module.exports = function (app) {
     }
   });
 
+  app.get("/api/post/comments/:postId", async (req, res) => {
+    try {
+      let comments = await Comment.find({postId: req.params.postId})
+      if (comments.length > 0) {
+        res.status(200).json(comments);
+        return;
+      }
+      res.sendStatus(204);
+      return;
+    } catch (error) {
+      res.sendStatus(400);
+      return;
+    }
+  });
+
   // ta bort sin kommentar
   app.delete(
     "/api/user/comments/:id",
@@ -34,7 +50,7 @@ module.exports = function (app) {
     authRole([roles.USER]),
     async (req, res) => {
       const user = { ...req.session.user };
-      commentModel.findOneAndDelete(
+      Comment.findOneAndDelete(
         { _id: req.params.id, writerId: user._id },
         (err, comment) => {
           if (err) {
@@ -52,7 +68,7 @@ module.exports = function (app) {
   // post comment for testing purposes
   app.post("/api/comments/test", authUserLoggedIn, async (req, res) => {
     try {
-      let comment = new commentModel({
+      let comment = new Comment({
         content: "test blabla ",
         writeId: req.session.user._id,
         createdDate: Date.now(),
