@@ -5,8 +5,10 @@ import {
   StyledFormWrapper,
   StyledButton,
   StyledUsername,
+  StyledSearchResult,
 } from "./StyledSearchModal";
 import { useUser } from "../../context/UserContext";
+import BasicChip from "../basics/basic-chip/BasicChip";
 
 interface Props {
   isOpen: boolean;
@@ -30,6 +32,22 @@ function SearchModal({ isOpen, handleClose }: Props) {
     }
   };
 
+  const handleAddModerator = () => {
+    console.log("works idiot");
+  };
+
+  const renderSearchResult = () => (
+    <>
+      <StyledSearchResult>Search result</StyledSearchResult>
+      {searchResult && (
+        <BasicChip
+          username={searchResult?.username}
+          handleClick={handleAddModerator}
+        />
+      )}
+    </>
+  );
+
   return (
     <>
       <BasicModal isOpen={isOpen} handleClose={handleClose}>
@@ -42,8 +60,10 @@ function SearchModal({ isOpen, handleClose }: Props) {
             />
             <StyledButton type="submit">Search</StyledButton>
           </StyledFormWrapper>
-          {searchResult && (
-            <StyledUsername>{searchResult.username}</StyledUsername>
+          {searchResult ? (
+            renderSearchResult()
+          ) : (
+            <StyledSearchResult>No user found</StyledSearchResult>
           )}
         </>
       </BasicModal>
