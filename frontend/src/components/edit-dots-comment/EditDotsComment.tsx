@@ -6,9 +6,10 @@ import { useComment } from "../../context/CommentContext";
 
 interface Props {
   commentId: string;
+  isCommentOwner: boolean;
 }
 
-function EditDotsComment({ commentId }: Props) {
+function EditDotsComment({ commentId, isCommentOwner }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModal, setOpenModal] = React.useState(false);
   const open = Boolean(anchorEl);
@@ -19,9 +20,12 @@ function EditDotsComment({ commentId }: Props) {
     setAnchorEl(null);
   };
 
-  const handleDeleteComment = async () => {
-    setOpenModal(false);
+  const handleDeleteMyComment = async () => {
+    console.log ('wow delete', commentId);
+    handleClose();
   };
+
+  // ta bort sin kommentar
 
   const renderMenu = () => (
     <Menu
@@ -33,8 +37,8 @@ function EditDotsComment({ commentId }: Props) {
         "aria-labelledby": "basic-button",
       }}
     >
-      <MenuItem onClick={() => {console.log ('wow ban'); handleClose(); }}>Ban user</MenuItem>
-      <MenuItem onClick={() => {console.log ('wow delete'); handleClose(); }}>Delete comment</MenuItem>
+      <MenuItem onClick={() => {console.log ('wow ban'); handleClose(); }}>Ban user</MenuItem> {/* visible to who? */}
+      {isCommentOwner && <MenuItem onClick={handleDeleteMyComment}>Delete my comment</MenuItem>}
     </Menu>
   );
 
