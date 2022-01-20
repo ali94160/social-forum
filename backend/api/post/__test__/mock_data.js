@@ -25,4 +25,4 @@ const postId = "61e51b44d7e4aef1f1fc1005"
 
 const wrongPostId = "62e51b44d7e4aef1f1fc1005"
 
-module.exports = { post, postId, user2Login, user1Login, updPost, wrongPostId, postId };
+module.exports = { post, postId, user2Login, user1Login, updPost, wrongPostId };
