@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useComment } from "../../context/CommentContext";
 import { usePost } from "../../context/PostContext";
-import { CommentItem } from "../../interfaces/Comment";
-import { PostItem } from "../../interfaces/Post";
 import CommentSection from "../../components/commentSection/CommentSection";
 import CommentList from "../../components/comment-list/CommentList";
 import LoadingDetailedSkeleton from "../../components/skeleton/LoadingDetailedSkeleton";
@@ -14,33 +12,28 @@ function PostDetailPage() {
   // typescript doesnt recognize string nor undefined/null/empty object
   const { id } = useParams<string | any>();
   const { user } = useAuth();
-  const { getPost } = usePost();
-  const { getComments } = useComment();
+  const { getPost, post } = usePost();
+  const { getComments, comments } = useComment();
   const [status, setStatus] = useState(0);
-  const [post, setPost] = useState<PostItem | undefined>();
-  const [comments, setComments] = useState<CommentItem[]>([]);
 
   useEffect(() => {
     handlePost();
   }, []);
 
+  useEffect(() => {
+    handleComments();
+  }, [post]);
+
   const handlePost = async () => {
     const res = await getPost(id);
     setStatus(res.status);
-    if (res.status === 200) {
-      setPost(res.body);
-      handleComments();
-    }
   };
 
   const handleComments = async () => {
-    if (post) {
-      const res = await getComments(post._id);
-      if (res.status === 200) {
-        setComments(res.body);
-      }
+    if (post && post._id) {
+      await getComments(post._id);
     }
-  }
+  };
 
   if (status === 0 || status === 401) {
     return <LoadingDetailedSkeleton />;
@@ -51,7 +44,14 @@ function PostDetailPage() {
 
   return (
     <div>
-      <Post id={id} post={post} />
+      <Post post={post} me={user} />
+      {user && (
+        <CommentSection
+          username={user.username}
+          postId={id}
+          updateComments={handleComments}
+        />
+      )}
       {post && comments && comments.length > 0 ? (
         <CommentList
           comments={comments}
@@ -60,13 +60,6 @@ function PostDetailPage() {
         />
       ) : (
         <p>There are nothing here O_Q</p>
-      )}
-      {user && (
-        <CommentSection
-          username={user.username}
-          postId={id}
-          updateComments={handleComments}
-        />
       )}
     </div>
   );
