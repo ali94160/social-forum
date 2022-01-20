@@ -23,8 +23,20 @@ function UserContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
+  const isAdmin = async () => {
+    const response = await fetch('/admin', {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      }
+    });
+    console.log('what is response.status from context', response.status);
+    return response.status;
+  };
+
   const values = {
-    deleteSelf
+    deleteSelf,
+    isAdmin
   };
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
