@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledWrapper = styled.div`
+export const StyledFormWrapper = styled.form`
   display: flex;
   gap: 0.5rem;
 `;
@@ -14,3 +14,7 @@ export const StyledButton = styled.button`
   color: white;
   border-radius: 3px;
 `;
+
+export const StyledUsername = styled.p`
+  font-size: 1rem;
+`
