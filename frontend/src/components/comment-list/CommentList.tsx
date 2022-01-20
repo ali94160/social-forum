@@ -12,10 +12,9 @@ interface Props {
 function CommentList({ ownerId, moderators }: Props) {
   const {comments} = useComment()
 
-
   return (
     <div>
-      {comments.map((comment: CommentItem) => (
+      {comments.length > 0 && comments.map((comment: CommentItem) => (
         <CommentCard key={comment._id} comment={comment} ownerId={ownerId} moderators={moderators} />
       ))}
     </div>

@@ -31,13 +31,15 @@ function CommentContextProvider({ children }: Props) {
   }
 
   const getComments = async (postId: string) => {
-    const response: Response = await fetch("/api/post/comments/" + postId);
-    if (response.status === 200) {
-      const body = await response.json();
+    const res: Response = await fetch("/api/post/comments/" + postId);
+    try {
+      const body = await res.json();
       setComments(body);
-      return response.status;
     }
-    return response.status;
+    catch (error) {
+      setComments([])
+    }
+    return res.status === 200;
   }
 
 

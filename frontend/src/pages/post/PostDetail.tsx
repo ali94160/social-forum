@@ -53,7 +53,7 @@ function PostDetailPage() {
           updateComments={handleComments}
         />
       )}
-      {post ? (
+      {post?.ownerId?._id ? (
         <CommentList
           ownerId={post.ownerId._id}
           moderators={post.moderatorsIds}
