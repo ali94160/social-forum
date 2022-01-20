@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { PostItem } from "../interfaces/Post";
+import { PostItem, UpdatePost } from "../interfaces/Post";
 
 const PostContext = createContext<any>(null);
 
@@ -12,6 +12,7 @@ interface Props {
 function PostContextProvider({ children }: Props) {
   const [posts, setPosts] = useState<null | PostItem[]>(null);
   const [myPosts, setMyPosts] = useState<null | PostItem[]>(null);
+  const [post, setPost] = useState<null | PostItem>(null);
 
   const createPost = async (newPost: PostItem) => {
     const response: Response = await fetch("/api/user/posts", {
@@ -28,9 +29,12 @@ function PostContextProvider({ children }: Props) {
   const getPost = async (id: string) => {
     const response: Response = await fetch("/api/posts/" + id);
     const body = await response.json();
-    return { status: response.status, body };
-  };
-
+    if (response.status === 200) {
+      setPost(body);
+    }
+    return response.status;
+  }
+    
   const getPosts = async (ascDate: boolean, ascTitle: boolean) => {
     const response: Response = await fetch(
       `/api/posts?createdDate=${ascDate ? "asc" : "desc"}&title=${
@@ -59,6 +63,26 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
+  const updatePost = async (post: UpdatePost) => {
+    const updatePost = {
+      content: post.content,
+      title: post.title,
+      categoryId: post.categoryId
+    }
+    const response: Response = await fetch(`/api/posts/${post._id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updatePost)
+    });
+    if (response.status === 200) {
+      getPost(post._id);
+    } else {
+      return response.status;
+    }
+  }
+
   const values = {
     createPost,
     getPosts,
@@ -67,6 +91,8 @@ function PostContextProvider({ children }: Props) {
     getMyPosts,
     deletePost,
     getPost,
+    updatePost,
+    post
   };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;

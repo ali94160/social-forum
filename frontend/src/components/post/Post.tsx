@@ -4,55 +4,76 @@ import {
   StyledLeftGrid,
   StyledBottomGrid,
   StyledAvatarGrid,
-  StyledTitleGrid,
-} from "./StyledPost";
-import Grid from "@mui/material/Grid";
-import EditIcon from "@mui/icons-material/Edit";
-import { useEffect, useState } from "react";
-import { User } from "../../interfaces/User";
-import { PostItem } from "../../interfaces/Post";
-import { StyledAvatar } from "../post-card/StyledPostCard";
+} from './StyledPost';
+import Grid from '@mui/material/Grid';
+import EditIcon from '@mui/icons-material/Edit';
+import { useEffect, useState } from 'react';
+import { PostItem } from '../../interfaces/Post';
+import { StyledAvatar } from '../post-card/StyledPostCard';
+import { formatModStr } from './HandleModerators';
+import CheckIcon from '@mui/icons-material/Check';
+import { usePost } from '../../context/PostContext';
+import CloseIcon from '@mui/icons-material/Close';
+import { User } from '../../interfaces/User';
+import EditForm from './EditForm';
 
 interface Props {
-  id: any;
-  post: PostItem | undefined;
+  post: PostItem | null;
+  me: User;
 }
+// shall be removed
+const categories = ["Meme", "Trollololo", "Cooking", "Economic"];
 
-// behåller id ifall man vill använda vid redigering av post??
-
-function Post({ id, post }: Props) {
+function Post({post, me}: Props) {
   const date = post?.createdDate?.substr(0, 10);
   const time = post && new Date(post.createdDate);
-  const [moderators, setModerators] = useState("");
+  const [moderators, setModerators] = useState('');
+  const [edit, setEdit] = useState(false);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const hours = time?.getHours();
+  const minutes = (time && time?.getMinutes() < 10 ? '0' : '') + time?.getMinutes();
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const { updatePost } = usePost();
+  const [status, setStatus] = useState(0);
+  const [isPostOwner, setIsPostOwner] = useState(false);
 
   useEffect(() => {
-    handleModerators();
+    handleIsPostOwner();
+  }, [me])
+  
+  useEffect(() => {
+    handleModeratorStr()
   }, [post?.moderatorsIds]);
 
-  const handleModerators = () => {
-    let str = "";
-    if (!post?.moderatorsIds?.length) {
-      str += "none";
+  const handleIsPostOwner = () => {
+    if (me && me._id === post?.ownerId._id) {
+      setIsPostOwner(true);
     } else {
-      post?.moderatorsIds?.map((m: User, i: number) => {
-        if (i === 0) {
-          str += m.username;
-          return;
-        }
-        if (
-          post?.moderatorsIds.length > 1 &&
-          i === post?.moderatorsIds.length - 1
-        ) {
-          str += " and ";
-          str += m.username;
-        } else if (post?.moderatorsIds.length > 2) {
-          str += ", ";
-          str += m.username;
-        }
-      });
+      setIsPostOwner(false);
     }
+  }
+
+  const handleModeratorStr = () => {
+    const str = formatModStr(post);
     setModerators(str);
   };
+
+  const handleEdit = async () => {
+    setEdit(!edit);
+    if (edit) {
+      const status = await updatePost({
+        _id: post?._id,
+        title: title? title : post?.title,
+        content: content? content : post?.content,
+        categoryId: null // ändra när category är på plats
+      });
+      setStatus(status);
+    }
+    if (status === 200) {
+      setEdit(!edit); 
+    }
+  }
 
   return (
     <StyledPost>
@@ -73,17 +94,29 @@ function Post({ id, post }: Props) {
             {post?.ownerId?.username}
           </StyledAvatarGrid>
         </Grid>
-
-        <Grid item xs={8} container direction="column" spacing={2}>
-          <StyledTitleGrid item xs>
-            {post?.title}
-          </StyledTitleGrid>
-          <Grid item xs>
-            {post?.content}
-          </Grid>
+        
+        <Grid
+          item xs={8}
+          container
+          direction="column"
+          spacing={2}
+        >
+          <EditForm
+            post={post}
+            edit={edit}
+            setTitle={setTitle}
+            setContent={setContent}
+            setSelectedCategory={setSelectedCategory}
+            categories={categories}
+            selectedCategory={selectedCategory}
+          />
         </Grid>
+
         <StyledLeftGrid item xs={2}>
-          <EditIcon />
+          {isPostOwner ? (!edit ?
+            <EditIcon onClick={handleEdit} />
+            : <><CheckIcon onClick={handleEdit} sx={{marginBottom: '15px'}} /><br/>
+              <CloseIcon onClick={() => setEdit(!edit)} /></>) : ''}
         </StyledLeftGrid>
 
         <StyledBottomGrid item xs={12} container direction="row" spacing={2}>
@@ -91,10 +124,11 @@ function Post({ id, post }: Props) {
             Post moderators: {moderators}
           </Grid>
           <StyledLeftGrid item xs={4}>
-            {date} {time?.getHours()}:{time?.getMinutes()}
+            {date} {hours}:{minutes}
           </StyledLeftGrid>
         </StyledBottomGrid>
-      </StyledGrid>
+
+      </StyledGrid> 
     </StyledPost>
   );
 }

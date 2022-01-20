@@ -1,7 +1,7 @@
 const postModel = require("../../models/post");
 const commentModel = require("../../models/comment");
-const { authUserLoggedIn } = require("../../middlewares/acl");
-const { isPostOwner } = require("../../middlewares/postOwner");
+const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
+const { isPostOwner, handleModerator } = require("../../middlewares/postOwner");
 const roles = require("../../models/role");
 
 module.exports = function (app) {
@@ -117,6 +117,7 @@ module.exports = function (app) {
         .findOne({ _id: req.params.id })
         .lean()
         .exec();
+      delete req.body.moderatorsIds
       const updatedPost = { ...post, ...req.body };
       await postModel.replaceOne({ _id: req.params.id }, updatedPost);
       res.status(200).json(updatedPost);
@@ -124,6 +125,14 @@ module.exports = function (app) {
       return res.sendStatus(404);
     }
   });
+
+  app.put("/api/posts/:id/moderators", authUserLoggedIn, authRole([roles.POSTOWNER, roles.POSTMODERATOR]), handleModerator, async (req, res) => {
+    try {
+      return res.sendStatus(200);
+    } catch (error) {
+      return res.sendStatus(404);
+    }
+  })
 
   app.delete("/api/posts/:id", authUserLoggedIn, async (req, res) => {
     let user = req.session.user;
@@ -145,6 +154,14 @@ module.exports = function (app) {
     } catch (error) {
       res.sendStatus(403);
       return;
+    }
+  });
+
+  app.get('/api/posts/owner/:id', authUserLoggedIn, authRole([roles.POSTOWNER]), isPostOwner, async (req, res) => {
+    try {
+      return res.sendStatus(200);
+    } catch (err) {
+      return res.sendStatus(403);
     }
   });
 };
