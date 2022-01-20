@@ -4,16 +4,11 @@ const role = require("../models/role");
 async function isPostOwner(req, res, next) {
   try {
     const post = await postModel.findOne({ _id: req.params.id }).lean().exec();
-    console.log('what is post id', req.params.id)
-    console.log('what is post owner id', post.ownerId._id);
-    console.log('what is req session id', req.session.user._id);
-    
     if (post.ownerId._id != req.session.user._id) {
       return res.sendStatus(401);
     }
     next()
   } catch (error) {
-    console.log('something went wrong in middlew')
     res.sendStatus(404)
   }
 }
