@@ -24,7 +24,7 @@ function UserContextProvider({ children }: Props) {
   };
 
   const values = {
-    deleteSelf,
+    deleteSelf
   };
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;

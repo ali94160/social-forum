@@ -28,9 +28,21 @@ function CommentContextProvider({ children }: Props) {
     return res.status === 200;
   }
 
+  const deleteMyComment = async (commentId: string) => {
+    const res = await fetch('/api/user/comments/' + commentId, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+
+    return res.status === 200;
+  }
+
 
   const values = {
     addComment,
+    deleteMyComment
   };
 
   return (

@@ -1,4 +1,5 @@
-const commentModel = require("../../models/comment");
+const Comment = require("../../models/comment");
+const Post = require("../../models/post");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
 const roles = require("../../models/role");
 
@@ -9,7 +10,7 @@ module.exports = function (app) {
       return;
     }
     try {
-      let newComment = new commentModel({
+      let newComment = new Comment({
         ...req.body,
         createdDate: Date.now(),
         writerId: req.session.user._id,
@@ -27,14 +28,49 @@ module.exports = function (app) {
     }
   });
 
-  // ta bort sin kommentar
+  app.delete(
+    "/api/comments/:id",
+    authUserLoggedIn,
+    authRole([roles.ADMIN, roles.POSTOWNER, roles.POSTMODERATOR]),
+    async (req, res) => {
+      const user = { ...req.session.user };
+      try {
+        const comment = await Comment.findOne({ _id: req.params.id }).exec();
+
+        let isAdmin = user.roles.includes(roles.ADMIN);
+        let isOwner;
+        let isModerator;
+        
+        if (!isAdmin) {
+          const post = await Post.findOne({ _id: comment.postId }).exec();
+          isOwner = post.ownerId.toString() === user._id;
+          if (!isOwner) { 
+            isModerator = post.moderatorsIds.includes(user._id);
+          }
+        }
+
+        if (isAdmin || isOwner || isModerator) {
+          await Comment.findOneAndDelete({ _id: req.params.id });
+          res.sendStatus(200);
+        } else {
+          res.sendStatus(401);
+        }
+        return;
+      } catch (error) {
+        res.sendStatus(400);
+        return;
+      }
+    }
+  );
+
+  // user remove their own comment
   app.delete(
     "/api/user/comments/:id",
     authUserLoggedIn,
     authRole([roles.USER]),
     async (req, res) => {
       const user = { ...req.session.user };
-      commentModel.findOneAndDelete(
+      Comment.findOneAndDelete(
         { _id: req.params.id, writerId: user._id },
         (err, comment) => {
           if (err) {
@@ -52,7 +88,7 @@ module.exports = function (app) {
   // post comment for testing purposes
   app.post("/api/comments/test", authUserLoggedIn, async (req, res) => {
     try {
-      let comment = new commentModel({
+      let comment = new Comment({
         content: "test blabla ",
         writeId: req.session.user._id,
         createdDate: Date.now(),
