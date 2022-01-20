@@ -11,6 +11,7 @@ import {
   StyledComment,
 } from "./StyledCommentCard";
 import BasicAvatar from "../basics/basic-avatar/BasicAvatar";
+import EditDotsComment from "../edit-dots-comment/EditDotsComment";
 import { trimString } from "../../utils/helper-methods";
 import { User } from "../../interfaces/User";
 
@@ -60,7 +61,7 @@ function CommentCard({ comment, ownerId, moderators }: Props) {
           <StyledComment>{comment.content}</StyledComment>
         </RightGrid>
         <Grid item xs={1}>
-          {/* space for edit dots */}
+        <EditDotsComment postId={'3'} />
         </Grid>
         <Grid container>
           <StyledDate>
