@@ -47,7 +47,7 @@ function Post({post, me}: Props) {
   }, [post?.moderatorsIds]);
 
   const handleIsPostOwner = () => {
-    if (me && me._id === post?.ownerId._id) {
+    if (me && me._id === post?.ownerId?._id) {
       setIsPostOwner(true);
     } else {
       setIsPostOwner(false);
