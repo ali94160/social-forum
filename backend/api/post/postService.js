@@ -1,7 +1,7 @@
 const postModel = require("../../models/post");
 const commentModel = require("../../models/comment");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
-const { isPostOwner, handleModerator, handleRoles, handleModeratorRole } = require("../../middlewares/postOwner");
+const { isPostOwner, handleModerator, handleRoles } = require("../../middlewares/postOwner");
 const roles = require("../../models/role");
 
 module.exports = function (app) {
