@@ -50,7 +50,8 @@ describe("Test to get comments from post", () => {
     });
 
     test("/api/post/comments/:postId - user get and there are comments", async () => {
-      const res = await request.get("/api/post/comments/" + post._id);
+      const whoAmIRes = await testSession.get("/api/whoAmI");
+      const res = await testSession.get("/api/post/comments/" + post._id);
       expect(res.statusCode).toBe(200);
       expect(Object.keys(res.body[0])).toEqual([
         "_id",
@@ -60,6 +61,7 @@ describe("Test to get comments from post", () => {
         "postId",
         "__v",
       ]);
+      expect(whoAmIRes.statusCode).toBe(200);
       expect(res.body[0].postId.toString()).toBe(post._id);
       await Comment.findByIdAndDelete(comment._id);
     });
@@ -72,7 +74,7 @@ describe("Test to get comments from post", () => {
 
     test("Wrong post id", async () => {
       const res = await request.get("/api/post/comments/123");
-      expect(res.statusCode).toBe(400);
+      expect(res.statusCode).toBe(404);
     });
   });
 
