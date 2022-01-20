@@ -12,11 +12,12 @@ import {
 import { useUser } from "../../context/UserContext";
 import BasicChip from "../basics/basic-chip/BasicChip";
 import { User } from "../../interfaces/User";
+import { usePost } from "../../context/PostContext";
 
 interface Props {
   isOpen: boolean;
   handleClose: Function;
-  moderators: [User];
+  moderators: User[];
 }
 
 interface TrimmedUser {
@@ -25,9 +26,11 @@ interface TrimmedUser {
 }
 
 function SearchModal({ isOpen, handleClose, moderators }: Props) {
+  const { updateModerators } = usePost();
   const [searchForUser, setSearchForUser] = useState("");
   const [searchResult, setSearchResult] = useState<null | TrimmedUser>();
   const [noUserFound, setNoUserFound] = useState<null | boolean>(null);
+  const [currentModerators, setCurrentModerators] = useState(moderators);
   const { searchUser } = useUser();
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,13 +46,33 @@ function SearchModal({ isOpen, handleClose, moderators }: Props) {
     setNoUserFound(true);
   };
 
-  const handleAddModerator = () => {
-    //method to add a moderator
+  const handleAddModerator = (moderator: User) => {
+    setSearchResult(null);
+    let moderatorExists = false;
+    currentModerators.map((m: User) => {
+      if (m._id === moderator._id) {
+        moderatorExists = true;
+        return;
+      }
+    });
+    !moderatorExists && setCurrentModerators([...currentModerators, moderator]);
   };
 
-  const handleDeleteModerator = () => {
+  const handleDeleteModerator = (moderatorId: string) => {
+    console.log(moderatorId);
     //method to delete a moderator
   };
+
+  const renderSearch = () => (
+    <StyledFormWrapper onSubmit={(e) => handleSearch(e)}>
+      <BasicTextField
+        placeholder="Search user..."
+        value={searchForUser}
+        handleChange={(ev: any) => setSearchForUser(ev.target.value)}
+      />
+      <StyledButton type="submit">Search</StyledButton>
+    </StyledFormWrapper>
+  );
 
   const renderSearchResult = () => (
     <>
@@ -58,7 +81,7 @@ function SearchModal({ isOpen, handleClose, moderators }: Props) {
         <BasicChip
           deleteable={false}
           username={searchResult?.username}
-          handleClick={handleAddModerator}
+          handleClick={() => handleAddModerator(searchResult)}
         />
       ) : (
         <p>No user found</p>
@@ -66,32 +89,31 @@ function SearchModal({ isOpen, handleClose, moderators }: Props) {
     </>
   );
 
+  const renderModerators = () => (
+    <StyledModeratorsWrapper>
+      <StyledModeratorsTitle>Current Moderators:</StyledModeratorsTitle>
+      {currentModerators?.map((m: User) => (
+        <BasicChip
+          key={m._id}
+          username={m.username}
+          handleClick={() => handleDeleteModerator(m._id)}
+          deleteable={true}
+        />
+      ))}
+    </StyledModeratorsWrapper>
+  );
+
   return (
     <>
-      <BasicModal isOpen={isOpen} handleClose={handleClose}>
+      <BasicModal
+        isOpen={isOpen}
+        handleClose={() => handleClose(setSearchResult)}
+      >
         <>
-          <StyledFormWrapper onSubmit={(e) => handleSearch(e)}>
-            <BasicTextField
-              placeholder="Search user..."
-              value={searchForUser}
-              handleChange={(ev: any) => setSearchForUser(ev.target.value)}
-            />
-            <StyledButton type="submit">Search</StyledButton>
-          </StyledFormWrapper>
+          {renderSearch()}
           {searchResult && renderSearchResult()}
           {noUserFound === true && <p>No user found</p>}
-          {moderators.length > 0 && (
-            <StyledModeratorsWrapper>
-              <StyledModeratorsTitle>Current Moderators:</StyledModeratorsTitle>
-              {moderators?.map((m: User) => (
-                <BasicChip
-                  username={m.username}
-                  handleClick={handleDeleteModerator}
-                  deleteable={true}
-                />
-              ))}
-            </StyledModeratorsWrapper>
-          )}
+          {moderators.length > 0 && renderModerators()}
         </>
       </BasicModal>
     </>

@@ -9,10 +9,15 @@ import { User } from "../../interfaces/User";
 
 interface Props {
   postId: string;
-  moderators: [User]
+  moderators: [User];
 }
 
-function EditDotsPost({ postId }: Props) {
+interface TrimmedUser {
+  _id: string;
+  username: string;
+}
+
+function EditDotsPost({ postId, moderators }: Props) {
   const { deletePost } = usePost();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModal, setOpenModal] = React.useState(false);
@@ -40,7 +45,12 @@ function EditDotsPost({ postId }: Props) {
     setAnchorEl(null);
   };
 
-  const handleCloseSearchModal = () => {
+  const handleCloseSearchModal = (
+    cleanup: React.Dispatch<
+      React.SetStateAction<TrimmedUser | null | undefined>
+    >
+  ) => {
+    cleanup(null);
     setOpenSearchModal(false);
   };
 
