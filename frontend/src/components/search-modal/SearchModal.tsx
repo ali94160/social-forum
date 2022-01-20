@@ -48,19 +48,18 @@ function SearchModal({ isOpen, handleClose, moderators }: Props) {
 
   const handleAddModerator = (moderator: User) => {
     setSearchResult(null);
-    let moderatorExists = false;
-    currentModerators.map((m: User) => {
-      if (m._id === moderator._id) {
-        moderatorExists = true;
-        return;
-      }
-    });
+
+    const moderatorExists = currentModerators.find(
+      (m: User) => m._id === moderator._id
+    );
+
     !moderatorExists && setCurrentModerators([...currentModerators, moderator]);
   };
 
   const handleDeleteModerator = (moderatorId: string) => {
-    console.log(moderatorId);
-    //method to delete a moderator
+    setCurrentModerators(
+      currentModerators.filter((m: User) => m._id !== moderatorId)
+    );
   };
 
   const renderSearch = () => (
