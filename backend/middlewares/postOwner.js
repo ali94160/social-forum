@@ -16,32 +16,34 @@ async function isPostOwner(req, res, next) {
 
 async function handleModerator(req, res, next) {
   try {
+    const user = req.session.user;
     const post = await postModel.findOne({ _id: req.params.id }).lean().exec();
-    const isModerator = post.moderatorsIds.some((id) => id == req.session.user._id)
+    const isModerator = post.moderatorsIds.some((id) => id == user._id)
 
-    if (post.ownerId._id != req.session.user._id && !isModerator) {
+    if (post.ownerId._id != user._id && !isModerator) {
       return res.sendStatus(403);
     }
 
-    if (post.ownerId._id == req.session.user._id) {
+    if (post.ownerId._id == user._id) {
       // using Set to remove duplicated from array, and converting it back to an array
-      const moderatorsArray = Array.from(new Set(req.body.moderatorsIds));
+      const set = Array.from(new Set(req.body.moderatorsIds));
+      const filteredModeratorsArray = set.filter(id => id != user._id);
 
       await postModel.updateOne({ _id: req.params.id },
         {
           $set: {
-            moderatorsIds: moderatorsArray
+            moderatorsIds: filteredModeratorsArray
           }
         })
       
-      moderatorsArray.map(async (id) => await userModel.findOneAndUpdate({ _id: id }, { $addToSet: { roles: role.POSTMODERATOR } }).lean().exec());
+      filteredModeratorsArray.map(async (id) => await userModel.findOneAndUpdate({ _id: id }, { $addToSet: { roles: role.POSTMODERATOR } }).lean().exec());
         
       return res.sendStatus(200);
     }
 
     if (isModerator) {
-      await postModel.updateOne({ _id: req.params.id }, { $pull: { moderatorsIds: req.session.user._id } });
-      handleRoles([req.session.user._id], role.POSTMODERATOR, false)
+      await postModel.updateOne({ _id: req.params.id }, { $pull: { moderatorsIds: user._id } });
+      handleRoles(user._id, role.POSTMODERATOR, false)
       return res.sendStatus(200);
     }
     
@@ -53,7 +55,7 @@ async function handleModerator(req, res, next) {
 
 async function handleRoles(userId, role, owner) {
   try {
-    let posts = owner ?
+    const posts = owner ?
       await postModel.find({ ownerId: userId }).count().exec() :
       await postModel.find({ moderatorsIds: userId }).count().exec()
  
