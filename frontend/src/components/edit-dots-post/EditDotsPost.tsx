@@ -9,7 +9,7 @@ interface Props {
   postId: string;
 }
 
-function EditDots({ postId }: Props) {
+function EditDotsPost({ postId }: Props) {
   const { deletePost } = usePost();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModal, setOpenModal] = React.useState(false);
@@ -68,4 +68,4 @@ function EditDots({ postId }: Props) {
   );
 }
 
-export default EditDots;
+export default EditDotsPost;
