@@ -3,7 +3,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { StyledDots, StyledBtn } from "./StyledEditDots";
 import { useComment } from "../../context/CommentContext";
-import ConfirmModal from "../confirm-modal/ConfirmModal";
 
 interface Props {
   commentId: string;
@@ -24,11 +23,6 @@ function EditDotsComment({ commentId }: Props) {
     setOpenModal(false);
   };
 
-  const handleOpenConfirmModal = () => {
-    setOpenModal(true);
-    setAnchorEl(null);
-  };
-
   const renderMenu = () => (
     <Menu
       id="basic-menu"
@@ -41,7 +35,6 @@ function EditDotsComment({ commentId }: Props) {
     >
       <MenuItem onClick={() => {console.log ('wow ban'); handleClose(); }}>Ban user</MenuItem>
       <MenuItem onClick={() => {console.log ('wow delete'); handleClose(); }}>Delete comment</MenuItem>
-      {/* <MenuItem onClick={handleOpenConfirmModal}>Delete post</MenuItem> */}
     </Menu>
   );
 
@@ -57,11 +50,6 @@ function EditDotsComment({ commentId }: Props) {
         <StyledDots />
       </StyledBtn>
       {renderMenu()}
-      {/* <ConfirmModal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        handleDeleteComment={handleDeleteComment}
-      /> */}
     </>
   );
 }
