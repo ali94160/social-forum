@@ -29,6 +29,25 @@ module.exports = function (app) {
     }
   });
 
+  app.get("/api/post/comments/:postId", async (req, res) => {
+    try {
+      let comments = await Comment.find({ postId: req.params.postId })
+        .populate("writerId", ["username"])
+        .lean()
+        .exec();
+      if (comments.length > 0) {
+        res.status(200).json(comments);
+        return;
+      }
+      res.sendStatus(204);
+      return;
+    } catch (error) {
+      res.sendStatus(404);
+      return;
+    }
+  });
+
+  // ta bort sin kommentar
   app.delete(
     "/api/comments/:id",
     authUserLoggedIn,

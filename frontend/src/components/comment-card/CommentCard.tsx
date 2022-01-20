@@ -25,10 +25,10 @@ function CommentCard({ comment, ownerId, moderators }: Props) {
   const created = new Date(comment.createdDate);
   const date = created.toLocaleDateString();
   const time = created.toLocaleTimeString().substring(0, 5);
-  const isOwner = comment.writerId._id === ownerId;
+  const isOwner = comment.writerId?._id === ownerId;
   let isModerator = false;
   if (!isOwner) {
-    isModerator = moderators.some(moderator => moderator._id === comment.writerId._id);
+    isModerator = moderators.some(moderator => moderator?._id === comment.writerId?._id);
   }
 
   const getRole = () => {

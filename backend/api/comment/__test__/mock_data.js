@@ -12,9 +12,15 @@ const testPost = {
   categoryId: "61dc3a622f8ecad1bc1367b2",
 };
 
+const user1Login = {
+  email: "isabella@haha.se",
+  password: "123",
+};
+
 
 module.exports = {
   newComment,
   wrongComment,
   testPost,
+  user1Login
 };
