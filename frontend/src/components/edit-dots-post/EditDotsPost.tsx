@@ -91,6 +91,7 @@ function EditDotsPost({ postId, moderators }: Props) {
         isOpen={openSearchModal}
         handleClose={handleCloseSearchModal}
         moderators={moderators}
+        postId={postId}
       />
     </>
   );

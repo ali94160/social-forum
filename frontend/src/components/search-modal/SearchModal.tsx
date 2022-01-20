@@ -4,20 +4,22 @@ import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import {
   StyledFormWrapper,
   StyledButton,
-  StyledUsername,
   StyledSearchResult,
   StyledModeratorsWrapper,
   StyledModeratorsTitle,
+  StyledSaveButton,
 } from "./StyledSearchModal";
 import { useUser } from "../../context/UserContext";
 import BasicChip from "../basics/basic-chip/BasicChip";
 import { User } from "../../interfaces/User";
 import { usePost } from "../../context/PostContext";
+import { useAuth } from "../../context/AuthContext";
 
 interface Props {
   isOpen: boolean;
   handleClose: Function;
   moderators: User[];
+  postId: string;
 }
 
 interface TrimmedUser {
@@ -25,18 +27,19 @@ interface TrimmedUser {
   username: string;
 }
 
-function SearchModal({ isOpen, handleClose, moderators }: Props) {
+function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
   const { updateModerators } = usePost();
   const [searchForUser, setSearchForUser] = useState("");
   const [searchResult, setSearchResult] = useState<null | TrimmedUser>();
   const [noUserFound, setNoUserFound] = useState<null | boolean>(null);
   const [currentModerators, setCurrentModerators] = useState(moderators);
   const { searchUser } = useUser();
+  const { user } = useAuth();
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = await searchUser(searchForUser);
-    if (result) {
+    if (result && result?._id !== user._id) {
       setSearchResult(result);
       setSearchForUser("");
       setNoUserFound(false);
@@ -48,11 +51,9 @@ function SearchModal({ isOpen, handleClose, moderators }: Props) {
 
   const handleAddModerator = (moderator: User) => {
     setSearchResult(null);
-
     const moderatorExists = currentModerators.find(
       (m: User) => m._id === moderator._id
     );
-
     !moderatorExists && setCurrentModerators([...currentModerators, moderator]);
   };
 
@@ -60,6 +61,10 @@ function SearchModal({ isOpen, handleClose, moderators }: Props) {
     setCurrentModerators(
       currentModerators.filter((m: User) => m._id !== moderatorId)
     );
+  };
+
+  const handleSaveModerators = () => {
+    updateModerators(postId, currentModerators);
   };
 
   const renderSearch = () => (
@@ -113,6 +118,9 @@ function SearchModal({ isOpen, handleClose, moderators }: Props) {
           {searchResult && renderSearchResult()}
           {noUserFound === true && <p>No user found</p>}
           {moderators.length > 0 && renderModerators()}
+          <StyledSaveButton onClick={handleSaveModerators}>
+            Save changes
+          </StyledSaveButton>
         </>
       </BasicModal>
     </>

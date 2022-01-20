@@ -26,12 +26,23 @@ export const StyledUsername = styled.p`
   margin: 0;
 `;
 
-export const StyledModeratorsWrapper = styled.div`
-
-`
+export const StyledModeratorsWrapper = styled.div``;
 
 export const StyledModeratorsTitle = styled.p`
   font-size: 1.3rem;
   color: grey;
   margin: 0.5rem 0;
+`;
+
+export const StyledSaveButton = styled.button`
+  border: none;
+  padding: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: green;
+  color: white;
+  border-radius: 3px;
+  float: right;
+  margin-top: 0.5rem;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 `;
