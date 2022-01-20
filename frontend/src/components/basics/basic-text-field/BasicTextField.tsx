@@ -13,6 +13,9 @@ interface Props {
   type?: string | "text";
   value?: any;
   handleChange: Function;
+  defaultValue?: string;
+  fullWidth?: boolean;
+  inputProps?: object;
 }
 
 function BasicTextField({
@@ -26,6 +29,9 @@ function BasicTextField({
   rows,
   required,
   handleChange,
+  defaultValue,
+  fullWidth,
+  inputProps
 }: Props) {
   return (
     <StyledTextField
@@ -39,6 +45,9 @@ function BasicTextField({
       maxRows={maxRows}
       minRows={minRows}
       required={required}
+      defaultValue={defaultValue}
+      fullWidth={fullWidth}
+      inputProps={inputProps}
     />
   );
 }
