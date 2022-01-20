@@ -33,11 +33,15 @@ async function handleModerator(req, res, next) {
             moderatorsIds: moderatorsArray
           }
         })
+      
+      moderatorsArray.map(async (id) => await userModel.findOneAndUpdate({ _id: id }, { $addToSet: { roles: role.POSTMODERATOR } }).lean().exec());
+        
       return res.sendStatus(200);
     }
 
     if (isModerator) {
       await postModel.updateOne({ _id: req.params.id }, { $pull: { moderatorsIds: req.session.user._id } });
+      handleRoles([req.session.user._id], role.POSTMODERATOR, false)
       return res.sendStatus(200);
     }
     
@@ -47,17 +51,18 @@ async function handleModerator(req, res, next) {
   }
 }
 
-async function handlePostOwnerRole(req) {
+async function handleRoles(userId, role, owner) {
   try {
-    const user = req.session.user;
-    const posts = await postModel.find({ ownerId: user._id }).count().exec();
-
+    let posts = owner ?
+      await postModel.find({ ownerId: userId }).count().exec() :
+      await postModel.find({ moderatorsIds: userId }).count().exec()
+ 
     if (posts > 0) {
-      await userModel.updateOne({ _id: user._id }, { $addToSet: { roles: role.POSTOWNER } }).lean().exec();
+      await userModel.updateOne({ _id: userId }, { $addToSet: { roles: role } }).lean().exec();
       return;
     }
 
-    await userModel.updateOne({ _id: user._id }, { $pull: { roles: role.POSTOWNER } }).lean().exec();
+    await userModel.updateOne({ _id: userId }, { $pull: { roles: role } }).lean().exec();
   } catch (error) {
     console.error(error);
   }
@@ -66,5 +71,5 @@ async function handlePostOwnerRole(req) {
 module.exports = {
   isPostOwner,
   handleModerator,
-  handlePostOwnerRole
+  handleRoles
 }
