@@ -46,7 +46,7 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
   );
 
   const handleDetailPage = () => {
-    history.push(`/posts/${post._id}`);
+    //history.push(`/posts/${post._id}`);
   };
 
   return (
