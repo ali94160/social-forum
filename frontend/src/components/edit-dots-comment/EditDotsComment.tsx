@@ -13,6 +13,7 @@ function EditDotsComment({ commentId, isCommentOwner }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModal, setOpenModal] = React.useState(false);
   const open = Boolean(anchorEl);
+  const {deleteMyComment} = useComment();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -21,11 +22,12 @@ function EditDotsComment({ commentId, isCommentOwner }: Props) {
   };
 
   const handleDeleteMyComment = async () => {
-    console.log ('wow delete', commentId);
+    const isSuccess = await deleteMyComment(commentId);
+    if(isSuccess){
+      // update comments list.
+    }
     handleClose();
   };
-
-  // ta bort sin kommentar
 
   const renderMenu = () => (
     <Menu
