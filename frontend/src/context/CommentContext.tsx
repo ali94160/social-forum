@@ -37,6 +37,7 @@ function CommentContextProvider({ children }: Props) {
         "content-type": "application/json",
       },
     });
+  }
 
   const getComments = async (postId: string) => {
     const res: Response = await fetch("/api/post/comments/" + postId);
@@ -61,7 +62,6 @@ function CommentContextProvider({ children }: Props) {
   return (
     <CommentContext.Provider value={values}>{children}</CommentContext.Provider>
   );
-}
 }
 
 export default CommentContextProvider;
