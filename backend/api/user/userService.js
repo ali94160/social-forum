@@ -72,9 +72,8 @@ module.exports = user = (app) => {
     }
   );
 
-  app.get('/admin', authUserLoggedIn, authRole([roles.ADMIN]), (req, res) => {
+  app.get('/api/admin', authUserLoggedIn, authRole([roles.ADMIN]), (req, res) => {
     try {
-      console.log('im logged in and have role as admin')
       res.sendStatus(200);
     } catch (error) {
       res.sendStatus(404);
