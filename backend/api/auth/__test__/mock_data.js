@@ -13,8 +13,8 @@ const user2Login = {
 // correct credentials
 const user3Login = {
   email: "mason@haha.se",
-  password: "123"
-}
+  password: "123",
+};
 
 // wrong credentials
 const user4WrongLogin = {
