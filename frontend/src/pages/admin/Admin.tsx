@@ -1,12 +1,16 @@
-import { getInputAdornmentUtilityClass } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { useUser } from '../../context/UserContext';
 import { useAuth } from '../../context/AuthContext';
+import TextBox from '../../components/admin/textbox/TextBox';
+import BanList from '../../components/admin/banlist/BanList';
+import Grid from '@mui/material/Grid';
+import CategoryList from '../../components/admin/categories/CategoryList';
+import { StyledGrid } from './StyledAdmin';
 
 function AdminPage() {
   const { isAdmin } = useUser();
-  const { whoAmI, me } = useAuth();
+  const { user } = useAuth();
   const history = useHistory();
   const [status, setStatus] = useState<number>(0);
 
@@ -15,17 +19,12 @@ function AdminPage() {
     return () => {
       setStatus(0);
     }
-  }, [me]);
+  }, [user]);
 
   const getAdmin = async () => {
     const resStatus = await isAdmin();
-    const res = await whoAmI();
-    console.log('what is res status', resStatus);
-    console.log('who am i ', res.body?.user);
     setStatus(resStatus);
   }
-
-  console.log('what is status', status)
 
   if (status !== 200) {
     // if(status === 401)
@@ -40,12 +39,18 @@ function AdminPage() {
     )
   }
 
-  console.log('i shouldnt be down here')
-
   return (
-    <div>
-      Hello you have access to homepage
-    </div>
+    <Grid container spacing={2}>
+      <StyledGrid item xs={12}>
+        <TextBox />
+      </StyledGrid>
+       <StyledGrid item xs={12}>
+        <BanList />
+      </StyledGrid>
+      <StyledGrid item xs={12}>
+        <CategoryList />
+      </StyledGrid>
+    </Grid>
   );
 }
 
