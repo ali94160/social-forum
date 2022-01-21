@@ -13,7 +13,7 @@ function PostDetailPage() {
   const { id } = useParams<string | any>();
   const { user } = useAuth();
   const { getPost, post } = usePost();
-  const { getComments } = useComment();
+  const { getComments, comments } = useComment();
   const [status, setStatus] = useState(0);
 
   useEffect(() => {
@@ -30,7 +30,6 @@ function PostDetailPage() {
   };
 
   const handleComments = async () => {
-    
     if (post && post._id) {
       await getComments(post._id);
     }
@@ -49,7 +48,7 @@ function PostDetailPage() {
         <CommentSection
           username={user.username}
           postId={id}
-          updateComments={handleComments}
+          handleComments={handleComments}
         />
       )}
       {post?.ownerId?._id ? (

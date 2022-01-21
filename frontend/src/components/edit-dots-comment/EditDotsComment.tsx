@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { StyledDots, StyledBtn } from "./StyledEditDots";
@@ -6,12 +6,15 @@ import { useComment } from "../../context/CommentContext";
 
 interface Props {
   commentId: string;
+  isCommentOwner: boolean;
+  postId: string;
 }
 
-function EditDotsComment({ commentId }: Props) {
+function EditDotsComment({ commentId, isCommentOwner, postId }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [openModal, setOpenModal] = React.useState(false);
   const open = Boolean(anchorEl);
+  const {deleteMyComment, getComments} = useComment();
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -19,8 +22,12 @@ function EditDotsComment({ commentId }: Props) {
     setAnchorEl(null);
   };
 
-  const handleDeleteComment = async () => {
-    setOpenModal(false);
+  const handleDeleteMyComment = async () => {
+    const isSuccess = await deleteMyComment(commentId);
+    if(isSuccess){
+      getComments(postId);
+    }
+    handleClose();
   };
 
   const renderMenu = () => (
@@ -33,8 +40,8 @@ function EditDotsComment({ commentId }: Props) {
         "aria-labelledby": "basic-button",
       }}
     >
-      <MenuItem onClick={() => {console.log ('wow ban'); handleClose(); }}>Ban user</MenuItem>
-      <MenuItem onClick={() => {console.log ('wow delete'); handleClose(); }}>Delete comment</MenuItem>
+      <MenuItem onClick={() => {console.log ('wow ban'); handleClose(); }}>Ban user</MenuItem> {/* visible to admin*/}
+      {isCommentOwner && <MenuItem onClick={handleDeleteMyComment}>Delete my comment</MenuItem>}
     </Menu>
   );
 
