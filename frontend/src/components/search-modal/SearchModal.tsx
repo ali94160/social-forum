@@ -86,7 +86,6 @@ function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
 
   const renderSearchResult = () => (
     <>
-      <StyledSearchResult>Search result</StyledSearchResult>
       {searchResult ? (
         <BasicChip
           deleteable={false}
@@ -101,7 +100,6 @@ function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
 
   const renderModerators = () => (
     <StyledModeratorsWrapper>
-      <StyledModeratorsTitle>Current Moderators:</StyledModeratorsTitle>
       {currentModerators?.map((m: User) => (
         <BasicChip
           key={m._id}
@@ -127,8 +125,10 @@ function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
       >
         <StyledContentWrapper>
           {renderSearch()}
+          <StyledSearchResult>Search result</StyledSearchResult>
           {searchResult && renderSearchResult()}
           {noUserFound === true && <p>No user found</p>}
+          <StyledModeratorsTitle>Current Moderators:</StyledModeratorsTitle>
           {currentModerators.length > 0 && renderModerators()}
         </StyledContentWrapper>
         {renderSaveModerators()}

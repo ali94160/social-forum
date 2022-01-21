@@ -28,7 +28,7 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
   );
 
   const renderContent = () => (
-    <StyledContentWrapper>
+    <StyledContentWrapper onClick={handleDetailPage}>
       <StyledTitle>{post.title}</StyledTitle>
       <StyledContent>{post.content}</StyledContent>
     </StyledContentWrapper>
@@ -47,11 +47,11 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
   );
 
   const handleDetailPage = () => {
-    //history.push(`/posts/${post._id}`);
+    history.push(`/posts/${post._id}`);
   };
 
   return (
-    <StyledCardWrapper onClick={handleDetailPage}>
+    <StyledCardWrapper>
       {renderAvatar()}
       {renderContent()}
       {renderComment()}
