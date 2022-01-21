@@ -21,8 +21,6 @@ function PostDetailPage() {
   }, []);
 
   useEffect(() => {
-    console.log('do we get here?');
-    
     handleComments();
   }, [post]);
 
@@ -32,7 +30,7 @@ function PostDetailPage() {
   };
 
   const handleComments = async () => {
-    
+    console.log('handle comments')
     if (post && post._id) {
       await getComments(post._id);
     }
@@ -52,7 +50,7 @@ function PostDetailPage() {
         <CommentSection
           username={user.username}
           postId={id}
-          updateComments={handleComments}
+          handleComments={handleComments}
         />
       )}
       {post?.ownerId?._id ? (
