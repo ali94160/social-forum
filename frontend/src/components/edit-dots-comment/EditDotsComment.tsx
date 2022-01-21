@@ -13,7 +13,7 @@ interface Props {
 function EditDotsComment({ commentId, isCommentOwner, postId }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const {deleteMyComment, getComments, comments} = useComment();
+  const {deleteMyComment, getComments} = useComment();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
