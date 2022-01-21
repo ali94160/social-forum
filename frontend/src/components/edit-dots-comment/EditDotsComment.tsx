@@ -38,7 +38,7 @@ function EditDotsComment({ commentId, isCommentOwner }: Props) {
         "aria-labelledby": "basic-button",
       }}
     >
-      <MenuItem onClick={() => {console.log ('wow ban'); handleClose(); }}>Ban user</MenuItem> {/* visible to who? */}
+      <MenuItem onClick={() => {console.log ('wow ban'); handleClose(); }}>Ban user</MenuItem> {/* visible to admin*/}
       {isCommentOwner && <MenuItem onClick={handleDeleteMyComment}>Delete my comment</MenuItem>}
     </Menu>
   );
