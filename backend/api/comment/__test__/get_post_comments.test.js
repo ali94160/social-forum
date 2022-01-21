@@ -78,8 +78,10 @@ describe("Test to get comments from post", () => {
     });
     
     test("There are no comments", async () => {
-      await Comment.deleteMany({ content: testComment1.content });
-      await Comment.deleteMany({ content: testComment2.content });
+      for (comment of comments) {
+        await Comment.findByIdAndDelete(comment._id);
+      }
+      
       const res = await request.get("/api/post/comments/" + post._id);
       expect(res.statusCode).toBe(404);
       await Post.findByIdAndDelete(post._id);
