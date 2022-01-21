@@ -30,7 +30,7 @@ const randomComment = async () => {return await commentModel.findOne({}).exec();
       });
     });
 
-    describe("User enters complete rubbish postId", () => {
+    describe("User enters complete rubbish comment id", () => {
       test("/api/user/comments/" + randomComment._id, async () => {
         const res = await testSession.delete("/api/user/comments/" + Math.random());
         expect(res.statusCode).toBe(500);
