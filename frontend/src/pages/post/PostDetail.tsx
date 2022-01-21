@@ -42,7 +42,6 @@ function PostDetailPage() {
     // LÄGG TILL 404 SIDAAAAA
     return;
   }
-
   return (
     <div>
       <Post post={post} me={user} />

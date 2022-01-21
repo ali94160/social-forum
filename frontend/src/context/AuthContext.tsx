@@ -24,7 +24,7 @@ function AuthContextProvider({ children }: Props) {
       },
       body: JSON.stringify(user),
     });
-
+    whoAmI();
     return response.status === 200;
   };
   const register = async (user: RegisterUser) => {

@@ -1,5 +1,5 @@
-import { CommentItem } from './Comment';
-import { User } from './User';
+import { CommentItem } from "./Comment";
+import { User } from "./User";
 
 export interface PostObj {
   post: {
@@ -9,6 +9,7 @@ export interface PostObj {
     categoryId: string;
     commentLength: number;
     createdDate: string;
+    moderatorsIds: [User];
     ownerId?: {
       _id: string;
       username: string;
@@ -26,7 +27,7 @@ export interface PostItem {
   createdDate: string;
   ownerId: User;
   moderatorsIds: [User];
-  comments?: CommentItem[] // change when comments interface has been added 
+  comments?: CommentItem[]; // change when comments interface has been added
 }
 
 export interface UpdatePost {

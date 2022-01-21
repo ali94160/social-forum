@@ -10,7 +10,6 @@ interface Props {
 }
 
 function UserContextProvider({ children }: Props) {
-
   const deleteSelf = async (password: string) => {
     const response: Response = await fetch("/api/user/self", {
       method: "DELETE",
@@ -23,8 +22,21 @@ function UserContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
+  const isAdmin = async () => {
+    const response = await fetch('/api/admin');
+    return response.status;
+  };
+  
+  const searchUser = async (username: string) => {
+    const response: Response = await fetch(`/api/users/username/${username}`);
+    const user = await response.json();
+    return user;
+  };
+
   const values = {
-    deleteSelf
+    deleteSelf,
+    isAdmin,
+    searchUser
   };
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
