@@ -3,10 +3,16 @@ const { expect } = require("@jest/globals");
 const supertest = require("supertest");
 const session = require("supertest-session");
 const request = supertest(app);
-const { post, postId, wrongPostId, moderatorsList1, moderatorsList2 } = require("./mock_data");
-const { user1Login } = require("../../auth/__test__/mock_data");
+const { user1Login, user3Login } = require("../../auth/__test__/mock_data");
 const postModel = require("../../../models/post");
-
+const {
+  post,
+  postId,
+  wrongPostId,
+  moderatorsList0,
+  moderatorsList1,
+  moderatorsList2
+} = require("./mock_data");
 
 describe("Handle moderators", () => {
   test("That visitor can not reach endpoint when not logged in", async () => {
@@ -31,7 +37,7 @@ describe("Handle moderators", () => {
     await testSession.post("/api/login").send(user1Login);
     newPost = await testSession.post("/api/user/posts").send(post);
     const res = await testSession.put("/api/posts/" + newPost.body._id + "/moderators").send(moderatorsList2);
-    const result = await postModel.findOne({ _id: newPost.body._id }).lean().exec();
+    const result = await postModel.findOne({ _id: newPost.body._id }, ["moderatorsIds"]).lean().exec();
     expect(res.statusCode).toBe(200);
     expect(result.moderatorsIds).toHaveLength(2);
   });
@@ -39,11 +45,19 @@ describe("Handle moderators", () => {
   test("That post-owner can remove moderators", async () => {
     await testSession.post("/api/login").send(user1Login);
     const res = await testSession.put("/api/posts/" + newPost.body._id + "/moderators").send(moderatorsList1);
-    const result = await postModel.findOne({ _id: newPost.body._id }).lean().exec();
+    const result = await postModel.findOne({ _id: newPost.body._id }, ["moderatorsIds"]).lean().exec();
     expect(res.statusCode).toBe(200);
     expect(result.moderatorsIds).toHaveLength(1);
-    await postModel.deleteMany({ title: "postTestTitle" }).exec();
   })
+  
+  test("That postmoderator can remove themself as moderator", async () => {
+    await testSession.post("/api/login").send(user3Login);
+    const res = await testSession.put("/api/posts/" + newPost.body._id + "/moderators").send(moderatorsList0);
+    const result = await postModel.findOne({ _id: newPost.body._id }, ["moderatorsIds"]).lean().exec();
+    expect(res.statusCode).toBe(200);
+    expect(result.moderatorsIds).toHaveLength(0);
+    // await postModel.deleteMany({ title: "postTestTitle" }).exec();
+  });
 
   afterAll(done => {  
   mongoose.connection.close()
