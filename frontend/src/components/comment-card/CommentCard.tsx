@@ -64,7 +64,7 @@ function CommentCard({ comment, ownerId, moderators }: Props) {
           <StyledComment>{comment.content}</StyledComment>
         </RightGrid>
         <Grid item xs={1}>
-        {user && <EditDotsComment commentId={comment._id} isCommentOwner={isCommentOwner}/>}
+        {user && <EditDotsComment commentId={comment._id} isCommentOwner={isCommentOwner} postId={comment.postId} />}
         </Grid>
         <Grid container>
           <StyledDate>
