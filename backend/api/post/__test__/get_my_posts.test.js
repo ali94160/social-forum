@@ -23,7 +23,7 @@ describe("Test getting users own posts", () => {
       testSession = session(app);
 
       // delete all the test posts in db
-      await Post.deleteMany({ title: post.title });
+      await Post.findOneAndDelete({ title: post.title });
       // login the user first and create a test post
       await testSession.post("/api/login").send(user2Login);
       await testSession.post("/api/user/posts").send(post);
