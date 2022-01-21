@@ -40,6 +40,18 @@ function Avatar({ justify, margin, backgroundColor }: Props) {
     },
   ];
 
+  const adminMenuItems = [
+    { title: "Admin Panel", method: () => history.push("/admin") },
+    {
+      title: "Logout",
+      method: () => {
+        setShowDropDown(false);
+        logout();
+        history.push("/");
+      },
+    }
+  ]
+
   return (
     <>
       <StyledAvatar
@@ -50,7 +62,7 @@ function Avatar({ justify, margin, backgroundColor }: Props) {
       >
         {user && user.username.charAt(0).toUpperCase()}
       </StyledAvatar>
-      <DropDownMenu menuItems={menuItems} />
+      <DropDownMenu menuItems={ user.roles.includes("ADMIN") ? adminMenuItems : menuItems} />
       <ConfirmDeleteUserModal
         isConfirmDeleteModal={isConfirmDeleteModal}
         toggleConfirmDeleteModal={toggleConfirmDeleteModal}
