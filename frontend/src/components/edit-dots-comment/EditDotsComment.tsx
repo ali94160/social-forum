@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { StyledDots, StyledBtn } from "./StyledEditDots";
@@ -7,12 +7,14 @@ import { useComment } from "../../context/CommentContext";
 interface Props {
   commentId: string;
   isCommentOwner: boolean;
+  postId: string;
 }
 
-function EditDotsComment({ commentId, isCommentOwner }: Props) {
+function EditDotsComment({ commentId, isCommentOwner, postId }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const {deleteMyComment} = useComment();
+  const {deleteMyComment, getComments, comments} = useComment();
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -23,7 +25,7 @@ function EditDotsComment({ commentId, isCommentOwner }: Props) {
   const handleDeleteMyComment = async () => {
     const isSuccess = await deleteMyComment(commentId);
     if(isSuccess){
-      // update comments list.
+      getComments(postId);
     }
     handleClose();
   };
