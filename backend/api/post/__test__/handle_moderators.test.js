@@ -39,7 +39,7 @@ describe("Handle moderators", () => {
     const res = await testSession.put("/api/posts/" + newPost.body._id + "/moderators").send(moderatorsList2);
     const result = await postModel.findOne({ _id: newPost.body._id }, ["moderatorsIds"]).lean().exec();
     expect(res.statusCode).toBe(200);
-    expect(result.moderatorsIds).toHaveLength(2);
+    expect(result.moderatorsIds).toHaveLength(moderatorsList2.moderatorsIds.length);
   });
   
   test("That post-owner can remove moderators", async () => {
@@ -47,7 +47,7 @@ describe("Handle moderators", () => {
     const res = await testSession.put("/api/posts/" + newPost.body._id + "/moderators").send(moderatorsList1);
     const result = await postModel.findOne({ _id: newPost.body._id }, ["moderatorsIds"]).lean().exec();
     expect(res.statusCode).toBe(200);
-    expect(result.moderatorsIds).toHaveLength(1);
+    expect(result.moderatorsIds.length).toBeLessThan(moderatorsList2.moderatorsIds.length);
   })
   
   test("That postmoderator can remove themself as moderator", async () => {
