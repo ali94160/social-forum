@@ -13,7 +13,7 @@ function PostDetailPage() {
   const { id } = useParams<string | any>();
   const { user } = useAuth();
   const { getPost, post } = usePost();
-  const { getComments } = useComment();
+  const { getComments, comments } = useComment();
   const [status, setStatus] = useState(0);
 
   useEffect(() => {
@@ -21,6 +21,8 @@ function PostDetailPage() {
   }, []);
 
   useEffect(() => {
+    console.log('do we get here?');
+    
     handleComments();
   }, [post]);
 
