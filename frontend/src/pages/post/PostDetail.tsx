@@ -30,7 +30,6 @@ function PostDetailPage() {
   };
 
   const handleComments = async () => {
-    console.log('handle comments')
     if (post && post._id) {
       await getComments(post._id);
     }
