@@ -71,4 +71,12 @@ module.exports = user = (app) => {
       }
     }
   );
+
+  app.get('/api/admin', authUserLoggedIn, authRole([roles.ADMIN]), (req, res) => {
+    try {
+      res.sendStatus(200);
+    } catch (error) {
+      res.sendStatus(404);
+    }
+  });
 };
