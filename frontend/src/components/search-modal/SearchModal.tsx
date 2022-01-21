@@ -113,15 +113,15 @@ function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
         isOpen={isOpen}
         handleClose={() => handleClose(setSearchResult)}
       >
-        <>
+        <div style={{ minHeight: "10vh" }}>
           {renderSearch()}
           {searchResult && renderSearchResult()}
           {noUserFound === true && <p>No user found</p>}
-          {moderators.length > 0 && renderModerators()}
-          <StyledSaveButton onClick={handleSaveModerators}>
-            Save changes
-          </StyledSaveButton>
-        </>
+          {currentModerators.length > 0 && renderModerators()}
+        </div>
+        <StyledSaveButton onClick={handleSaveModerators}>
+          Save changes
+        </StyledSaveButton>
       </BasicModal>
     </>
   );
