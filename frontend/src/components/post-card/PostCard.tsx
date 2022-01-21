@@ -13,12 +13,11 @@ import {
   StyledCommentSection,
 } from "./StyledPostCard";
 import { PostObj } from "../../interfaces/Post";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import EditDotsPost from "../edit-dots-post/EditDotsPost";
 
 function PostCard({ post, isInMyPostPage }: PostObj) {
   const history = useHistory();
-
   const renderAvatar = () => (
     <StyledAvatarWrapper>
       <StyledAvatar>
@@ -29,7 +28,7 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
   );
 
   const renderContent = () => (
-    <StyledContentWrapper>
+    <StyledContentWrapper onClick={handleDetailPage}>
       <StyledTitle>{post.title}</StyledTitle>
       <StyledContent>{post.content}</StyledContent>
     </StyledContentWrapper>
@@ -37,7 +36,9 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
 
   const renderComment = () => (
     <StyledCommentWrapper>
-      {isInMyPostPage && <EditDotsPost postId={post._id} />}
+      {isInMyPostPage && (
+        <EditDotsPost postId={post._id} moderators={post.moderatorsIds} />
+      )}
       <StyledCommentSection>
         <StyledCommentIcon />
         <StyledCommentLength>{post.commentLength}</StyledCommentLength>
@@ -47,10 +48,10 @@ function PostCard({ post, isInMyPostPage }: PostObj) {
 
   const handleDetailPage = () => {
     history.push(`/posts/${post._id}`);
-  }
+  };
 
   return (
-    <StyledCardWrapper onClick={handleDetailPage}>
+    <StyledCardWrapper>
       {renderAvatar()}
       {renderContent()}
       {renderComment()}

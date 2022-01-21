@@ -1,12 +1,15 @@
 const userModel = require("../../models/user");
 const roles = require("../../models/role");
-const { notBannedUser, userNotExists } = require("../../middlewares/validation");
+const {
+  notBannedUser,
+  userNotExists,
+} = require("../../middlewares/validation");
 const {
   authUserLoggedIn,
   authUserNotLoggedIn,
   authRole,
 } = require("../../middlewares/acl");
-const { hashUtil } = require('../utils')
+const { hashUtil } = require("../utils");
 
 module.exports = user = (app) => {
   //login
@@ -17,7 +20,6 @@ module.exports = user = (app) => {
     async (req, res) => {
       const hash = hashUtil(req.body?.password);
       let user;
-
       try {
         user = await userModel.findOne({
           email: req.body.email,
