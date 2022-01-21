@@ -51,11 +51,12 @@ describe("Handle moderators", () => {
   })
   
   test("That postmoderator can remove themself as moderator", async () => {
-    await testSession.post("/api/login").send(user3Login);
+    const user = await testSession.post("/api/login").send(user3Login);
     const res = await testSession.put("/api/posts/" + newPost.body._id + "/moderators").send(moderatorsList0);
     const result = await postModel.findOne({ _id: newPost.body._id }, ["moderatorsIds"]).lean().exec();
     expect(res.statusCode).toBe(200);
-    expect(result.moderatorsIds).toHaveLength(0);
+    expect(result.moderatorsIds).not.toContain(user._id);
+    await postModel.findByIdAndDelete({ _id: newPost.body._id }).exec();
   });
 
   afterAll(done => {  
