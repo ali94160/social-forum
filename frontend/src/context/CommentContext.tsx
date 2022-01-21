@@ -62,5 +62,6 @@ function CommentContextProvider({ children }: Props) {
     <CommentContext.Provider value={values}>{children}</CommentContext.Provider>
   );
 }
+}
 
 export default CommentContextProvider;
