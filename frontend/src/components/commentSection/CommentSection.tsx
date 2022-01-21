@@ -24,9 +24,9 @@ function CommentSection({ username, postId, handleComments }: Props) {
       content: trimComment,
       postId: postId,
     };
-    addComment(newComment);
+    await addComment(newComment);
     setComment("");
-    handleComments();
+    await handleComments();
     window.scrollTo(0, document.body.scrollHeight);
   };
 
