@@ -10,6 +10,7 @@ module.exports = function (app) {
       return;
     }
     try {
+      await Post.findById(req.body.postId);
       let newComment = new Comment({
         ...req.body,
         createdDate: Date.now(),
@@ -20,7 +21,7 @@ module.exports = function (app) {
         res.sendStatus(400);
         return;
       }
-      res.sendStatus(200);
+      res.status(200).json(result);
       return;
     } catch (error) {
       res.sendStatus(400);
