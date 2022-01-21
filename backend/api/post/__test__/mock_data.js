@@ -21,7 +21,7 @@ const user2Login = {
   password: "123"
 }
 
-const postId = "61e51b44d7e4aef1f1fc1005"
+const postId = "61ea7d53fcdcf6ff25d72c9e"
 const wrongPostId = "62e51b44d7e4aef1f1fc1005"
 
 const moderatorsList0 = { moderatorsIds: [] }
