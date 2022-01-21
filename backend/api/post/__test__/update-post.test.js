@@ -1,7 +1,7 @@
 const app = require("../../../app");
 const session = require("supertest-session");
 const Post = require("../../../models/post");
-const { user1Login } = require("../../auth/__test__/mock_data");
+const { user1Login, user2Login } = require("../../auth/__test__/mock_data");
 const { post, updPost, postId, wrongPostId } = require("./mock_data");
 const roles = require('../../../models/role');
 
@@ -48,7 +48,7 @@ describe("Test if a user can update their post", () => {
   
   describe('Two users', () => {
     test('/api/posts/id user cannot update post they don\'t own', async () => {
-      await testSession.post('/api/login').send(user1Login);
+      await testSession.post('/api/login').send(user2Login);
       const updRes = await testSession.put(`/api/posts/${postId}`).send(updPost);
   
       expect(updRes.statusCode).toBe(401);
