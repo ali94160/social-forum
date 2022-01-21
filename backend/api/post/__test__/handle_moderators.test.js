@@ -56,12 +56,11 @@ describe("Handle moderators", () => {
     const result = await postModel.findOne({ _id: newPost.body._id }, ["moderatorsIds"]).lean().exec();
     expect(res.statusCode).toBe(200);
     expect(result.moderatorsIds).toHaveLength(0);
-    // await postModel.deleteMany({ title: "postTestTitle" }).exec();
   });
 
   afterAll(done => {  
   mongoose.connection.close()
   done()
-})
+  })
 
 })
