@@ -11,7 +11,6 @@ interface Props {
 
 function EditDotsComment({ commentId, isCommentOwner }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [openModal, setOpenModal] = React.useState(false);
   const open = Boolean(anchorEl);
   const {deleteMyComment} = useComment();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
