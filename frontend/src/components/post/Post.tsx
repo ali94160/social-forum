@@ -57,7 +57,7 @@ function Post({post, me}: Props) {
   const handleModeratorStr = () => {
     const str = formatModStr(post);
     setModerators(str);
-  }
+  };
 
   const handleEdit = async () => {
     setEdit(!edit);
@@ -78,20 +78,21 @@ function Post({post, me}: Props) {
   return (
     <StyledPost>
       <StyledGrid container spacing={2}>
-
         <Grid
-          item xs={2}
+          item
+          xs={2}
           container
           direction="column"
           spacing={2}
           justifyContent="center"
-          alignItems="center">
-            <StyledAvatarGrid item xs>
-              <StyledAvatar style={{margin: '0 auto', marginBottom: '10px'}}>
-                {post?.ownerId?.username.charAt(0).toUpperCase()}
+          alignItems="center"
+        >
+          <StyledAvatarGrid item xs>
+            <StyledAvatar style={{ margin: "0 auto", marginBottom: "10px" }}>
+              {post?.ownerId?.username.charAt(0).toUpperCase()}
             </StyledAvatar>
             {post?.ownerId?.username}
-            </StyledAvatarGrid>
+          </StyledAvatarGrid>
         </Grid>
         
         <Grid
@@ -118,12 +119,7 @@ function Post({post, me}: Props) {
               <CloseIcon onClick={() => setEdit(!edit)} /></>) : ''}
         </StyledLeftGrid>
 
-        <StyledBottomGrid
-          item xs={12}
-          container
-          direction="row"
-          spacing={2}
-          >   
+        <StyledBottomGrid item xs={12} container direction="row" spacing={2}>
           <Grid item xs={8}>
             Post moderators: {moderators}
           </Grid>
@@ -134,7 +130,7 @@ function Post({post, me}: Props) {
 
       </StyledGrid> 
     </StyledPost>
-  )
+  );
 }
 
 export default Post;

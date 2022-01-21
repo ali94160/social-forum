@@ -10,6 +10,7 @@ module.exports = function (app) {
       return;
     }
     try {
+      await Post.findById(req.body.postId);
       let newComment = new Comment({
         ...req.body,
         createdDate: Date.now(),
@@ -31,14 +32,17 @@ module.exports = function (app) {
   app.get("/api/post/comments/:postId", async (req, res) => {
     try {
       let comments = await Comment.find({ postId: req.params.postId })
+        .sort({ createdDate: req.query.createdDate })
+        .collation({ locale: "en" })
         .populate("writerId", ["username"])
         .lean()
         .exec();
+
       if (comments.length > 0) {
         res.status(200).json(comments);
         return;
       }
-      res.sendStatus(204);
+      res.sendStatus(404);
       return;
     } catch (error) {
       res.sendStatus(404);
@@ -59,11 +63,11 @@ module.exports = function (app) {
         let isAdmin = user.roles.includes(roles.ADMIN);
         let isOwner;
         let isModerator;
-        
+
         if (!isAdmin) {
           const post = await Post.findOne({ _id: comment.postId }).exec();
           isOwner = post.ownerId.toString() === user._id;
-          if (!isOwner) { 
+          if (!isOwner) {
             isModerator = post.moderatorsIds.includes(user._id);
           }
         }

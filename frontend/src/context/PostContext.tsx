@@ -27,7 +27,7 @@ function PostContextProvider({ children }: Props) {
   };
 
   const getPost = async (id: string) => {
-    const response: Response = await fetch('/api/posts/' + id);
+    const response: Response = await fetch("/api/posts/" + id);
     const body = await response.json();
     if (response.status === 200) {
       setPost(body);
@@ -83,6 +83,18 @@ function PostContextProvider({ children }: Props) {
     }
   }
 
+  const updateModerators = async(postId: string, moderators: string[]) => {
+    const res = await fetch(`/api/posts/${postId}/moderators`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(moderators),
+    });
+
+    return res.status === 200;
+  }
+
   const values = {
     createPost,
     getPosts,
@@ -92,7 +104,8 @@ function PostContextProvider({ children }: Props) {
     deletePost,
     getPost,
     updatePost,
-    post
+    post,
+    updateModerators,
   };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;

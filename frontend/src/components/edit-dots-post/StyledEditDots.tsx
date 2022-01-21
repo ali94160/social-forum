@@ -7,6 +7,6 @@ export const StyledDots = styled(MoreVertIcon)`
 `;
 
 export const StyledBtn = styled.button`
-  background: none;
   border: none;
+  background: none;
 `;

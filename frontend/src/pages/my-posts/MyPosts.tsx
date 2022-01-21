@@ -10,6 +10,7 @@ function MyPosts() {
     getMyPosts();
   }, []);
 
+
   return (
     <div>
       {myPosts &&
