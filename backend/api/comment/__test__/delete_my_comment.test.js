@@ -5,7 +5,7 @@ const request = supertest(app);
 const session = require("supertest-session");
 const commentModel = require("../../../models/comment");
 const postModel = require("../../../models/post");
-const { newComment } = require("./mock_data");
+const { newComment, testPost } = require("./mock_data");
 const { user1Login } = require("../../auth/__test__/mock_data");
 
 const randomComment = async () => {return await commentModel.findOne({}).exec();}
@@ -40,18 +40,19 @@ const randomComment = async () => {return await commentModel.findOne({}).exec();
 
     describe("User creates a comment and then removes it", () => {
       test("/api/user/comments/:id", async () => {
-        const randomPost = await postModel.findOne({}).exec();
-        if (!randomPost){
-          return;
-        }
-        const comment = await testSession.post("/api/comments").send({...newComment, postId: randomPost._id});
+        const postRes = await testSession.post("/api/user/posts").send(testPost);
+        const postId = postRes.body._id;
+
+        const comment = await testSession.post("/api/comments").send({...newComment, postId});
         const res = await testSession.delete("/api/user/comments/" + comment.body._id);
+        await postModel.findByIdAndDelete(postId)
         expect(res.statusCode).toBe(200);
       });
     });
 
     
     afterAll(async function () {
+      
       await testSession.post("/api/logout")
       testSession = null;
       mongoose.connection.close();
