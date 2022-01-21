@@ -13,7 +13,7 @@ function PostDetailPage() {
   const { id } = useParams<string | any>();
   const { user } = useAuth();
   const { getPost, post } = usePost();
-  const { getComments, comments } = useComment();
+  const { getComments} = useComment();
   const [status, setStatus] = useState(0);
 
   useEffect(() => {
@@ -21,9 +21,11 @@ function PostDetailPage() {
   }, []);
 
   useEffect(() => {
-    console.log('do we get here?');
-    
+    let mounted = true;
+    if(mounted){
     handleComments();
+    }
+    return () => {mounted = false;} //unmount
   }, [post]);
 
   const handlePost = async () => {
@@ -32,7 +34,6 @@ function PostDetailPage() {
   };
 
   const handleComments = async () => {
-    
     if (post && post._id) {
       await getComments(post._id);
     }
