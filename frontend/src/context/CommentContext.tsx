@@ -37,6 +37,7 @@ function CommentContextProvider({ children }: Props) {
         "content-type": "application/json",
       },
     });
+    return res.status === 200;
   }
 
   const getComments = async (postId: string) => {
