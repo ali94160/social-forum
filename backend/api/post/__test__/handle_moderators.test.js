@@ -3,8 +3,8 @@ const { expect } = require("@jest/globals");
 const supertest = require("supertest");
 const session = require("supertest-session");
 const request = supertest(app);
-const { user1Login, user3Login } = require("../../auth/__test__/mock_data");
 const postModel = require("../../../models/post");
+const { user1Login, user3Login } = require("../../auth/__test__/mock_data");
 const {
   post,
   postId,
