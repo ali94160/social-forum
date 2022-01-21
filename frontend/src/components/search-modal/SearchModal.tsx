@@ -31,7 +31,7 @@ interface TrimmedUser {
 function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
   const { updateModerators } = usePost();
   const [searchForUser, setSearchForUser] = useState("");
-  const [searchResult, setSearchResult] = useState<null | TrimmedUser>();
+  const [searchResult, setSearchResult] = useState<null | TrimmedUser>(null);
   const [noUserFound, setNoUserFound] = useState<null | boolean>(null);
   const [currentModerators, setCurrentModerators] = useState(moderators);
   const { searchUser } = useUser();
@@ -125,9 +125,13 @@ function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
       >
         <StyledContentWrapper>
           {renderSearch()}
-          <StyledSearchResult>Search result</StyledSearchResult>
+          <StyledSearchResult addMargin={searchResult === null}>
+            Search result
+          </StyledSearchResult>
           {searchResult && renderSearchResult()}
-          <p>{noUserFound ? "No user found" : ""}</p>
+          {noUserFound && (
+            <p style={{ height: "32px", margin: "0" }}>No user found</p>
+          )}
           <StyledModeratorsTitle>Current Moderators:</StyledModeratorsTitle>
           {currentModerators.length > 0 && renderModerators()}
         </StyledContentWrapper>

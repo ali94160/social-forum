@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface Props {
+  addMargin: boolean;
+}
+
 export const StyledFormWrapper = styled.form`
   display: flex;
   gap: 0.5rem;
@@ -15,10 +19,11 @@ export const StyledButton = styled.button`
   border-radius: 3px;
 `;
 
-export const StyledSearchResult = styled.p`
+export const StyledSearchResult = styled.p<Props>`
   font-size: 1.3rem;
   color: grey;
   margin: 0.5rem 0;
+  margin-bottom: ${(props) => (props.addMargin ? "3rem" : "0.5rem")};
 `;
 
 export const StyledUsername = styled.p`
@@ -50,4 +55,4 @@ export const StyledSaveButton = styled.button`
 
 export const StyledContentWrapper = styled.div`
   min-height: 10vh;
-`
+`;
