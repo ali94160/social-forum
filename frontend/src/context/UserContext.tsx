@@ -24,13 +24,7 @@ function UserContextProvider({ children }: Props) {
   };
 
   const isAdmin = async () => {
-    const response = await fetch('/admin', {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      }
-    });
-    console.log('what is response.status from context', response.status);
+    const response = await fetch('/api/admin');
     return response.status;
   };
 
