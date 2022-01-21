@@ -8,6 +8,7 @@ import {
   StyledModeratorsWrapper,
   StyledModeratorsTitle,
   StyledSaveButton,
+  StyledContentWrapper,
 } from "./StyledSearchModal";
 import { useUser } from "../../context/UserContext";
 import BasicChip from "../basics/basic-chip/BasicChip";
@@ -64,7 +65,12 @@ function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
   };
 
   const handleSaveModerators = () => {
-    updateModerators(postId, currentModerators);
+    const moderatorsIds = currentModerators.map((m: User) => m._id);
+    const moderatorObj = {
+      moderatorsIds,
+    };
+    updateModerators(postId, moderatorObj);
+    handleClose(setSearchResult);
   };
 
   const renderSearch = () => (
@@ -107,21 +113,25 @@ function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
     </StyledModeratorsWrapper>
   );
 
+  const renderSaveModerators = () => (
+    <StyledSaveButton onClick={handleSaveModerators}>
+      Save changes
+    </StyledSaveButton>
+  );
+
   return (
     <>
       <BasicModal
         isOpen={isOpen}
         handleClose={() => handleClose(setSearchResult)}
       >
-        <div style={{ minHeight: "10vh" }}>
+        <StyledContentWrapper>
           {renderSearch()}
           {searchResult && renderSearchResult()}
           {noUserFound === true && <p>No user found</p>}
           {currentModerators.length > 0 && renderModerators()}
-        </div>
-        <StyledSaveButton onClick={handleSaveModerators}>
-          Save changes
-        </StyledSaveButton>
+        </StyledContentWrapper>
+        {renderSaveModerators()}
       </BasicModal>
     </>
   );

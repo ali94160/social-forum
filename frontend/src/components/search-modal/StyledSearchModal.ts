@@ -10,7 +10,7 @@ export const StyledButton = styled.button`
   padding: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  background: grey;
+  background: var(--dark-teal);
   color: white;
   border-radius: 3px;
 `;
@@ -39,7 +39,7 @@ export const StyledSaveButton = styled.button`
   padding: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  background: green;
+  background: var(--dark-teal);
   color: white;
   border-radius: 3px;
   float: right;
@@ -47,3 +47,7 @@ export const StyledSaveButton = styled.button`
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 100%;
 `;
+
+export const StyledContentWrapper = styled.div`
+  min-height: 10vh;
+`
