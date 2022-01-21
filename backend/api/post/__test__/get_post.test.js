@@ -57,6 +57,7 @@ describe("Test get posts", () => {
       expect(res.statusCode).toBe(200);
       expect(res.body).toStrictEqual(expected);
     });
+    
   });
 
   describe("Get posts with incorrect query", () => {
@@ -64,5 +65,12 @@ describe("Test get posts", () => {
       let res = await request.get("/api/posts?title=123");
       expect(res.statusCode).toBe(400);
     });
+    
+  });
+
+  
+  afterAll((done) => {
+    mongoose.connection.close();
+    done();
   });
 });

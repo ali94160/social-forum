@@ -47,4 +47,9 @@ describe("Test to add a comment", () => {
     expect(user).toBeDefined()
     expect(res.statusCode).toBe(400);
   });
+
+  afterAll(done => {
+    mongoose.connection.close()
+    done()
+  })
 });
