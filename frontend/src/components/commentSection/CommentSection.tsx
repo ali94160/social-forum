@@ -27,7 +27,6 @@ function CommentSection({ username, postId, handleComments }: Props) {
     await addComment(newComment);
     setComment("");
     await handleComments();
-    window.scrollTo(0, document.body.scrollHeight);
   };
 
   return (
