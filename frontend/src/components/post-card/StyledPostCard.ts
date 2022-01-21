@@ -12,7 +12,7 @@ export const StyledCardWrapper = styled.div`
   padding: 0.5rem;
   margin-bottom: 1rem;
 
-  :hover{
+  :hover {
     opacity: 0.8;
     cursor: pointer;
   }

@@ -3,8 +3,8 @@ function authUserNotLoggedIn(req, res, next) {
     res.sendStatus(400);
     return;
   }
-  
-  next()
+
+  next();
 }
 
 function authUserLoggedIn(req, res, next) {
@@ -13,28 +13,27 @@ function authUserLoggedIn(req, res, next) {
     return;
   }
 
-  next()
+  next();
 }
 
 function authRole(roles) {
   return (req, res, next) => {
-
-    let found = false
+    let found = false;
     for (let foundRole of req.session.user.roles) {
       if (roles.includes(foundRole)) {
-        found = true
+        found = true;
       }
     }
-    
+
     if (!found) {
       return res.sendStatus(401);
     }
-    next()
-  }
+    next();
+  };
 }
 
 module.exports = {
   authUserNotLoggedIn,
   authUserLoggedIn,
-  authRole
-}
+  authRole,
+};
