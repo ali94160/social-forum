@@ -3,6 +3,14 @@ const newComment = {
   postId: "61e53014a16cbc6b2777fb8b",
 };
 
+const testComment1 = {
+  content: "b-firstCommentedTestComment"
+};
+
+const testComment2 = {
+  content: "a-secondCommentedTestComment",
+};
+
 const testPost = {
   title: "postTestTitleForComment",
   content: "postTestContent",
@@ -18,5 +26,7 @@ const user1Login = {
 module.exports = {
   newComment,
   testPost,
-  user1Login
+  user1Login,
+  testComment1,
+  testComment2,
 };
