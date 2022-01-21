@@ -10,13 +10,14 @@ import { useComment } from "../../context/CommentContext";
 interface Props {
   username: string;
   postId: string;
+  updateComments: Function;
 }
 
-function CommentSection({ username, postId }: Props) {
+function CommentSection({ username, postId, updateComments }: Props) {
   const [comment, setComment] = useState("");
   const { addComment } = useComment();
 
-  const handleAddComment = () => {
+  const handleAddComment = async () => {
     const trimComment = comment.trim();
     if (!trimComment) return;
     const newComment = {
@@ -25,6 +26,8 @@ function CommentSection({ username, postId }: Props) {
     };
     addComment(newComment);
     setComment("");
+    await updateComments();
+    window.scrollTo(0, document.body.scrollHeight);
   };
 
   return (

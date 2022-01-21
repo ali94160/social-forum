@@ -1,7 +1,7 @@
 const postModel = require("../../models/post");
 const commentModel = require("../../models/comment");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
-const { isPostOwner, handleModerator } = require("../../middlewares/postOwner");
+const { isPostOwner, handleModerator, handleRoles } = require("../../middlewares/postOwner");
 const roles = require("../../models/role");
 
 module.exports = function (app) {
@@ -74,6 +74,7 @@ module.exports = function (app) {
         res.sendStatus(400);
         return;
       }
+      handleRoles(req.session.user._id, roles.POSTOWNER, true);
       res.status(200).json(newPost);
       return;
     } catch (error) {
@@ -148,7 +149,8 @@ module.exports = function (app) {
       let post = await postModel.findOne(filter).lean();
       await commentModel.deleteMany({ postId: post._id });
       await postModel.deleteOne(filter);
-
+      handleRoles(req.session.user._id, roles.POSTOWNER, true);
+      post.moderatorsIds.map(id => handleRoles(id, roles.POSTMODERATOR, false));
       res.sendStatus(200);
       return;
     } catch (error) {

@@ -75,13 +75,11 @@ module.exports = user = (app) => {
 
   //current user
   app.get(
-    "/api/whoAmI",
+    "/api/whoAmI", 
     authUserLoggedIn,
-    authRole([roles.USER, roles.ADMIN]),
-    (req, res) => {
-      let user = { ...req.session.user };
-      delete user.email;
-      delete user.password;
+    authRole([roles.USER, roles.ADMIN]), 
+    async (req, res) => {
+      const user = await userModel.findOne({email: req.session.user.email}, ["username", "roles"]).exec();
       res.json(user);
     }
   );
