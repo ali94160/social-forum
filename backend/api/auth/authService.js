@@ -77,9 +77,7 @@ module.exports = user = (app) => {
     authUserLoggedIn,
     authRole([roles.USER, roles.ADMIN]), 
     async (req, res) => {
-      let user = await userModel.findOne({email: req.session.user.email}).exec();
-      delete user.email;
-      delete user.password;
+      const user = await userModel.findOne({email: req.session.user.email}, ["username", "roles"]).exec();
       res.json(user);
     }
   );

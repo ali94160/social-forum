@@ -16,11 +16,12 @@ describe("Test get posts", () => {
         expect(typeof post.title).toBe("string");
 
         expect(post.ownerId).toBeDefined();
-        expect(post.ownerId._id).toBeDefined();
-        expect(typeof post.ownerId._id).toBe("string");
-        expect(post.ownerId.username).toBeDefined();
-        expect(typeof post.ownerId.username).toBe("string");
-
+        if (typeof ownerId === "object") {
+          expect(post.ownerId._id).toBeDefined();
+          expect(typeof post.ownerId._id).toBe("string");
+          expect(post.ownerId.username).toBeDefined();
+          expect(typeof post.ownerId.username).toBe("string");
+        }
         expect(post.createdDate).toBeDefined();
         expect(typeof post.createdDate).toBe("string");
 
@@ -56,6 +57,7 @@ describe("Test get posts", () => {
       expect(res.statusCode).toBe(200);
       expect(res.body).toStrictEqual(expected);
     });
+    
   });
 
   describe("Get posts with incorrect query", () => {
@@ -63,5 +65,12 @@ describe("Test get posts", () => {
       let res = await request.get("/api/posts?title=123");
       expect(res.statusCode).toBe(400);
     });
+    
+  });
+
+  
+  afterAll((done) => {
+    mongoose.connection.close();
+    done();
   });
 });

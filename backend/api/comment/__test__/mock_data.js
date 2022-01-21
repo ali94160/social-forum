@@ -1,12 +1,23 @@
 const newComment = {
   content: "testMockDataWillBeRemoved",
-  postId: "61e53014a16cbc6b2777fb8b",
+};
+const wrongComment = {
+  content: "testMockDataWillBeRemoved",
+  postId: "123",
+};
+
+const testComment1 = {
+  content: "b-firstCommentedTestComment"
+};
+
+const testComment2 = {
+  content: "a-secondCommentedTestComment",
 };
 
 const testPost = {
   title: "postTestTitleForComment",
   content: "postTestContent",
-  categoryId: "61dc3a622f8ecad1bc1367b2"
+  categoryId: "61dc3a622f8ecad1bc1367b2",
 };
 
 const user1Login = {
@@ -17,6 +28,9 @@ const user1Login = {
 
 module.exports = {
   newComment,
+  wrongComment,
   testPost,
-  user1Login
+  user1Login,
+  testComment1,
+  testComment2,
 };
