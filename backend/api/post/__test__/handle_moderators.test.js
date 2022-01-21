@@ -7,7 +7,6 @@ const postModel = require("../../../models/post");
 const { user1Login, user3Login } = require("../../auth/__test__/mock_data");
 const {
   post,
-  postId,
   wrongPostId,
   moderatorsList0,
   moderatorsList1,
@@ -15,13 +14,13 @@ const {
 } = require("./mock_data");
 
 describe("Handle moderators", () => {
+  let testSession = null;
+  let postId = "61ea8424131ed617f9b03f6e";
+
   test("That visitor can not reach endpoint when not logged in", async () => {
     const res = await request.put("/api/posts/" + postId + "/moderators");
     expect(res.statusCode).toBe(401);
   });
-  
-  let testSession = null;
-  let newPost;
 
   beforeAll(async () => {
     testSession = session(app);
@@ -35,28 +34,29 @@ describe("Handle moderators", () => {
 
   test("That post-owner can add moderators", async () => {
     await testSession.post("/api/login").send(user1Login);
-    newPost = await testSession.post("/api/user/posts").send(post);
-    const res = await testSession.put("/api/posts/" + newPost.body._id + "/moderators").send(moderatorsList2);
-    const result = await postModel.findOne({ _id: newPost.body._id }, ["moderatorsIds"]).lean().exec();
+    const postRes = await testSession.post("/api/user/posts").send(post);
+    postId = postRes.body._id;
+    const res = await testSession.put("/api/posts/" + postId + "/moderators").send(moderatorsList2);
+    const result = await postModel.findOne({ _id: postId }, ["moderatorsIds"]).lean().exec();
     expect(res.statusCode).toBe(200);
     expect(result.moderatorsIds).toHaveLength(moderatorsList2.moderatorsIds.length);
   });
   
   test("That post-owner can remove moderators", async () => {
     await testSession.post("/api/login").send(user1Login);
-    const res = await testSession.put("/api/posts/" + newPost.body._id + "/moderators").send(moderatorsList1);
-    const result = await postModel.findOne({ _id: newPost.body._id }, ["moderatorsIds"]).lean().exec();
+    const res = await testSession.put("/api/posts/" + postId + "/moderators").send(moderatorsList1);
+    const result = await postModel.findOne({ _id: postId }, ["moderatorsIds"]).lean().exec();
     expect(res.statusCode).toBe(200);
     expect(result.moderatorsIds.length).toBeLessThan(moderatorsList2.moderatorsIds.length);
   })
   
   test("That postmoderator can remove themself as moderator", async () => {
     const user = await testSession.post("/api/login").send(user3Login);
-    const res = await testSession.put("/api/posts/" + newPost.body._id + "/moderators").send(moderatorsList0);
-    const result = await postModel.findOne({ _id: newPost.body._id }, ["moderatorsIds"]).lean().exec();
+    const res = await testSession.put("/api/posts/" + postId + "/moderators").send(moderatorsList0);
+    const result = await postModel.findOne({ _id: postId }, ["moderatorsIds"]).lean().exec();
     expect(res.statusCode).toBe(200);
     expect(result.moderatorsIds).not.toContain(user._id);
-    await postModel.findByIdAndDelete({ _id: newPost.body._id }).exec();
+    await postModel.findByIdAndDelete({ _id: postId }).exec();
   });
 
   afterAll(done => {  
