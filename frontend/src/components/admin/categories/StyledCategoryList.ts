@@ -35,3 +35,24 @@ export const StyledDeleteIcon = styled(DeleteIcon)`
 export const StyledWrapper = styled.div`
   align-self: flex-end;
 `;
+
+export const StyledAddWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  padding-right: 10px;
+`;
+
+export const StyledHeader = styled.p`
+  font-weight: 600;
+  padding-right: 10px;
+
+`;
+
+export const StyledInputWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  margin: 0 auto;
+  gap: 10px;
+`;
