@@ -13,7 +13,7 @@ function PostDetailPage() {
   const { id } = useParams<string | any>();
   const { user } = useAuth();
   const { getPost, post } = usePost();
-  const { getComments, comments } = useComment();
+  const { getComments } = useComment();
   const [status, setStatus] = useState(0);
 
   useEffect(() => {
@@ -41,6 +41,7 @@ function PostDetailPage() {
     // LÄGG TILL 404 SIDAAAAA
     return;
   }
+
   return (
     <div>
       <Post post={post} me={user} />

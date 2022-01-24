@@ -19,7 +19,9 @@ describe("Test if a user can create a post", () => {
   test("To successfully create a post", async () => {
     await testSession.post("/api/login").send(user1Login);
     const res = await testSession.post("/api/user/posts").send(post);
+    const { body } = await testSession.get("/api/whoAmI");
     await Post.findOneAndDelete({ title: post.title });
     expect(res.statusCode).toBe(200);
+    expect(body.roles).toEqual(expect.arrayContaining(["POSTOWNER"]));
   });
 });
