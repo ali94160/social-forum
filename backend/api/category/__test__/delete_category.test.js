@@ -2,6 +2,8 @@ const app = require("../../../app");
 const session = require("supertest-session");
 const { user1Login, admin } = require("../../auth/__test__/mock_data");
 const { categoryToAdd } = require("./mock_data");
+const mongoose = global.mongoose;
+
 
 describe("Test to delete a category", () => {
   let testSession = null;
@@ -28,5 +30,10 @@ describe("Test to delete a category", () => {
       `/api/categories/${categoryResponse.body._id}`
     );
     expect(res.statusCode).toBe(200);
+  });
+
+  afterAll((done) => {
+    mongoose.connection.close();
+    done();
   });
 });

@@ -1,6 +1,8 @@
 const app = require("../../../app");
 const session = require("supertest-session");
 const { testLogin2 } = require("./mock_data");
+const mongoose = global.mongoose;
+
 describe("Test if a user can can search for another user", () => {
   let testSession = null;
 
@@ -28,4 +30,9 @@ describe("Test if a user can can search for another user", () => {
     expect(res.body).toBe(null);
     expect(res.statusCode).toBe(200);
   });
+
+    afterAll((done) => {
+      mongoose.connection.close();
+      done();
+    });
 });

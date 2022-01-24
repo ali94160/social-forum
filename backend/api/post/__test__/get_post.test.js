@@ -2,6 +2,8 @@ const app = require("../../../app");
 const { expect } = require("@jest/globals");
 const supertest = require("supertest");
 const request = supertest(app);
+const mongoose = global.mongoose;
+
 
 describe("Test get posts", () => {
   describe("Get posts", () => {

@@ -5,6 +5,8 @@ const session = require('supertest-session');
 const User = require('../../../models/user');
 const { newUser, bannedUser } = require('./mock_data');
 const roles = require('../../../models/role');
+const mongoose = global.mongoose;
+
 
 describe("Test user authentication - Register", () => {
 

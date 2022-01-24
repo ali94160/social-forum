@@ -3,6 +3,8 @@ const supertest = require('supertest');
 const request = supertest(app);
 const session = require('supertest-session');
 const { user1Login } = require('./mock_data');
+const mongoose = global.mongoose;
+
 
 describe('Test user authentication - Logout', () => {
 

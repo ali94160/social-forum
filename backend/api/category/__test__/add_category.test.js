@@ -3,6 +3,8 @@ const session = require("supertest-session");
 const { user1Login, admin } = require("../../auth/__test__/mock_data");
 const { category_success } = require("./mock_data");
 const categoryModel = require('../../../models/category')
+const mongoose = global.mongoose;
+
 
 describe("Test to add a category", () => {
   let testSession = null;
@@ -32,7 +34,8 @@ describe("Test to add a category", () => {
 
 
   afterAll(async () => {
-    await categoryModel.findOneAndDelete({title: category_success.title})
+    await categoryModel.findOneAndDelete({ title: category_success.title })
+    mongoose.connection.close();
   })
   
 });

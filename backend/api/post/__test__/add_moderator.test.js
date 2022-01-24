@@ -4,6 +4,8 @@ const Post = require("../../../models/post");
 const User = require("../../../models/user");
 const { user3, user4 } = require("../../auth/__test__/mock_data");
 const { post, moderatorIds } = require("./mock_data");
+const mongoose = global.mongoose;
+
 
 describe("Test if a user can create a post", () => {
   let testSession = null;

@@ -12,6 +12,8 @@ const {
   moderatorsList1,
   moderatorsList2
 } = require("./mock_data");
+const mongoose = global.mongoose;
+
 
 describe("Handle moderators", () => {
   let testSession = null;

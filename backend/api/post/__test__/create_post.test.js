@@ -3,6 +3,8 @@ const session = require("supertest-session");
 const Post = require("../../../models/post");
 const { user1Login } = require("../../auth/__test__/mock_data");
 const { post } = require("./mock_data");
+const mongoose = global.mongoose;
+
 
 describe("Test if a user can create a post", () => {
   let testSession = null;
@@ -23,5 +25,10 @@ describe("Test if a user can create a post", () => {
     await Post.findOneAndDelete({ title: post.title });
     expect(res.statusCode).toBe(200);
     expect(body.roles).toEqual(expect.arrayContaining(["POSTOWNER"]));
+  });
+
+  afterAll((done) => {
+    mongoose.connection.close();
+    done();
   });
 });

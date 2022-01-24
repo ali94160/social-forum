@@ -1,5 +1,4 @@
 const app = require("../../../app");
-const mongoose = global.mongoose;
 const session = require("supertest-session");
 const User = require("../../../models/user");
 const Post = require("../../../models/post");
@@ -13,6 +12,8 @@ const {
   testPost,
 } = require("./mock_data");
 const { hashUtil } = require("../../utils");
+const mongoose = global.mongoose;
+
 
 describe("Test to delete comment as post owner or post moderator", () => {
   let postOwner;
