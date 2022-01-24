@@ -2,8 +2,6 @@ const categoryModel = require("../../models/category");
 const postModel = require("../../models/post");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
 const roles = require("../../models/role");
-require("dotenv").config();
-const generalId = process.env.GENERALID;
 
 module.exports = function (app) {
   // https://fonts.google.com/icons
@@ -38,6 +36,7 @@ module.exports = function (app) {
     authUserLoggedIn,
     authRole([roles.ADMIN]),
     async (req, res) => {
+      const generalId = "61eac34bd88374463c0f358a";
       const category = await categoryModel.findById(req.params.id);
       if (category) {
         try {
