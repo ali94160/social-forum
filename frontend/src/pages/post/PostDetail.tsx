@@ -30,7 +30,6 @@ function PostDetailPage() {
   };
 
   const handleComments = async () => {
-    
     if (post && post._id) {
       await getComments(post._id);
     }
@@ -42,6 +41,7 @@ function PostDetailPage() {
     // LÄGG TILL 404 SIDAAAAA
     return;
   }
+
   return (
     <div>
       <Post post={post} me={user} />
@@ -49,7 +49,7 @@ function PostDetailPage() {
         <CommentSection
           username={user.username}
           postId={id}
-          updateComments={handleComments}
+          handleComments={handleComments}
         />
       )}
       {post?.ownerId?._id ? (

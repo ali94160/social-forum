@@ -1,7 +1,11 @@
 const postModel = require("../../models/post");
 const commentModel = require("../../models/comment");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
-const { isPostOwner, handleModerator, handleRoles } = require("../../middlewares/postOwner");
+const {
+  isPostOwner,
+  handleModerator,
+  handleRoles,
+} = require("../../middlewares/postOwner");
 const roles = require("../../models/role");
 
 module.exports = function (app) {
@@ -74,7 +78,7 @@ module.exports = function (app) {
         res.sendStatus(400);
         return;
       }
-      handleRoles(req.session.user._id, roles.POSTOWNER, true);
+      await handleRoles(req.session.user._id, roles.POSTOWNER, true);
       res.status(200).json(newPost);
       return;
     } catch (error) {
@@ -118,7 +122,7 @@ module.exports = function (app) {
         .findOne({ _id: req.params.id })
         .lean()
         .exec();
-      delete req.body.moderatorsIds
+      delete req.body.moderatorsIds;
       const updatedPost = { ...post, ...req.body };
       await postModel.replaceOne({ _id: req.params.id }, updatedPost);
       res.status(200).json(updatedPost);
@@ -127,13 +131,19 @@ module.exports = function (app) {
     }
   });
 
-  app.put("/api/posts/:id/moderators", authUserLoggedIn, authRole([roles.POSTOWNER, roles.POSTMODERATOR]), handleModerator, async (req, res) => {
-    try {
-      return res.sendStatus(200);
-    } catch (error) {
-      return res.sendStatus(404);
+  app.put(
+    "/api/posts/:id/moderators",
+    authUserLoggedIn,
+    authRole([roles.POSTOWNER, roles.POSTMODERATOR]),
+    handleModerator,
+    async (req, res) => {
+      try {
+        return res.sendStatus(200);
+      } catch (error) {
+        return res.sendStatus(404);
+      }
     }
-  })
+  );
 
   app.delete("/api/posts/:id", authUserLoggedIn, async (req, res) => {
     let user = req.session.user;
@@ -149,8 +159,10 @@ module.exports = function (app) {
       let post = await postModel.findOne(filter).lean();
       await commentModel.deleteMany({ postId: post._id });
       await postModel.deleteOne(filter);
-      handleRoles(req.session.user._id, roles.POSTOWNER, true);
-      post.moderatorsIds.map(id => handleRoles(id, roles.POSTMODERATOR, false));
+      await handleRoles(req.session.user._id, roles.POSTOWNER, true);
+      post.moderatorsIds.map(
+        async (id) => await handleRoles(id, roles.POSTMODERATOR, false)
+      );
       res.sendStatus(200);
       return;
     } catch (error) {
@@ -159,11 +171,17 @@ module.exports = function (app) {
     }
   });
 
-  app.get('/api/posts/owner/:id', authUserLoggedIn, authRole([roles.POSTOWNER]), isPostOwner, async (req, res) => {
-    try {
-      return res.sendStatus(200);
-    } catch (err) {
-      return res.sendStatus(403);
+  app.get(
+    "/api/posts/owner/:id",
+    authUserLoggedIn,
+    authRole([roles.POSTOWNER]),
+    isPostOwner,
+    async (req, res) => {
+      try {
+        return res.sendStatus(200);
+      } catch (err) {
+        return res.sendStatus(403);
+      }
     }
-  });
+  );
 };

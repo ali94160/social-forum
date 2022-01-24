@@ -2,11 +2,13 @@ const app = require("../../../app");
 const supertest = require("supertest");
 const request = supertest(app);
 const session = require("supertest-session");
+const mongoose = global.mongoose;
+
 const {
   user1,
   user1Login,
   user2Login,
-  user3WrongLogin,
+  user4WrongLogin,
   bannedUser,
 } = require("./mock_data");
 const roles = require("../../../models/role");
@@ -45,7 +47,7 @@ describe("Test user authentication - Login", () => {
 
   describe("Wrong credentials", () => {
     test("/api/login - No one is logged in", async () => {
-      const res = await request.post("/api/login").send(user3WrongLogin);
+      const res = await request.post("/api/login").send(user4WrongLogin);
 
       expect(res.statusCode).toBe(401);
     });

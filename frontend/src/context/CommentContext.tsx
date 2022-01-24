@@ -30,6 +30,26 @@ function CommentContextProvider({ children }: Props) {
     return res.status === 200;
   }
 
+  const deleteComment = async (commentId: string) => {
+    const res = await fetch('/api/comments/' + commentId, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    return res.status === 200;
+  }
+
+  const deleteMyComment = async (commentId: string) => {
+    const res = await fetch('/api/user/comments/' + commentId, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    return res.status === 200;
+  }
+
   const getComments = async (postId: string, sort?: string) => {
     const sorting = sort ?? "desc";
     const res: Response = await fetch("/api/post/comments/" + postId + "?createdDate=" + sorting);
@@ -47,6 +67,8 @@ function CommentContextProvider({ children }: Props) {
   const values = {
     addComment,
     getComments,
+    deleteComment,
+    deleteMyComment,
     comments
   };
 

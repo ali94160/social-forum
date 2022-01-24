@@ -3,12 +3,13 @@ const { expect } = require("@jest/globals");
 const supertest = require("supertest");
 const session = require("supertest-session");
 const Post = require("../../../models/post");
+const mongoose = global.mongoose;
+
 
 const { user2Login, post } = require("./mock_data");
 const request = supertest(app);
 
 describe("Test getting users own posts", () => {
-
   describe("Get post when user not logged in", () => {
     test("GET api/user/posts - Should get error", async () => {
       const res = await request.get("/api/user/posts");
@@ -40,5 +41,10 @@ describe("Test getting users own posts", () => {
       expect(postResult.content).toBe(post.content);
       expect(postResult.categoryId).toBe(post.categoryId);
     });
+  });
+
+  afterAll((done) => {
+    mongoose.connection.close();
+    done();
   });
 });

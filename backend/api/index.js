@@ -3,6 +3,7 @@ const auth = require("./auth/authService");
 const banlist = require("./ban/banService");
 const post = require("./post/postService");
 const comment = require("./comment/commentService");
+const category = require("./category/categoryService");
 
 module.exports = (app) => {
   user(app);
@@ -10,4 +11,5 @@ module.exports = (app) => {
   banlist(app);
   post(app);
   comment(app);
+  category(app);
 };

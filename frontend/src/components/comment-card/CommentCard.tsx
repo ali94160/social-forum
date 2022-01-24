@@ -14,32 +14,36 @@ import BasicAvatar from "../basics/basic-avatar/BasicAvatar";
 import EditDotsComment from "../edit-dots-comment/EditDotsComment";
 import { trimString } from "../../utils/helper-methods";
 import { User } from "../../interfaces/User";
+import { useAuth } from "../../context/AuthContext";
 
 interface Props {
   comment: CommentItem;
   ownerId: string;
   moderators: User[];
+  hasDeleteAccess: boolean;
 }
 
-function CommentCard({ comment, ownerId, moderators }: Props) {
+function CommentCard({ comment, ownerId, moderators, hasDeleteAccess }: Props) {
   const created = new Date(comment.createdDate);
   const date = created.toLocaleDateString();
   const time = created.toLocaleTimeString().substring(0, 5);
-  const isOwner = comment.writerId?._id === ownerId;
-  let isModerator = false;
-  if (!isOwner) {
-    isModerator = moderators.some(moderator => moderator?._id === comment.writerId?._id);
+  const { user } = useAuth();
+
+  const isCommentOwner = comment?.writerId?._id === user?._id;
+  
+  const isPostOwner = comment?.writerId?._id === ownerId;
+  let isPostModerator = false;
+  if (!isPostOwner) {
+    isPostModerator = moderators.some(
+      (moderator) => moderator._id === comment?.writerId?._id
+    );
   }
 
   const getRole = () => {
-    if (isOwner)
-      return "Post-owner"
-    
-    if (isModerator)
-      return "Post-moderator"
-    
+    if (isPostOwner) return "Post-owner";
+    if (isPostModerator) return "Post-moderator";
     return "User";
-  }
+  };
 
   const getUsername = () => {
     return comment?.writerId?.username
@@ -61,7 +65,14 @@ function CommentCard({ comment, ownerId, moderators }: Props) {
           <StyledComment>{comment.content}</StyledComment>
         </RightGrid>
         <Grid item xs={1}>
-        <EditDotsComment postId={'3'} />
+          {user && (
+            <EditDotsComment
+              commentId={comment._id}
+              isCommentOwner={isCommentOwner}
+              hasDeleteAccess={hasDeleteAccess}
+              postId={comment.postId}
+            />
+          )}
         </Grid>
         <Grid container>
           <StyledDate>
