@@ -17,7 +17,7 @@ const { hashUtil } = require("../../utils");
 describe("Test to delete comment as post owner or post moderator", () => {
   let postOwner;
   let postModerator;
-  let normalUser; // is this a good name?
+  let normalUser;
   let post;
   let comment1;
   let comment2;
@@ -37,14 +37,14 @@ describe("Test to delete comment as post owner or post moderator", () => {
     postOwner = new User({...testPostOwner, password: hashUtil(testPostOwner.password), roles: [role.USER, role.POSTOWNER]})
     postModerator = new User({...testPostModerator,password: hashUtil(testPostModerator.password), roles: [role.USER, role.POSTMODERATOR]})
     normalUser = new User({...testUser,password: hashUtil(testUser.password), roles: [role.USER]})
-    postOwner.save()
-    postModerator.save()
-    normalUser.save()
+    await postOwner.save();
+    await postModerator.save();
+    await normalUser.save();
 
-    const today = new Date()
+    const today = Date.now()
     // Create post by post owner, add postModerator
     post = new Post({...testPost, ownerId: postOwner._id, moderatorsIds: [postModerator._id], createdDate: today})
-    post.save();
+    await post.save();
 
     // Create two comments
     comment1 = new Comment({...newComment, postId: post._id, writerId: normalUser._id, createdDate: today})
