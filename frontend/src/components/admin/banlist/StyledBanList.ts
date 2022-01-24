@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import Button from '@mui/material/Button';
-import TableHead from '@mui/material/TableHead';
+import { Box, TableHead, Button} from "@mui/material";
 
 interface Props {
   isOpen?: boolean;
@@ -22,4 +21,26 @@ export const StyledTableHead = styled(TableHead)`
     background-color: var(--yellow);
   }
 `;
+
+export const StyledInputContainer = styled(Box)`
+  margin: 4% 0%;
+`;
+
+export const StyledCloseButton = styled(Button)`
+  &&  {
+    background: grey;
+    font-weight: bold;
+  }
+`;
+
+export const StyledButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2%;
+`;
+
+export const StyledUnban = styled.div`
+  
+`;
+
 

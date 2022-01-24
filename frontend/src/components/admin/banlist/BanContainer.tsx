@@ -22,6 +22,7 @@ function BanContainer({banlist}: Props) {
             <TableCell>Email</TableCell>
             <TableCell align="left">Ip</TableCell>
             <TableCell align="left">Reason</TableCell>
+            <TableCell align="left">Ban date</TableCell>
             <TableCell align="center">Unban</TableCell>
           </TableRow>
         </StyledTableHead>
