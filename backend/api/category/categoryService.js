@@ -29,14 +29,15 @@ module.exports = function (app) {
   app.get("/api/categories", async (req, res) => {
     let categories = [];
     try {
-      let data = await postModel
+      let data = await categoryModel
         .find({})
-        // .sort( )
-        .collation({ locale: "en" })
+        .sort({ title: 'asc'})
         .lean()
         .exec();
 
+        console.log('here?')
       // add logic
+      categories = data;
 
     } catch (e) {
       res.sendStatus(400);
