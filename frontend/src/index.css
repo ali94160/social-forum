@@ -37,6 +37,7 @@ main {
 }
 
 p,
-li {
+li,
+div {
   color: var(--dark-text);
 }
