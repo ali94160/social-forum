@@ -5,6 +5,11 @@ type Props = {
   children?: JSX.Element;
 };
 
+interface UnbanProps {
+  id: string;
+  password: string;
+}
+
 const BanContext = createContext<any>(null);
 
 export const useBan = () => useContext(BanContext);
@@ -21,13 +26,13 @@ const BanContextProvider: FC<Props> = ({ children }: Props) => {
     return res.status;
   }
 
-  const unbanUser = async (id: string, password: string) => {
+  const unbanUser = async ({id, password}: UnbanProps) => {
     const res = await fetch(`/api/bans/${id}`, {
       method: 'DELETE',
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(password),
+      body: JSON.stringify({password}),
     });
     return res.status;
   }
