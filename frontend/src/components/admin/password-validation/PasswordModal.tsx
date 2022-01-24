@@ -6,7 +6,7 @@ import {
 import { StyledTealButton } from "../../basics/StyledTealButton";
 import BasicModal from '../../basics/basic-modal/BasicModal';
 import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
-import React, { BaseSyntheticEvent, ReactElement, ReactChild } from 'react';
+import { BaseSyntheticEvent } from 'react';
 
 type Props = {
   isOpen: boolean;
