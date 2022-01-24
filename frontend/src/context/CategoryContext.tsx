@@ -14,6 +14,15 @@ function CategoryContextProvider({ children }: Props) {
       _id: "1",
       title: "Real Housewives",
       icon: ""
+    },
+        {
+      _id: "2",
+      title: "Real Housewives",
+      icon: ""
+    },    {
+      _id: "3",
+      title: "Real Housewives",
+      icon: ""
     }
   ])
 
