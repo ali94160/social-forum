@@ -7,9 +7,6 @@ import { styled } from '@mui/material/styles';
 import Collapse from '@mui/material/Collapse';
 import CardActions from '@mui/material/CardActions';
 import { useBan } from '../../../context/BanContext';
-import BanItem from './BanItem';
-import { Ban } from '../../../interfaces/Ban';
-import List from '@mui/material/List';
 import BanContainer from './BanContainer';
 
 function BanList() {
@@ -26,6 +23,10 @@ function BanList() {
     setStatus(status);
   }
 
+  if (status !== 200) {
+    //loading ??? 
+  }
+
   const StyledExpandMore = styled((props): any => {
     const { expand, ...other }: any = props;
     return <IconButton {...other} />;
@@ -39,18 +40,18 @@ function BanList() {
 
 
   return (
-    <Card elevation={isOpen ? 0 : 1} onClick={() => setIsOpen(!isOpen)}>
+    <Card elevation={isOpen ? 0 : 1}>
       <StyledBanlist isOpen={isOpen}>
          <CardActions disableSpacing>
           <p>Banlist</p>
           <StyledExpandMore
             expand={isOpen} 
           >
-            <KeyboardArrowDownIcon />
+            <KeyboardArrowDownIcon onClick={() => setIsOpen(!isOpen)} />
           </StyledExpandMore>
         </CardActions>
         <Collapse in={isOpen} timeout="auto" unmountOnExit>
-          <BanContainer ban={ban} />
+          <BanContainer banlist={banlist} />
         </Collapse>
       </StyledBanlist>
     </Card>
