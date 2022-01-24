@@ -10,17 +10,16 @@ import { StyledTealButton } from "../../basics/StyledTealButton";
 
 
 function CategoriesList() {
-  const [display, setDisplay] = useState<boolean>(true);
+  const [display, setDisplay] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('')
   const [icon, setIcon] = useState<string>('')
   const { categories, addCategory } = useCategory();
 
   const addNewCategory = async (e: any) => {
     e.preventDefault();
-    
     const newCategory = {
       title,
-      icon
+      icon: icon !== '' ? icon : "tag"
     }
     await addCategory(newCategory);
     setTitle('');
@@ -28,45 +27,42 @@ function CategoriesList() {
   }
 
   return (
-    <>
-      <Card>
-        <StyledAddWrapper>
-          <AddCircleIcon onClick={() => setDisplay(!display)}/>
-          <StyledHeader >
-            Add new category
-          </StyledHeader>
-        </StyledAddWrapper>
+    <Card>
+      <StyledAddWrapper>
+        <AddCircleIcon onClick={() => setDisplay(!display)}/>
+        <StyledHeader >
+          Add new category
+        </StyledHeader>
+      </StyledAddWrapper>
 
-      {display &&
-        <StyledInputWrapper>
-          <BasicTextField
-            type="text"
-            value={title}
-            label="Title"
-            placeholder="Title"
-            handleChange={(ev: any) => setTitle(ev.target.value)}
-            required
-          />
+    {display &&
+      <StyledInputWrapper>
+        <BasicTextField
+          type="text"
+          value={title}
+          label="Title"
+          placeholder="Title"
+          handleChange={(ev: any) => setTitle(ev.target.value)}
+          required
+        />
 
-          <BasicTextField
-            type="text"
-            value={icon}
-            label="Icon"
-            placeholder="Icon"
-            handleChange={(ev: any) => setIcon(ev.target.value)}
-            required
-            />
-            
-          <StyledTealButton type="submit" variant="contained" onClick={(e) => addNewCategory(e)}>
-            Add
-          </StyledTealButton>
-        </StyledInputWrapper>}
+        <BasicTextField
+          type="text"
+          value={icon}
+          label="Icon"
+          placeholder="Icon"
+          handleChange={(ev: any) => setIcon(ev.target.value)}
+        />
 
-        {categories.map((category: Category) =>
-          <CategoryItem key={category._id} category={category} />
-        )}
-      </Card>
-     </> 
+        <StyledTealButton type="submit" variant="contained" onClick={(e) => addNewCategory(e)}>
+          Add
+        </StyledTealButton>
+      </StyledInputWrapper>}
+
+      {categories.map((category: Category, index: number) =>
+        <CategoryItem key={index} category={category} />
+      )}
+    </Card>
   )
 }
 
