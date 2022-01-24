@@ -3,12 +3,10 @@ const mongoose = global.mongoose;
 const banSchema = new mongoose.Schema(
   {
     email: {
-      type: String,
-      unique: true
+      type: String
     },
     ip: {
       type: String,
-      unique: true
     },
     reason: {
       type: String,
