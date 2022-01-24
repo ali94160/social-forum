@@ -2,23 +2,17 @@ import { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Category } from "../../../interfaces/Category";
 import { StyledCategoryTitle, FlexContainer, StyledDeleteIcon, StyledWrapper } from './StyledCategoryList';
-import { useAuth } from "../../../context/AuthContext";
+import { useCategory } from "../../../context/CategoryContext";
 
 interface Props {
   category: Category
 }
 
 function CategoryItem({ category }: Props) {
-  const [isAdmin, setIsAdmin] = useState(false)
-  const { user } = useAuth();
+  const { deleteCategory } = useCategory();
 
-  useEffect(() => {
-    if (user.roles.includes('ADMIN')) {
-      setIsAdmin(true)
-    }
-  },[])
-
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    await deleteCategory(category._id);
   }
 
   return (
@@ -31,7 +25,6 @@ function CategoryItem({ category }: Props) {
         <StyledDeleteIcon onClick={handleDelete}>
           <DeleteIcon />
         </StyledDeleteIcon>
-
       </StyledWrapper>
 
     </FlexContainer>
