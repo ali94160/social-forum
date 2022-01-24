@@ -1,21 +1,21 @@
 import React, { createContext, useContext, useState } from "react";
+import { Category } from "../../src/interfaces/Category";
 const CategoryContext = createContext<any>(null);
-
 export const useCategory = () => useContext(CategoryContext);
 
 interface Props {
   children: any;
 }
 
-interface Category {
-  id?: string;
-  title: string;
-  icon: string;
-}
-
 
 function CategoryContextProvider({ children }: Props) {
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([
+    {
+      _id: "1",
+      title: "Real Housewives",
+      icon: ""
+    }
+  ])
 
   const getCategories = async () => {
     const res: Response = await fetch("/api/categories")
