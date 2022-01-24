@@ -1,9 +1,8 @@
 
-import React, { useState } from "react";
-import Grid from '@mui/material/Grid';
+import React from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { Category } from "../../../interfaces/Category";
+import { StyledCategoryTitle, FlexContainer, StyledDeleteIcon } from './StyledCategoryList';
 
 interface Props {
   category: Category,
@@ -11,18 +10,18 @@ interface Props {
 
 function CategoryItem({ category }: Props) {
 
+  const handleDelete = () => { }
+
   return (
-    <Grid container spacing={0}>
-      <Grid item xs={8}>
+    <FlexContainer>
+      <StyledCategoryTitle>
         {category.title}
-      </Grid>
-      <Grid item xs={2}>
+      </StyledCategoryTitle>
+
+      <StyledDeleteIcon onClick={handleDelete}>
         <DeleteIcon />
-      </Grid>
-      <Grid item xs={2}>
-        <EditIcon />
-      </Grid>
-    </Grid>
+      </StyledDeleteIcon>
+    </FlexContainer>
   )
 }
 
