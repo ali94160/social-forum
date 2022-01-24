@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Box, TableHead, Button} from "@mui/material";
+import { Box, TableHead, Button, TableCell } from "@mui/material";
 
 interface Props {
   isOpen?: boolean;
@@ -40,7 +40,13 @@ export const StyledButtonContainer = styled.div`
 `;
 
 export const StyledUnban = styled.div`
-  
+
+`;
+
+export const StyledTableCell = styled(TableCell)`
+  && {
+    min-width: 5rem;
+  }
 `;
 
 
