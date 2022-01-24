@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Collapse from '@mui/material/Collapse';
 import CardActions from '@mui/material/CardActions';
+import CategoryItems from './CategoryItems';
 
 function CategoryList() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,7 @@ function CategoryList() {
           </StyledExpandMore>
         </CardActions>
         <Collapse in={isOpen} timeout="auto" unmountOnExit>
-          put category list here
+          <CategoryItems />
         </Collapse>
       </StyledCategoryList>
     </Card>
