@@ -1,7 +1,16 @@
 import { useState, BaseSyntheticEvent, useEffect } from 'react';
 import { Ban } from '../../../interfaces/Ban';
 import TableRow from '@mui/material/TableRow';
-import { StyledUnbanBtn, StyledInputContainer, StyledCloseButton, StyledButtonContainer, StyledUnban, StyledTableCell } from './StyledBanList';
+import {
+  StyledUnbanBtn,
+  StyledInputContainer,
+  StyledCloseButton,
+  StyledButtonContainer,
+  StyledUnban,
+  StyledTableCell,
+  StyledTitle,
+  StyledSpan
+} from './StyledBanList';
 import { StyledTealButton } from "../../basics/StyledTealButton";
 import BasicModal from '../../basics/basic-modal/BasicModal';
 import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
@@ -59,10 +68,10 @@ function BanItem({ban}: Props) {
       {isOpen &&
         <BasicModal isOpen={isOpen} handleClose={setIsOpen}>
         <StyledUnban>
-          Email: {ban.email}<br />
-          Ip: {ban.ip}<br />
-          Reason: {ban.reason}<br />
-          Ban date: {dateStr}
+          <p>Email: <StyledSpan>{ban.email}</StyledSpan></p>
+          <p>Ip: <StyledSpan>{ban.ip}</StyledSpan></p>
+          <p>Reason: <StyledSpan>{ban.reason}</StyledSpan></p>
+          <p>Ban date: <StyledSpan>{dateStr}</StyledSpan></p>
         </StyledUnban>
           <StyledInputContainer>
             <BasicVisibilityInput

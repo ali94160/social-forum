@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Box, TableHead, Button, TableCell } from "@mui/material";
+import { Box, TableHead, Button, TableCell, Typography } from "@mui/material";
 
 interface Props {
   isOpen?: boolean;
@@ -47,6 +47,10 @@ export const StyledTableCell = styled(TableCell)`
   && {
     min-width: 5rem;
   }
+`;
+
+export const StyledSpan = styled.span`
+  font-style: oblique;
 `;
 
 
