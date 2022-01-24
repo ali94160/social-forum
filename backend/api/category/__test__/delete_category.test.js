@@ -1,6 +1,7 @@
 const app = require("../../../app");
 const session = require("supertest-session");
 const { user1Login, admin } = require("../../auth/__test__/mock_data");
+const { categoryToAdd } = require("./mock_data");
 
 describe("Test to delete a category", () => {
   let testSession = null;
@@ -17,10 +18,15 @@ describe("Test to delete a category", () => {
     expect(res.statusCode).toBe(401);
   });
 
-  test("Test to delete a category as a admin but with a wrong id", async () => {
+  test("Test to delete a category as a admin", async () => {
     await testSession.delete("/api/logout");
     await testSession.post("/api/login").send(admin);
-    const res = await testSession.delete("/api/categories/wrongCategoryId");
-    expect(res.statusCode).toBe(400);
+    const categoryResponse = await testSession
+      .post("/api/categories")
+      .send(categoryToAdd);
+    const res = await testSession.delete(
+      `/api/categories/${categoryResponse.body._id}`
+    );
+    expect(res.statusCode).toBe(200);
   });
 });
