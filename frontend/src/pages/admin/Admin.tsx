@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import TextBox from '../../components/admin/textbox/TextBox';
 import BanList from '../../components/admin/banlist/BanList';
 import Grid from '@mui/material/Grid';
-import CategoryList from '../../components/admin/categories/CategoryList';
+import CategoryCollapse from '../../components/admin/categories/CategoryCollapse';
 import { StyledGrid } from './StyledAdmin';
 
 function AdminPage() {
@@ -48,7 +48,7 @@ function AdminPage() {
         <BanList />
       </StyledGrid>
       <StyledGrid item xs={12}>
-        <CategoryList />
+        <CategoryCollapse/>
       </StyledGrid>
     </Grid>
   );
