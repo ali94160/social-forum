@@ -32,14 +32,25 @@ function CategoryContextProvider({ children }: Props) {
       body: JSON.stringify(category),
     });
 
+    getCategories();
     return res.status === 200;
   }
 
-
+  const deleteCategory = async (categoryId: string) => {
+    const res = await fetch('/api/categories/' + categoryId, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    getCategories();
+    return res.status === 200;
+  }
 
   const values = {
     getCategories,
     addCategory,
+    deleteCategory,
     categories
   };
 
