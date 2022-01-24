@@ -11,3 +11,12 @@ export const StyledForm = styled.form`
     margin-bottom: 20px;
   }
 `;
+
+export const StyledTermsWrapper = styled.div`
+`
+
+export const StyledReadMore = styled.span`
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+`;
