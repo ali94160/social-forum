@@ -1,7 +1,5 @@
-
 import { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { Category } from "../../../interfaces/Category";
 import { StyledCategoryTitle, FlexContainer, StyledDeleteIcon, StyledWrapper } from './StyledCategoryList';
 import { useAuth } from "../../../context/AuthContext";
@@ -21,7 +19,6 @@ function CategoryItem({ category }: Props) {
   },[])
 
   const handleDelete = () => {
-    console.log('is admin: ', isAdmin)
   }
 
   return (
@@ -35,7 +32,6 @@ function CategoryItem({ category }: Props) {
           <DeleteIcon />
         </StyledDeleteIcon>
 
-        <EditIcon />
       </StyledWrapper>
 
     </FlexContainer>
