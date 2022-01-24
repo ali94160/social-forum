@@ -107,22 +107,4 @@ module.exports = function (app) {
       );
     }
   );
-
-  // post comment for testing purposes
-  app.post("/api/comments/test", authUserLoggedIn, async (req, res) => {
-    try {
-      let comment = new Comment({
-        content: "test blabla ",
-        writeId: req.session.user._id,
-        createdDate: Date.now(),
-        postId: null,
-      });
-      await comment.save();
-      res.sendStatus(200);
-      return;
-    } catch (error) {
-      res.sendStatus(400);
-      return;
-    }
-  });
 };
