@@ -31,3 +31,7 @@ export const StyledDeleteIcon = styled(DeleteIcon)`
       cursor: pointer;
     }
 `;
+
+export const StyledWrapper = styled.div`
+  align-self: flex-end;
+`;

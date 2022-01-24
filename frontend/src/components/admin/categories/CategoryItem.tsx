@@ -1,16 +1,28 @@
 
-import React from "react";
+import { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { Category } from "../../../interfaces/Category";
-import { StyledCategoryTitle, FlexContainer, StyledDeleteIcon } from './StyledCategoryList';
+import { StyledCategoryTitle, FlexContainer, StyledDeleteIcon, StyledWrapper } from './StyledCategoryList';
+import { useAuth } from "../../../context/AuthContext";
 
 interface Props {
-  category: Category,
+  category: Category
 }
 
 function CategoryItem({ category }: Props) {
+  const [isAdmin, setIsAdmin] = useState(false)
+  const { user } = useAuth();
 
-  const handleDelete = () => { }
+  useEffect(() => {
+    if (user.roles.includes('ADMIN')) {
+      setIsAdmin(true)
+    }
+  },[])
+
+  const handleDelete = () => {
+    console.log('is admin: ', isAdmin)
+  }
 
   return (
     <FlexContainer>
@@ -18,9 +30,14 @@ function CategoryItem({ category }: Props) {
         {category.title}
       </StyledCategoryTitle>
 
-      <StyledDeleteIcon onClick={handleDelete}>
-        <DeleteIcon />
-      </StyledDeleteIcon>
+      <StyledWrapper>
+        <StyledDeleteIcon onClick={handleDelete}>
+          <DeleteIcon />
+        </StyledDeleteIcon>
+
+        <EditIcon />
+      </StyledWrapper>
+
     </FlexContainer>
   )
 }
