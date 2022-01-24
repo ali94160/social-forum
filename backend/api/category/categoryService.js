@@ -25,7 +25,6 @@ module.exports = function (app) {
     }
   });
 
-  // 17.5 Skapa en route för att hämta alla kategorier, sortera bokstavsordning förutom Övrigt som ska ligga sist (4)
   app.get("/api/categories", async (req, res) => {
     let categories = [];
     try {
@@ -35,8 +34,10 @@ module.exports = function (app) {
         .lean()
         .exec();
 
-        console.log('here?')
-      // add logic
+      const generalIndex = data.findIndex(category => {
+        return category.title === 'General' });
+      const removedObj = data.splice(generalIndex, 1)
+      removedObj && data.push(removedObj[0]);
       categories = data;
 
     } catch (e) {
