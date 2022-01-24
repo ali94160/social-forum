@@ -17,7 +17,8 @@ function BanItem({ban}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  
+  const [status, setStatus] = useState(0);
+   
 
   const handleUnban = async () => {
     console.log('i want to unban id', ban._id);
