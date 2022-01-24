@@ -19,8 +19,7 @@ module.exports = banlist = (app) => {
     const password = req.body.password;
 
     if (!password) {
-      /// check this one
-      return res.sendSatus(400);
+      return res.status(400).json({message: "Bad request"});
     }
 
     const hash = hashUtil(req.body?.password);
@@ -30,11 +29,10 @@ module.exports = banlist = (app) => {
     }
 
     try {
-      console.log('everythings good')
       await Ban.findOneAndDelete({ _id: req.params.id });
       return res.sendStatus(200);
     } catch (error) {
-      res.status(404).json(error);
+      res.senStatus(404);
     }
 
   });
