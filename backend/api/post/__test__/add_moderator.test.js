@@ -7,7 +7,7 @@ const { post, moderatorIds } = require("./mock_data");
 
 describe("Test if a user can create a post", () => {
   let testSession = null;
-  let addedPost;
+  let postResponse;
 
   beforeAll(function () {
     testSession = session(app);
@@ -15,9 +15,9 @@ describe("Test if a user can create a post", () => {
 
   test("To check if a user gets the correct role", async () => {
     await testSession.post("/api/login").send(user3);
-    addedPost = await testSession.post("/api/user/posts").send(post);
+    postResponse = await testSession.post("/api/user/posts").send(post);
     const { body } = await testSession.get("/api/whoAmI");
-    expect(addedPost.statusCode).toBe(200);
+    expect(postResponse.statusCode).toBe(200);
     expect(body.roles).toEqual(expect.arrayContaining(["POSTOWNER"]));
     await testSession.delete("/api/logout");
   });
@@ -25,16 +25,16 @@ describe("Test if a user can create a post", () => {
   test("Check if a user has the moderator role", async () => {
     await testSession.post("/api/login").send(user3);
     await testSession
-      .put(`/api/posts/${addedPost.body._id}/moderators`)
+      .put(`/api/posts/${postResponse.body._id}/moderators`)
       .send(moderatorIds);
-    await Post.findById(addedPost.body._id);
+    await Post.findById(postResponse.body._id);
     const user = await testSession.get(`/api/users/username/${user4.username}`);
     const moderator = await User.findById(user.body._id);
     expect(moderator.roles).toContain("POSTMODERATOR");
   });
 
   test("User has the correct roles after deleting a post", async () => {
-    await testSession.delete(`/api/posts/${addedPost.body._id}`);
+    await testSession.delete(`/api/posts/${postResponse.body._id}`);
     const { body } = await testSession.get("/api/whoAmI");
     const user = await testSession.get(`/api/users/username/${user4.username}`);
     const moderator = await User.findById(user.body._id);
