@@ -9,22 +9,7 @@ interface Props {
 
 
 function CategoryContextProvider({ children }: Props) {
-  const [categories, setCategories] = useState([
-    {
-      _id: "1",
-      title: "Real Housewives",
-      icon: ""
-    },
-        {
-      _id: "2",
-      title: "Real Housewives",
-      icon: ""
-    },    {
-      _id: "3",
-      title: "Real Housewives",
-      icon: ""
-    }
-  ])
+  const [categories, setCategories] = useState([])
 
   const getCategories = async () => {
     const res: Response = await fetch("/api/categories")

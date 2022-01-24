@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyledCategoryList } from './StyledCategoryList';
 import Card from '@mui/material/Card';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -6,13 +6,21 @@ import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Collapse from '@mui/material/Collapse';
 import CardActions from '@mui/material/CardActions';
+import { useCategory } from "../../../context/CategoryContext";
 import CategoryList from "./CategoryList";
 
 function CategoryCollapse() {
   const [isOpen, setIsOpen] = useState(false);
+  const { getCategories } = useCategory();
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   const StyledExpandMore = styled((props): any => {
     const { expand, ...other }: any = props;
+
+
     return <IconButton {...other} onClick={() => setIsOpen(!isOpen)}/>;
         })(({ theme, expand}: any) => ({
         transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
@@ -21,6 +29,7 @@ function CategoryCollapse() {
           duration: theme.transitions.duration.shortest,
       }),
     }));
+    
 
 
   return (
