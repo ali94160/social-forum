@@ -7,9 +7,11 @@ import {
   StyledLoginButton,
   StyledCloseButton,
   StyledButtonContainer,
+  StyledReadMore,
 } from "./StyledRegisterForm";
 import { useAuth } from "../../../context/AuthContext";
 import { StyledTealButton } from "../../basics/StyledTealButton";
+import Terms from "../../terms-and-conditions/Terms";
 
 interface Props {
   toggleRegister: Function;
@@ -26,6 +28,7 @@ function RegisterForm({ toggleRegister, handleClose }: Props) {
   const [check, setCheck] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showNotMatch, setShowNotMatch] = useState<boolean>(false);
+  const [readMore, setReadMore] = useState<boolean>(false);
 
   const submitRegister = async (ev: BaseSyntheticEvent) => {
     ev.preventDefault();
@@ -43,97 +46,108 @@ function RegisterForm({ toggleRegister, handleClose }: Props) {
   };
 
   return (
-    <form onSubmit={submitRegister}>
-      <h3>Register</h3>
-      <p>* = required</p>
-      <p>Tips: Use a sentence as password ;)</p>
-      <StyledInputContainer>
-        <BasicTextField
-          type="email"
-          value={email}
-          label="E-mail"
-          placeholder="123@email.com"
-          handleChange={(ev: BaseSyntheticEvent) => setEmail(ev.target.value)}
-          required
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <BasicTextField
-          type="text"
-          value={username}
-          label="Username"
-          placeholder="Name something unique ;)"
-          handleChange={(ev: BaseSyntheticEvent) =>
-            setUsername(ev.target.value)
-          }
-          required
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <BasicVisibilityInput
-          value={password}
-          variant="outlined"
-          label="Password"
-          showText={showPassword}
-          setShowText={setShowPassword}
-          handleChange={(ev: BaseSyntheticEvent) =>
-            setPassword(ev.target.value)
-          }
-          required
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <BasicVisibilityInput
-          value={repeatPassword}
-          variant="outlined"
-          label="Repeat password"
-          showText={showPassword}
-          setShowText={setShowPassword}
-          handleChange={(ev: BaseSyntheticEvent) =>
-            setRepeatPassword(ev.target.value)
-          }
-          required
-        />
-      </StyledInputContainer>
-      <StyledInputContainer>
-        <Checkbox
-          checked={check}
-          onChange={() => setCheck(!check)}
-          inputProps={{ "aria-label": "controlled" }}
-          required
-          sx={{
-            color: "var(--dark-teal)",
-            "&.Mui-checked": {
-              color: "var(--dark-teal)",
-            },
-          }}
-        />
-        Accept user conditions
-      </StyledInputContainer>
-      <StyledInputContainer>
-        Already have an account?{" "}
-        <StyledLoginButton onClick={() => toggleRegister()}>
-          Log in here
-        </StyledLoginButton>
-      </StyledInputContainer>
-      {showNotMatch && (
-        <StyledInputContainer>
-          OBS! Password don't match/ Bad credentials
-        </StyledInputContainer>
+    <>
+      {!readMore ? (
+        <form onSubmit={submitRegister}>
+          <h3>Register</h3>
+          <p>* = required</p>
+          <p>Tips: Use a sentence as password ;)</p>
+          <StyledInputContainer>
+            <BasicTextField
+              type="email"
+              value={email}
+              label="E-mail"
+              placeholder="123@email.com"
+              handleChange={(ev: BaseSyntheticEvent) =>
+                setEmail(ev.target.value)
+              }
+              required
+            />
+          </StyledInputContainer>
+          <StyledInputContainer>
+            <BasicTextField
+              type="text"
+              value={username}
+              label="Username"
+              placeholder="Name something unique ;)"
+              handleChange={(ev: BaseSyntheticEvent) =>
+                setUsername(ev.target.value)
+              }
+              required
+            />
+          </StyledInputContainer>
+          <StyledInputContainer>
+            <BasicVisibilityInput
+              value={password}
+              variant="outlined"
+              label="Password"
+              showText={showPassword}
+              setShowText={setShowPassword}
+              handleChange={(ev: BaseSyntheticEvent) =>
+                setPassword(ev.target.value)
+              }
+              required
+            />
+          </StyledInputContainer>
+          <StyledInputContainer>
+            <BasicVisibilityInput
+              value={repeatPassword}
+              variant="outlined"
+              label="Repeat password"
+              showText={showPassword}
+              setShowText={setShowPassword}
+              handleChange={(ev: BaseSyntheticEvent) =>
+                setRepeatPassword(ev.target.value)
+              }
+              required
+            />
+          </StyledInputContainer>
+          <StyledInputContainer>
+            <Checkbox
+              checked={check}
+              onChange={() => setCheck(!check)}
+              inputProps={{ "aria-label": "controlled" }}
+              required
+              sx={{
+                color: "var(--dark-teal)",
+                "&.Mui-checked": {
+                  color: "var(--dark-teal)",
+                },
+              }}
+            />
+            Accept user conditions{" "}
+            <StyledReadMore onClick={() => setReadMore(true)}>
+              (read more)
+            </StyledReadMore>
+          </StyledInputContainer>
+          <StyledInputContainer>
+            Already have an account?{" "}
+            <StyledLoginButton onClick={() => toggleRegister()}>
+              Log in here
+            </StyledLoginButton>
+          </StyledInputContainer>
+          {showNotMatch && (
+            <StyledInputContainer>
+              OBS! Password don't match/ Bad credentials
+            </StyledInputContainer>
+          )}
+          <StyledButtonContainer>
+            <StyledCloseButton
+              type="button"
+              variant="contained"
+              onClick={() => handleClose()}
+            >
+              Cancel
+            </StyledCloseButton>
+            <StyledTealButton type="submit" variant="contained">
+              Register
+            </StyledTealButton>
+          </StyledButtonContainer>
+        </form>
+      ) : (
+        <Terms setReadMore={setReadMore} />
       )}
-      <StyledButtonContainer>
-        <StyledCloseButton
-          type="button"
-          variant="contained"
-          onClick={() => handleClose()}
-        >
-          Cancel
-        </StyledCloseButton>
-        <StyledTealButton type="submit" variant="contained">
-          Register
-        </StyledTealButton>
-      </StyledButtonContainer>
-    </form>
+    </>
   );
 }
 
