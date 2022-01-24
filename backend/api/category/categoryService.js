@@ -31,14 +31,44 @@ module.exports = function (app) {
     }
   );
 
+  app.get("/api/categories", async (req, res) => {
+    let categories = [];
+    try {
+      let data = await categoryModel
+        .find({})
+        .sort({ title: 'asc'})
+        .lean()
+        .exec();
+
+      const generalIndex = data.findIndex(category => {
+        return category.title === 'General' });
+      const removedObj = data.splice(generalIndex, 1)
+      removedObj && data.push(removedObj[0]);
+      categories = data;
+
+    } catch (e) {
+      res.sendStatus(400);
+      return;
+    }
+    if (categories.length > 0) {
+      res.status(200).json(categories);
+    } else {
+      res.sendStatus(204);
+    }
+  });
+
+  
   app.delete(
     "/api/categories/:id",
     authUserLoggedIn,
     authRole([roles.ADMIN]),
     async (req, res) => {
-      const generalId = "61eac34bd88374463c0f358a";
+      const categoryResponse = await categoryModel
+        .findOne({ title: "General" })
+        .exec();
+      const generalId = categoryResponse._id;
       const category = await categoryModel.findById(req.params.id);
-      if (category) {
+      if (category && categoryResponse) {
         try {
           await postModel.updateMany(
             { categoryId: req.params.id },
