@@ -49,8 +49,8 @@ describe("Test to delete comment as post owner or post moderator", () => {
     // Create two comments
     comment1 = new Comment({...newComment, postId: post._id, writerId: normalUser._id, createdDate: today})
     comment2 = new Comment({...newComment, postId: post._id, writerId: normalUser._id, createdDate: today})
-    comment1.save()
-    comment2.save()
+    await comment1.save();
+    await comment2.save();
   });
 
     test("Delete comment as writer", async () => {
