@@ -8,7 +8,6 @@ import Paper from '@mui/material/Paper';
 import BanItem from './BanItem';
 import { StyledTableHead } from './StyledBanList';
 
-
 interface Props {
   banlist: Ban[]
 }
@@ -16,7 +15,7 @@ interface Props {
 function BanContainer({banlist}: Props) {
   return (
      <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+      <Table size="small">
         <StyledTableHead>
           <TableRow>
             <TableCell>Email</TableCell>
@@ -28,7 +27,7 @@ function BanContainer({banlist}: Props) {
         </StyledTableHead>
         <TableBody>
           {banlist.map((ban) =>
-           <BanItem ban={ban} />
+           <BanItem ban={ban} key={ban._id} />
           )}
         </TableBody>
       </Table>
