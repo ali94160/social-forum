@@ -20,6 +20,24 @@ const testPost = {
   categoryId: "61dc3a622f8ecad1bc1367b2",
 };
 
+const testPostOwner = {
+  username: "testUserLogin1 for delete comment",
+  email: "testUserLogin1@haha.com",
+  password: "123"
+}
+
+const testPostModerator = {
+  username: "testUserLogin2 for delete comment",
+  email: "testUserLogin2@haha.com",
+  password: "123"
+}
+
+const testUser = {
+  username: "testUserLogin3 for delete comment",
+  email: "testUserLogin3@haha.com",
+  password: "123"
+}
+
 const user1Login = {
   email: "isabella@haha.se",
   password: "123",
@@ -33,4 +51,7 @@ module.exports = {
   user1Login,
   testComment1,
   testComment2,
+  testPostOwner,
+  testPostModerator,
+  testUser
 };
