@@ -13,7 +13,7 @@ function CategoryCollapse() {
 
   const StyledExpandMore = styled((props): any => {
     const { expand, ...other }: any = props;
-    return <IconButton {...other} />;
+    return <IconButton {...other} onClick={() => setIsOpen(!isOpen)}/>;
         })(({ theme, expand}: any) => ({
         transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
         marginLeft: 'auto',
@@ -24,7 +24,7 @@ function CategoryCollapse() {
 
 
   return (
-    <Card elevation={isOpen ? 0 : 1} onClick={() => setIsOpen(!isOpen)}>
+    <Card elevation={isOpen ? 0 : 1}>
       <StyledCategoryList isOpen={isOpen}>
          <CardActions disableSpacing>
           <p>Categories</p>
