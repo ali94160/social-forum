@@ -7,7 +7,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import BanItem from './BanItem';
 import { StyledTableHead } from './StyledBanList';
-import { useEffect } from 'react';
 
 interface Props {
   banlist: Ban[]

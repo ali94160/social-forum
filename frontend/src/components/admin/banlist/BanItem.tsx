@@ -1,19 +1,13 @@
-import { useState, BaseSyntheticEvent, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Ban } from '../../../interfaces/Ban';
 import TableRow from '@mui/material/TableRow';
 import {
   StyledUnbanBtn,
-  StyledInputContainer,
-  StyledCloseButton,
-  StyledButtonContainer,
-  StyledUnban,
   StyledTableCell,
   StyledSpan
 } from './StyledBanList';
-import { StyledTealButton } from "../../basics/StyledTealButton";
-import BasicModal from '../../basics/basic-modal/BasicModal';
-import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
 import { useBan } from '../../../context/BanContext';
+import PasswordModal from '../password-validation/PasswordModal';
 
 interface Props {
   ban: Ban;
@@ -36,11 +30,9 @@ function BanItem({ban, index}: Props) {
     }
   }, []);
    
-
   const handleUnban = async () => {
     const res = await unbanUser({id: ban._id, password});
     setStatus(res);
-    console.log('what is res status', res)
     if (res !== 200) {
       setStatusMsg('Bad input')
     } else if (res === 200) {
@@ -67,51 +59,25 @@ function BanItem({ban, index}: Props) {
       </StyledTableCell>
     </TableRow>
       {isOpen &&
-        <BasicModal isOpen={isOpen} handleClose={setIsOpen}>
-        <StyledUnban>
+        <PasswordModal
+          isOpen={isOpen}
+          password={password}
+          setPassword={setPassword}
+          status={status}
+          setIsOpen={setIsOpen}
+          setStatus={setStatus}
+          setStatusMsg={setStatusMsg}
+          handleConfirm={handleUnban}
+          statusMsg={statusMsg}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+        >
           <p>Email: <StyledSpan>{ban.email}</StyledSpan></p>
           <p>Ip: <StyledSpan>{ban.ip}</StyledSpan></p>
           <p>Reason: <StyledSpan>{ban.reason}</StyledSpan></p>
           <p>Ban date: <StyledSpan>{dateStr}</StyledSpan></p>
-        </StyledUnban>
-          <StyledInputContainer>
-            <BasicVisibilityInput
-              value={password}
-              variant="outlined"
-              label="Password"
-              showText={showPassword}
-              setShowText={setShowPassword}
-              handleChange={(ev: BaseSyntheticEvent) =>
-                setPassword(ev.target.value)
-              }
-            required
-            error={status !== 200 && status !== 0}
-          />
-          {status !== 200 && status !== 0 && statusMsg}
-        </StyledInputContainer>
-        <StyledButtonContainer>
-          <StyledCloseButton
-            type="button"
-            variant="contained"
-            onClick={() =>
-            {
-              setIsOpen(!isOpen);
-              setPassword('');
-              setStatusMsg('');
-              setStatus(0);
-            }}
-          >
-            Cancel
-          </StyledCloseButton>
-          <StyledTealButton
-            type="submit"
-            variant="contained"
-            onClick={handleUnban}
-          >
-            Confirm
-          </StyledTealButton>
-        </StyledButtonContainer>
-      </BasicModal>}
+        </PasswordModal>
+      }
     </>
   )
 }

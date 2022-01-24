@@ -19,7 +19,6 @@ function BanList() {
   }, []);
 
   useEffect(() => {
-
   }, [banlist])
 
   const handleBanlist = async () => {
@@ -33,7 +32,7 @@ function BanList() {
 
   const StyledExpandMore = styled((props): any => {
     const { expand, ...other }: any = props;
-    return <IconButton {...other} />;
+    return <IconButton {...other} onClick={() => setIsOpen(!isOpen)} />;
         })(({ theme, expand}: any) => ({
         transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
         marginLeft: 'auto',
@@ -51,7 +50,7 @@ function BanList() {
           <StyledExpandMore
             expand={isOpen} 
           >
-            <KeyboardArrowDownIcon onClick={() => setIsOpen(!isOpen)} />
+            <KeyboardArrowDownIcon />
           </StyledExpandMore>
         </CardActions>
         <Collapse in={isOpen} timeout="auto" unmountOnExit>

@@ -22,27 +22,6 @@ export const StyledTableHead = styled(TableHead)`
   }
 `;
 
-export const StyledInputContainer = styled(Box)`
-  margin: 4% 0%;
-`;
-
-export const StyledCloseButton = styled(Button)`
-  &&  {
-    background: grey;
-    font-weight: bold;
-  }
-`;
-
-export const StyledButtonContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 2%;
-`;
-
-export const StyledUnban = styled.div`
-
-`;
-
 export const StyledTableCell = styled(TableCell)`
   && {
     min-width: 5rem;
