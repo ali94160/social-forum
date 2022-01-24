@@ -52,6 +52,12 @@ const user4 = {
   password: "123",
 };
 
+const admin = {
+  username: "admin",
+  email: "admin@haha.se",
+  password: "123",
+};
+
 const bannedUser = {
   username: "bex",
   email: "bex@haha.se",
@@ -68,5 +74,6 @@ module.exports = {
   user2,
   user3,
   user4,
+  admin,
   bannedUser,
 };
