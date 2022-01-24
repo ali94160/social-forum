@@ -12,7 +12,9 @@ function CategoryItem({ category }: Props) {
   const { deleteCategory } = useCategory();
 
   const handleDelete = async () => {
-    await deleteCategory(category._id);
+    if (category.title != "General") {
+      await deleteCategory(category._id);
+    }
   }
 
   return (
@@ -22,9 +24,10 @@ function CategoryItem({ category }: Props) {
       </StyledCategoryTitle>
 
       <StyledWrapper>
+        {category.title != "General" &&
         <StyledDeleteIcon onClick={handleDelete}>
           <DeleteIcon />
-        </StyledDeleteIcon>
+        </StyledDeleteIcon>}
       </StyledWrapper>
 
     </FlexContainer>
