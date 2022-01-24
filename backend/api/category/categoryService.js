@@ -36,10 +36,12 @@ module.exports = function (app) {
     authUserLoggedIn,
     authRole([roles.ADMIN]),
     async (req, res) => {
-      const generalId = "61ee6f9015a484637e1d71e6";
-      const generalResponse = await categoryModel.findById(generalId);
+      const categoryResponse = await categoryModel
+        .findOne({ title: "General" })
+        .exec();
+      const generalId = categoryResponse._id;
       const category = await categoryModel.findById(req.params.id);
-      if (category && generalResponse) {
+      if (category && categoryResponse) {
         try {
           await postModel.updateMany(
             { categoryId: req.params.id },
