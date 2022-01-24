@@ -4,6 +4,8 @@ const { newComment, wrongComment, testPost } = require("./mock_data");
 const Comment = require("../../../models/comment");
 const Post = require("../../../models/post");
 const { user1Login } = require("../../auth/__test__/mock_data");
+const mongoose = global.mongoose;
+
 
 describe("Test to add a comment", () => {
   let testSession = null;

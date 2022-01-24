@@ -25,3 +25,9 @@ export const StyledButtonContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 2%;
 `;
+
+export const StyledReadMore = styled.span`
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+`;

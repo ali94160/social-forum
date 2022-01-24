@@ -2,6 +2,8 @@ const app = require("../../../app");
 const supertest = require("supertest");
 const request = supertest(app);
 const session = require("supertest-session");
+const mongoose = global.mongoose;
+
 const {
   user1,
   user1Login,

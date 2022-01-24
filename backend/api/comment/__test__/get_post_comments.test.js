@@ -2,13 +2,18 @@ const app = require("../../../app");
 const session = require("supertest-session");
 const supertest = require("supertest");
 const request = supertest(app);
-const Post = require("../../../models/post")
-const Comment = require("../../../models/comment")
-const { user1Login, testPost, testComment1, testComment2 } = require("./mock_data");
+const Post = require("../../../models/post");
+const Comment = require("../../../models/comment");
+const mongoose = global.mongoose;
 
+const {
+  user1Login,
+  testPost,
+  testComment1,
+  testComment2,
+} = require("./mock_data");
 
 describe("Test to get comments from post", () => {
-  
   describe("/api/post/comments/:postId", () => {
     let testSession = null;
     let post = null;
@@ -25,9 +30,13 @@ describe("Test to get comments from post", () => {
       post = postRes.body;
 
       let firstComment = { ...testComment1, postId: post._id };
-      const firstCommentRes = await testSession.post("/api/comments").send(firstComment);
+      const firstCommentRes = await testSession
+        .post("/api/comments")
+        .send(firstComment);
       let secondComment = { ...testComment2, postId: post._id };
-      const secondCommentRes = await testSession.post("/api/comments").send(secondComment);
+      const secondCommentRes = await testSession
+        .post("/api/comments")
+        .send(secondComment);
       expect(whoAmIRes.statusCode).toBe(401);
       expect(loginRes.statusCode).toBe(200);
       expect(postRes.statusCode).toBe(200);
@@ -69,19 +78,27 @@ describe("Test to get comments from post", () => {
     });
 
     test("/api/post/comments/:postId?createdDate=desc - get comments with sort by date", async () => {
-      const res = await request.get(`/api/post/comments/${post._id}?createdDate=desc`);
+      const res = await request.get(
+        `/api/post/comments/${post._id}?createdDate=desc`
+      );
       const received = res.body;
-      const expected = received.slice().sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime())
-      
+      const expected = received
+        .slice()
+        .sort(
+          (a, b) =>
+            new Date(b.createdDate).getTime() -
+            new Date(a.createdDate).getTime()
+        );
+
       expect(res.statusCode).toBe(200);
       expect(received).toStrictEqual(expected);
     });
-    
+
     test("There are no comments", async () => {
       for (comment of comments) {
         await Comment.findByIdAndDelete(comment._id);
       }
-      
+
       const res = await request.get("/api/post/comments/" + post._id);
       expect(res.statusCode).toBe(404);
       await Post.findByIdAndDelete(post._id);
@@ -91,6 +108,10 @@ describe("Test to get comments from post", () => {
       const res = await request.get("/api/post/comments/123");
       expect(res.statusCode).toBe(404);
     });
-  });
 
+    afterAll((done) => {
+      mongoose.connection.close();
+      done();
+    });
+  });
 });

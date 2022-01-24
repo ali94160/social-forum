@@ -1,27 +1,28 @@
 :root {
-  --dark-yellow: #FFC045;
-  --yellow: #F2D395;
-  --dark-blue: #0A91AB;
-  --light-blue: #78BBC8;
+  --dark-yellow: #ffc045;
+  --yellow: #f2d395;
+  --dark-blue: #0a91ab;
+  --light-blue: #78bbc8;
   --dark-teal: #065471;
-  --light-teal: #749DAA;
+  --light-teal: #749daa;
   --menu-text-color: white;
   --shadow: rgb(6, 83, 111, 0.6);
+  --dark-text: #003346;
 }
 
 body {
   margin: 0;
   box-sizing: border-box;
   background-color: var(--dark-teal);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -33,4 +34,10 @@ div.App {
 main {
   padding-top: 10vh;
   margin-bottom: 10vh;
+}
+
+p,
+li,
+div {
+  color: var(--dark-text);
 }

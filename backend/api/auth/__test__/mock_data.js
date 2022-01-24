@@ -59,8 +59,8 @@ const admin = {
 };
 
 const bannedUser = {
-  username: "bex",
-  email: "bex@haha.se",
+  username: "banned",
+  email: "banned@haha.se",
   password: "123",
 };
 

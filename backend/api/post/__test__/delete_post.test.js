@@ -4,6 +4,8 @@ const request = supertest(app);
 const session = require("supertest-session");
 const { user1Login, post, user2Login } = require("./mock_data");
 const postModel = require("../../../models/post");
+const mongoose = global.mongoose;
+
 
 describe("Test delete posts", () => {
   describe("Not allow unauthenticated user delete post", () => {
@@ -52,14 +54,19 @@ describe("Test delete posts", () => {
 
       const newPost = await testSession.post("/api/user/posts").send(post);
 
-      await testSession.delete('/api/logout');
+      await testSession.delete("/api/logout");
 
       await testSession.post("/api/login").send(user1Login);
       const res = await testSession.delete("/api/posts/" + newPost.body._id);
 
-      await postModel.findOneAndDelete({ title: post.title })
-      
+      await postModel.findOneAndDelete({ title: post.title });
+
       expect(res.statusCode).toBe(403);
     });
+  });
+
+  afterAll((done) => {
+    mongoose.connection.close();
+    done();
   });
 });
