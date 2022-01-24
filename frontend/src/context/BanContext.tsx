@@ -34,6 +34,9 @@ const BanContextProvider: FC<Props> = ({ children }: Props) => {
       },
       body: JSON.stringify({password}),
     });
+    if (res.status === 200) {
+      getBanlist();
+    }
     return res.status;
   }
 

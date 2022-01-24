@@ -8,7 +8,6 @@ import {
   StyledButtonContainer,
   StyledUnban,
   StyledTableCell,
-  StyledTitle,
   StyledSpan
 } from './StyledBanList';
 import { StyledTealButton } from "../../basics/StyledTealButton";
@@ -17,10 +16,11 @@ import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisib
 import { useBan } from '../../../context/BanContext';
 
 interface Props {
-  ban: Ban
+  ban: Ban;
+  index: number;
 }
 
-function BanItem({ban}: Props) {
+function BanItem({ban, index}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -40,9 +40,10 @@ function BanItem({ban}: Props) {
   const handleUnban = async () => {
     const res = await unbanUser({id: ban._id, password});
     setStatus(res);
-    if (status !== 200) {
+    console.log('what is res status', res)
+    if (res !== 200) {
       setStatusMsg('Bad input')
-    } else if (status === 200) {
+    } else if (res === 200) {
       setStatusMsg('')
       setIsOpen(!isOpen);
     }
@@ -51,7 +52,7 @@ function BanItem({ban}: Props) {
   return (
      <><TableRow
       key={ban._id}
-      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+      sx={{backgroundColor: index % 2 ? 'var(--light-teal)' : 'white'}}
     >
       <StyledTableCell component="th" scope="row">
         {ban.email}

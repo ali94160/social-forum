@@ -18,6 +18,10 @@ function BanList() {
     handleBanlist();
   }, []);
 
+  useEffect(() => {
+
+  }, [banlist])
+
   const handleBanlist = async () => {
     const status = await getBanlist();
     setStatus(status);

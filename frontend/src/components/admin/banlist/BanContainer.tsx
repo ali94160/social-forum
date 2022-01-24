@@ -7,12 +7,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import BanItem from './BanItem';
 import { StyledTableHead } from './StyledBanList';
+import { useEffect } from 'react';
 
 interface Props {
   banlist: Ban[]
 }
 
-function BanContainer({banlist}: Props) {
+function BanContainer({ banlist }: Props) {
   return (
      <TableContainer component={Paper}>
       <Table size="small">
@@ -26,8 +27,8 @@ function BanContainer({banlist}: Props) {
           </TableRow>
         </StyledTableHead>
         <TableBody>
-          {banlist.map((ban) =>
-           <BanItem ban={ban} key={ban._id} />
+          {banlist.map((ban: Ban, index: number) =>
+           <BanItem ban={ban} key={ban._id} index={index} />
           )}
         </TableBody>
       </Table>
