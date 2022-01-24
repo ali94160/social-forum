@@ -1,27 +1,42 @@
-import { useState, BaseSyntheticEvent } from 'react';
+import { useState, BaseSyntheticEvent, useEffect } from 'react';
 import { Ban } from '../../../interfaces/Ban';
-import Grid from '@mui/material/Grid';
 import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import { StyledUnbanBtn, StyledInputContainer, StyledCloseButton, StyledButtonContainer, StyledUnban } from './StyledBanList';
+import { StyledUnbanBtn, StyledInputContainer, StyledCloseButton, StyledButtonContainer, StyledUnban, StyledTableCell } from './StyledBanList';
 import { StyledTealButton } from "../../basics/StyledTealButton";
 import BasicModal from '../../basics/basic-modal/BasicModal';
 import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
+import { useBan } from '../../../context/BanContext';
 
 interface Props {
   ban: Ban
 }
 
 function BanItem({ban}: Props) {
-  console.log('ban from item', ban)
   const [isOpen, setIsOpen] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [status, setStatus] = useState(0);
+  const [statusMsg, setStatusMsg] = useState('');
+  const { unbanUser } = useBan();
+  const date = new Date(ban.banDate);
+  const dateStr = date.toLocaleDateString();
+
+  useEffect(() => {
+    return () => {
+      setPassword('');
+    }
+  }, []);
    
 
   const handleUnban = async () => {
-    console.log('i want to unban id', ban._id);
+    const res = await unbanUser({id: ban._id, password});
+    setStatus(res);
+    if (status !== 200) {
+      setStatusMsg('Bad input')
+    } else if (status === 200) {
+      setStatusMsg('')
+      setIsOpen(!isOpen);
+    }
   }
 
   return (
@@ -29,17 +44,17 @@ function BanItem({ban}: Props) {
       key={ban._id}
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <TableCell component="th" scope="row">
+      <StyledTableCell component="th" scope="row">
         {ban.email}
-      </TableCell>
-      <TableCell align="left">{ban.ip}</TableCell>
-      <TableCell align="left">{ban.reason}</TableCell>
-      <TableCell align="left">{ban.banDate}</TableCell>
-      <TableCell align="center">
+      </StyledTableCell>
+      <StyledTableCell align="left">{ban.ip}</StyledTableCell>
+      <StyledTableCell align="left">{ban.reason}</StyledTableCell>
+      <StyledTableCell align="left">{dateStr}</StyledTableCell>
+      <StyledTableCell align="center">
         <StyledUnbanBtn size="small" onClick={() => setIsOpen(!isOpen)}>
           Unban
         </StyledUnbanBtn>
-      </TableCell>
+      </StyledTableCell>
     </TableRow>
       {isOpen &&
         <BasicModal isOpen={isOpen} handleClose={setIsOpen}>
@@ -47,7 +62,7 @@ function BanItem({ban}: Props) {
           Email: {ban.email}<br />
           Ip: {ban.ip}<br />
           Reason: {ban.reason}<br />
-          Ban date: {ban.banDate}
+          Ban date: {dateStr}
         </StyledUnban>
           <StyledInputContainer>
             <BasicVisibilityInput
@@ -59,14 +74,22 @@ function BanItem({ban}: Props) {
               handleChange={(ev: BaseSyntheticEvent) =>
                 setPassword(ev.target.value)
               }
-              required
-            />
+            required
+            error={status !== 200 && status !== 0}
+          />
+          {status !== 200 && status !== 0 && statusMsg}
         </StyledInputContainer>
         <StyledButtonContainer>
           <StyledCloseButton
             type="button"
             variant="contained"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() =>
+            {
+              setIsOpen(!isOpen);
+              setPassword('');
+              setStatusMsg('');
+              setStatus(0);
+            }}
           >
             Cancel
           </StyledCloseButton>
@@ -78,7 +101,7 @@ function BanItem({ban}: Props) {
             Confirm
           </StyledTealButton>
         </StyledButtonContainer>
-        </BasicModal>}
+      </BasicModal>}
     </>
   )
 }
