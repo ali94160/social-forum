@@ -45,8 +45,6 @@ function PostContextProvider({ children }: Props) {
       query = `${query}&categoryId=${categoryId}`;
     }
     const response: Response = await fetch(query);
-    console.log(response);
-    
     try {
       const result = await response.json();
       setPosts(result);
