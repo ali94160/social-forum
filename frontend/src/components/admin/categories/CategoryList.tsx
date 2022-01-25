@@ -55,8 +55,10 @@ function CategoriesList() {
   return (
     <Card>
       <StyledAddWrapper>
-        {!display && <AddCircleIcon onClick={() => setDisplay(!display)} />}
-        {display && <CloseIcon onClick={() => setDisplay(!display)} />}
+        {!display ?
+          (<AddCircleIcon onClick={() => setDisplay(!display)} />) :
+          (<CloseIcon onClick={() => setDisplay(!display)} />)
+        }
         <StyledHeader >
           Add new category
         </StyledHeader>
