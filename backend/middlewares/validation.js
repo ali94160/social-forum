@@ -1,5 +1,6 @@
 const banModel = require("../models/ban");
 const userModel = require("../models/user");
+const { hashUtil } = require("../api/utils");
 
 async function notBannedUser(req, res, next) {
   if (!req.body.email || !req.body.password) {
@@ -37,7 +38,25 @@ async function userNotExists(req, res, next) {
   next()
 }
 
+async function passwordValidation(req, res, next) {
+  const user = { ...req.session.user };
+  const password = req.body.password;
+
+  if (!password) {
+    return res.status(400).json({message: "Bad request"});
+  }
+
+  const hash = hashUtil(req.body?.password);
+
+  if (user.password !== hash) {
+    return res.sendStatus(403);
+  }
+  
+  next()
+}
+
 module.exports = {
   notBannedUser,
   userNotExists,
+  passwordValidation
 }
