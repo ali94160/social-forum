@@ -15,7 +15,7 @@ type Props = {
   setPassword: Function;
   status: number;
   setStatus: Function;
-  statusMsg: string | "default";
+  statusMsg?: string | "default";
   setStatusMsg: Function;
   showPassword: boolean;
   setShowPassword: Function;

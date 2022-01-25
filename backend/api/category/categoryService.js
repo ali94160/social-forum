@@ -2,6 +2,7 @@ const categoryModel = require("../../models/category");
 const postModel = require("../../models/post");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
 const roles = require("../../models/role");
+const { passwordValidation } = require('../../middlewares/validation');
 
 module.exports = function (app) {
   // https://fonts.google.com/icons
@@ -62,6 +63,7 @@ module.exports = function (app) {
     "/api/categories/:id",
     authUserLoggedIn,
     authRole([roles.ADMIN]),
+    passwordValidation,
     async (req, res) => {
       const categoryResponse = await categoryModel
         .findOne({ title: "General" })

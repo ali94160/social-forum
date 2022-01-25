@@ -7,6 +7,11 @@ interface Props {
   children: any;
 }
 
+interface CatProps {
+  id: string;
+  password: string;
+}
+
 
 function CategoryContextProvider({ children }: Props) {
   const [categories, setCategories] = useState([])
@@ -36,15 +41,18 @@ function CategoryContextProvider({ children }: Props) {
     return res.status === 200;
   }
 
-  const deleteCategory = async (categoryId: string) => {
-    const res = await fetch('/api/categories/' + categoryId, {
+  const deleteCategory = async ({id, password}: CatProps) => {
+    const res = await fetch('/api/categories/' + id, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
       },
+      body: JSON.stringify({password})
     });
-    getCategories();
-    return res.status === 200;
+    if (res.status === 200) {
+      getCategories();
+    }
+    return res.status;
   }
 
   const values = {
