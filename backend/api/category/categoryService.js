@@ -11,6 +11,7 @@ module.exports = function (app) {
     "/api/categories",
     authUserLoggedIn,
     authRole([roles.ADMIN]),
+    passwordValidation,
     async (req, res) => {
       if (!req.body) {
         res.sendStatus(403);
@@ -18,7 +19,7 @@ module.exports = function (app) {
       }
 
       try {
-        const result = await categoryModel(req.body).save();
+        const result = await categoryModel(req.body.category).save();
         if (!result) {
           res.sendStatus(400);
           return;
