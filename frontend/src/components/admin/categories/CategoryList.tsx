@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CategoryItem from './CategoryItem';
 import { useCategory } from "../../../context/CategoryContext";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import CloseIcon from '@mui/icons-material/Close';
 import { StyledAddWrapper, StyledHeader, StyledInputWrapper } from './StyledCategoryList';
 import BasicTextField from "../../basics/basic-text-field/BasicTextField";
 import { StyledTealButton } from "../../basics/StyledTealButton";
@@ -54,7 +55,8 @@ function CategoriesList() {
   return (
     <Card>
       <StyledAddWrapper>
-        <AddCircleIcon onClick={() => setDisplay(!display)}/>
+        {!display && <AddCircleIcon onClick={() => setDisplay(!display)} />}
+        {display && <CloseIcon onClick={() => setDisplay(!display)} />}
         <StyledHeader >
           Add new category
         </StyledHeader>
@@ -63,7 +65,7 @@ function CategoriesList() {
     {display && renderAddCategory()}
 
       {categories.map((category: Category, index: number) =>
-        <CategoryItem key={index} category={category} />
+        <CategoryItem key={category._id} category={category} />
       )}
     </Card>
   )
