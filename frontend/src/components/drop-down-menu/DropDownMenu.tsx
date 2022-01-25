@@ -1,6 +1,4 @@
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useDropDown } from "../../context/DropDownContext";
 import { StyledMenu } from "./StyledDropDownMenu";
 
 interface Props {
@@ -8,6 +6,8 @@ interface Props {
     title: string;
     method: () => void;
   }[];
+  anchorEl: null | HTMLElement;
+  setAnchorEl: Function;
 }
 
 interface MenuItem {
@@ -15,21 +15,23 @@ interface MenuItem {
   method: () => void;
 }
 
-function DropDownMenu({ menuItems }: Props) {
-  const { showDropDown, setShowDropDown } = useDropDown();
+function DropDownMenu({ menuItems, anchorEl, setAnchorEl }: Props) {
+  const open = Boolean(anchorEl);
+
   const handleClose = () => {
-    setShowDropDown(!showDropDown);
+    setAnchorEl(null)
   };
 
   const handleClick = (item: MenuItem) => {
     item.method();
-    setShowDropDown(false);
+    handleClose
   };
 
   return (
     <StyledMenu
       id="basic-menu"
-      open={showDropDown}
+      anchorEl={anchorEl}
+      open={open}
       onClose={handleClose}
       autoFocus={false}
       anchorOrigin={{

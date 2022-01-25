@@ -1,4 +1,3 @@
-import DropDownContextProvider from "./DropDownContext";
 import ModalContextProvider from "./ModalContext";
 import AuthContextProvider from "./AuthContext";
 import UserContextProvider from "./UserContext";
@@ -16,7 +15,6 @@ function AllContexts({ children }: Props) {
     <>
       <AuthContextProvider>
         <PostContextProvider>
-          <DropDownContextProvider>
             <UserContextProvider>
               <CommentContextProvider>
                 <BanContextProvider>
@@ -26,7 +24,6 @@ function AllContexts({ children }: Props) {
                 </BanContextProvider>
               </CommentContextProvider>
             </UserContextProvider>
-          </DropDownContextProvider>
         </PostContextProvider>
       </AuthContextProvider>
     </>
