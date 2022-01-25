@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
+  List,
   Toolbar,
   ListItem,
   Divider,
@@ -9,10 +10,11 @@ import {
   StyledDrawerContainer,
   StyledDrawer,
   StyledBox,
-  StyledList,
   StyledText,
 } from "./StyledCategoryDrawer";
 import { useHistory } from "react-router-dom";
+import { useCategory } from "../../context/CategoryContext";
+import { Category } from "../../interfaces/Category";
 
 interface Props {
   isOpen: boolean;
@@ -20,9 +22,10 @@ interface Props {
 
 function CategoryDrawer({ isOpen }: Props) {
   const history = useHistory();
+  const { categories } = useCategory();
+
   const navigateToCategory = (name: string) => {
-    // temporary
-    history.push(`/categories/${name}`);
+    history.push(`/categories/${name.toLocaleLowerCase()}`);
   };
 
   return (
@@ -39,20 +42,20 @@ function CategoryDrawer({ isOpen }: Props) {
       <StyledDrawerContainer>
         <Toolbar />
         <StyledBox>
-          <StyledList>
-            {/* shall be replaced with categories */}
-            {["Meme", "Trollololo", "Cooking", "Economic"].map(
-              (text, index) => (
+          <List>
+            {categories.map(
+              (category: Category) => (
                 <ListItem
                   button
-                  key={text}
-                  onClick={() => navigateToCategory(text)}
+                  key={category._id}
+                  onClick={() => navigateToCategory(category.title.toLowerCase())}
                 >
-                  <StyledText>{text}</StyledText>
+                  <span className="material-icons">{category.icon}</span>
+                  <StyledText>{category.title}</StyledText>
                 </ListItem>
               )
             )}
-          </StyledList>
+          </List>
           <Divider />
         </StyledBox>
       </StyledDrawerContainer>
