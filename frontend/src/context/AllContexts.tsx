@@ -5,6 +5,7 @@ import UserContextProvider from "./UserContext";
 import PostContextProvider from "./PostContext";
 import CommentContextProvider from "./CommentContext";
 import CategoryContextProvider from "./CategoryContext";
+import BanContextProvider from "./BanContext";
 
 interface Props {
   children: JSX.Element;
@@ -17,11 +18,13 @@ function AllContexts({ children }: Props) {
         <PostContextProvider>
           <DropDownContextProvider>
             <UserContextProvider>
-              <CategoryContextProvider>
-                <CommentContextProvider>
+              <CommentContextProvider>
+                <BanContextProvider>
+                  <CategoryContextProvider>
                   <ModalContextProvider>{children}</ModalContextProvider>
-                </CommentContextProvider>
-              </CategoryContextProvider>
+                  </CategoryContextProvider>
+                </BanContextProvider>
+              </CommentContextProvider>
             </UserContextProvider>
           </DropDownContextProvider>
         </PostContextProvider>

@@ -19,6 +19,7 @@ interface Props {
   handleChange: Function;
   showText?: boolean;
   setShowText: Function;
+  error?: boolean
 }
 
 function BasicVisibilityInput({
@@ -30,11 +31,13 @@ function BasicVisibilityInput({
   handleChange,
   showText,
   setShowText,
+  error
 }: Props) {
   return (
     <StyledFormControl variant={variant}>
       <InputLabel htmlFor="outlined-adornment-password">{label + (required ? " *" : "")}</InputLabel>
       <OutlinedInput
+        error={error}
         type={showText ? type : "password"}
         value={value}
         onChange={(ev) => handleChange(ev)}
