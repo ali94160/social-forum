@@ -1,44 +1,76 @@
-import { useState } from 'react';
-import { StyledCategoryList } from './StyledCategoryList';
+import { useState, BaseSyntheticEvent } from "react";
+import { Category } from "../../../interfaces/Category";
 import Card from '@mui/material/Card';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import IconButton from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
-import Collapse from '@mui/material/Collapse';
-import CardActions from '@mui/material/CardActions';
+import CategoryItem from './CategoryItem';
+import { useCategory } from "../../../context/CategoryContext";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import CloseIcon from '@mui/icons-material/Close';
+import { StyledAddWrapper, StyledHeader, StyledInputWrapper } from './StyledCategoryList';
+import BasicTextField from "../../basics/basic-text-field/BasicTextField";
+import { StyledTealButton } from "../../basics/StyledTealButton";
 
-function CategoryList() {
-  const [isOpen, setIsOpen] = useState(false);
 
-  const StyledExpandMore = styled((props): any => {
-    const { expand, ...other }: any = props;
-    return <IconButton {...other} />;
-        })(({ theme, expand}: any) => ({
-        transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-          duration: theme.transitions.duration.shortest,
-      }),
-    }));
+function CategoriesList() {
+  const [display, setDisplay] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('')
+  const [icon, setIcon] = useState<string>('')
+  const { categories, addCategory } = useCategory();
 
+  const addNewCategory = async (e: any) => {
+    e.preventDefault();
+    const newCategory = {
+      title,
+      icon: icon !== '' ? icon : "tag"
+    }
+    await addCategory(newCategory);
+    setTitle('');
+    setIcon('');
+  }
+
+  const renderAddCategory = () => (
+    <StyledInputWrapper>
+      <BasicTextField
+        type="text"
+        value={title}
+        label="Title"
+        placeholder="Title"
+        handleChange={(ev: any) => setTitle(ev.target.value)}
+        required
+      />
+
+      <BasicTextField
+        type="text"
+        value={icon}
+        label="Icon"
+        placeholder="Icon"
+        handleChange={(ev: any) => setIcon(ev.target.value)}
+      />
+
+      <StyledTealButton type="submit" variant="contained" onClick={(e) => addNewCategory(e)}>
+        Add
+      </StyledTealButton>
+    </StyledInputWrapper>
+  );
 
   return (
-    <Card elevation={isOpen ? 0 : 1} onClick={() => setIsOpen(!isOpen)}>
-      <StyledCategoryList isOpen={isOpen}>
-         <CardActions disableSpacing>
-          <p>Categories</p>
-          <StyledExpandMore
-            expand={isOpen} 
-          >
-            <KeyboardArrowDownIcon />
-          </StyledExpandMore>
-        </CardActions>
-        <Collapse in={isOpen} timeout="auto" unmountOnExit>
-          put category list here
-        </Collapse>
-      </StyledCategoryList>
+    <Card>
+      <StyledAddWrapper>
+        {!display ?
+          (<AddCircleIcon onClick={() => setDisplay(!display)} />) :
+          (<CloseIcon onClick={() => setDisplay(!display)} />)
+        }
+        <StyledHeader >
+          Add new category
+        </StyledHeader>
+      </StyledAddWrapper>
+
+    {display && renderAddCategory()}
+
+      {categories.map((category: Category, index: number) =>
+        <CategoryItem key={category._id} category={category} />
+      )}
     </Card>
-  );
+  )
 }
 
-export default CategoryList;
+export default CategoriesList;
