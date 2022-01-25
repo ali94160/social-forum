@@ -14,7 +14,7 @@ import {
 } from "./StyledCategoryDrawer";
 import { useHistory } from "react-router-dom";
 import { useCategory } from "../../context/CategoryContext";
-import Category from "../../interfaces/Category"
+import { Category } from "../../interfaces/Category"
 
 interface Props {
   isOpen: boolean;
