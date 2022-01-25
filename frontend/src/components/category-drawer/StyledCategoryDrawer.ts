@@ -19,16 +19,9 @@ export const StyledBox = styled(Box)`
   overflow: "auto";
 `;
 
-export const StyledList = styled(List)`
-  color: white;
-`;
-
-export const StyledListItem = styled(ListItem)`
-  color: white;
-`;
-
 export const StyledText = styled(Typography)`
   && {
+    color: white;
     font-weight: bolder;
   }
 `;

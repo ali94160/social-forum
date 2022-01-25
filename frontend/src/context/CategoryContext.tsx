@@ -9,7 +9,7 @@ interface Props {
 
 
 function CategoryContextProvider({ children }: Props) {
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState<Category[]>([])
 
   const getCategories = async () => {
     const res: Response = await fetch("/api/categories")

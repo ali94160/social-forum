@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
+  List,
   Toolbar,
   ListItem,
   Divider,
@@ -9,10 +10,11 @@ import {
   StyledDrawerContainer,
   StyledDrawer,
   StyledBox,
-  StyledList,
   StyledText,
 } from "./StyledCategoryDrawer";
 import { useHistory } from "react-router-dom";
+import { useCategory } from "../../context/CategoryContext";
+import Category from "../../interfaces/Category"
 
 interface Props {
   isOpen: boolean;
@@ -20,10 +22,15 @@ interface Props {
 
 function CategoryDrawer({ isOpen }: Props) {
   const history = useHistory();
+  const { categories, getCategories } = useCategory();
+
   const navigateToCategory = (name: string) => {
-    // temporary
-    history.push(`/categories/${name}`);
+    history.push(`/categories/${name.toLocaleLowerCase()}`);
   };
+
+  useEffect(() => {
+    getCategories()
+  },[])
 
   return (
     <StyledDrawer
@@ -39,20 +46,18 @@ function CategoryDrawer({ isOpen }: Props) {
       <StyledDrawerContainer>
         <Toolbar />
         <StyledBox>
-          <StyledList>
-            {/* shall be replaced with categories */}
-            {["Meme", "Trollololo", "Cooking", "Economic"].map(
-              (text, index) => (
-                <ListItem
-                  button
-                  key={text}
-                  onClick={() => navigateToCategory(text)}
-                >
-                  <StyledText>{text}</StyledText>
-                </ListItem>
-              )
-            )}
-          </StyledList>
+          <List>
+            {categories?.length > 0 &&
+              categories.map((cat: Category) => (
+              <ListItem
+                button
+                key={cat._id}
+                onClick={() => navigateToCategory(cat.title)}
+              >
+                <StyledText>{cat.title}</StyledText>
+              </ListItem>
+            ))}
+          </List>
           <Divider />
         </StyledBox>
       </StyledDrawerContainer>
