@@ -26,6 +26,31 @@ function CategoriesList() {
     setIcon('');
   }
 
+  const renderAddCategory = () => (
+    <StyledInputWrapper>
+      <BasicTextField
+        type="text"
+        value={title}
+        label="Title"
+        placeholder="Title"
+        handleChange={(ev: any) => setTitle(ev.target.value)}
+        required
+      />
+
+      <BasicTextField
+        type="text"
+        value={icon}
+        label="Icon"
+        placeholder="Icon"
+        handleChange={(ev: any) => setIcon(ev.target.value)}
+      />
+
+      <StyledTealButton type="submit" variant="contained" onClick={(e) => addNewCategory(e)}>
+        Add
+      </StyledTealButton>
+    </StyledInputWrapper>
+  );
+
   return (
     <Card>
       <StyledAddWrapper>
@@ -35,29 +60,7 @@ function CategoriesList() {
         </StyledHeader>
       </StyledAddWrapper>
 
-    {display &&
-      <StyledInputWrapper>
-        <BasicTextField
-          type="text"
-          value={title}
-          label="Title"
-          placeholder="Title"
-          handleChange={(ev: any) => setTitle(ev.target.value)}
-          required
-        />
-
-        <BasicTextField
-          type="text"
-          value={icon}
-          label="Icon"
-          placeholder="Icon"
-          handleChange={(ev: any) => setIcon(ev.target.value)}
-        />
-
-        <StyledTealButton type="submit" variant="contained" onClick={(e) => addNewCategory(e)}>
-          Add
-        </StyledTealButton>
-      </StyledInputWrapper>}
+    {display && renderAddCategory()}
 
       {categories.map((category: Category, index: number) =>
         <CategoryItem key={index} category={category} />
