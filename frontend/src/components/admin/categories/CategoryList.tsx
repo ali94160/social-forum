@@ -8,6 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { StyledAddWrapper, StyledHeader, StyledInputWrapper } from './StyledCategoryList';
 import BasicTextField from "../../basics/basic-text-field/BasicTextField";
 import { StyledTealButton } from "../../basics/StyledTealButton";
+import PasswordModal from '../password-validation/PasswordModal';
 
 
 function CategoriesList() {
@@ -15,16 +16,26 @@ function CategoriesList() {
   const [title, setTitle] = useState<string>('')
   const [icon, setIcon] = useState<string>('')
   const { categories, addCategory } = useCategory();
+  const [isAdd, setIsAdd] = useState(false);
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [status, setStatus] = useState(0);
+  const [statusMsg, setStatusMsg] = useState('');
 
-  const addNewCategory = async (e: any) => {
-    e.preventDefault();
+  const addNewCategory = async () => {
     const newCategory = {
       title,
       icon: icon !== '' ? icon : "tag"
     }
-    await addCategory(newCategory);
-    setTitle('');
-    setIcon('');
+    const res = await addCategory({ category: newCategory, password });
+    setStatus(res);
+    if (res === 200) {
+      setTitle('');
+      setIcon('');
+      setIsAdd(!isAdd);
+      setPassword('');
+      setDisplay(!display);
+    }
   }
 
   const renderAddCategory = () => (
@@ -46,14 +57,14 @@ function CategoriesList() {
         handleChange={(ev: any) => setIcon(ev.target.value)}
       />
 
-      <StyledTealButton type="submit" variant="contained" onClick={(e) => addNewCategory(e)}>
+      <StyledTealButton type="submit" variant="contained" onClick={() => setIsAdd(!isAdd)}>
         Add
       </StyledTealButton>
     </StyledInputWrapper>
   );
 
   return (
-    <Card>
+    <><Card>
       <StyledAddWrapper>
         {!display ?
           (<AddCircleIcon onClick={() => setDisplay(!display)} />) :
@@ -70,6 +81,22 @@ function CategoriesList() {
         <CategoryItem key={category._id} category={category} />
       )}
     </Card>
+    {isAdd &&
+        <PasswordModal
+          isOpen={isAdd}
+          password={password}
+          setPassword={setPassword}
+          status={status}
+          setIsOpen={setIsAdd}
+          setStatus={setStatus}
+          setStatusMsg={setStatusMsg}
+          handleConfirm={addNewCategory}
+          statusMsg={statusMsg}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+        >
+          <p>Do you want to add {title} as a category?</p>
+        </PasswordModal>}</>
   )
 }
 

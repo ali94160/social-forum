@@ -21,6 +21,10 @@ function CategoryItem({ category }: Props) {
     if (category.title != "General") {
       const res = await deleteCategory({id: category._id, password});
       setStatus(res);
+      if (status === 200) {
+        setPassword('');
+        setIsDelete(!isDelete);
+      }
     }
   }
 
