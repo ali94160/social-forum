@@ -53,10 +53,6 @@ function PostContextProvider({ children }: Props) {
     }
     return response.status === 200;
   };
-    
-  const getPostsByCategory = async () => {
-
-  };
 
   const getMyPosts = async () => {
     const response: Response = await fetch("/api/user/posts");
@@ -118,7 +114,6 @@ function PostContextProvider({ children }: Props) {
     updatePost,
     post,
     updateModerators,
-    getPostsByCategory,
   };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;
