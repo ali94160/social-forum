@@ -1,7 +1,7 @@
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
+const { passwordValidation } = require('../../middlewares/validation');
 const Ban = require('../../models/ban');
 const roles = require("../../models/role");
-const { hashUtil } = require("../utils");
 
 module.exports = banlist = (app) => {
   app.get("/api/bans", authUserLoggedIn, authRole([roles.ADMIN]), async (req, res) => {
@@ -14,27 +14,13 @@ module.exports = banlist = (app) => {
   });
 
   //unban 
-  app.delete('/api/bans/:id', authUserLoggedIn, authRole([roles.ADMIN]), async (req, res) => {
-    const user = { ...req.session.user };
-    const password = req.body.password;
-
-    if (!password) {
-      return res.status(400).json({message: "Bad request"});
-    }
-
-    const hash = hashUtil(req.body?.password);
-
-    if (user.password !== hash) {
-      return res.sendStatus(403);
-    }
-
+  app.delete('/api/bans/:id', authUserLoggedIn, authRole([roles.ADMIN]), passwordValidation, async (req, res) => {
     try {
       await Ban.findOneAndDelete({ _id: req.params.id });
       return res.sendStatus(200);
     } catch (error) {
       res.senStatus(404);
     }
-
   });
 
 };

@@ -19,7 +19,6 @@ function BanItem({ban, index}: Props) {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [status, setStatus] = useState(0);
-  const [statusMsg, setStatusMsg] = useState('');
   const { unbanUser } = useBan();
   const date = new Date(ban.banDate);
   const dateStr = date.toLocaleDateString();
@@ -33,10 +32,7 @@ function BanItem({ban, index}: Props) {
   const handleUnban = async () => {
     const res = await unbanUser({id: ban._id, password});
     setStatus(res);
-    if (res !== 200) {
-      setStatusMsg('Bad input')
-    } else if (res === 200) {
-      setStatusMsg('')
+    if (res === 200) {
       setIsOpen(!isOpen);
     }
   }
@@ -66,9 +62,7 @@ function BanItem({ban, index}: Props) {
           status={status}
           setIsOpen={setIsOpen}
           setStatus={setStatus}
-          setStatusMsg={setStatusMsg}
           handleConfirm={handleUnban}
-          statusMsg={statusMsg}
           showPassword={showPassword}
           setShowPassword={setShowPassword}
         >
