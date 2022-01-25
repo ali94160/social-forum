@@ -29,6 +29,8 @@ export const StyledListItem = styled(ListItem)`
 
 export const StyledText = styled(Typography)`
   && {
-    font-weight: bolder;
+    color: white;
+    font-weight: normal;
+    padding-left: 10px;
   }
 `;

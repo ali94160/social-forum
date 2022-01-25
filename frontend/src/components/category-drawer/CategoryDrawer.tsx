@@ -13,6 +13,8 @@ import {
   StyledText,
 } from "./StyledCategoryDrawer";
 import { useHistory } from "react-router-dom";
+import { useCategory } from "../../context/CategoryContext";
+import { Category } from "../../interfaces/Category";
 
 interface Props {
   isOpen: boolean;
@@ -20,6 +22,7 @@ interface Props {
 
 function CategoryDrawer({ isOpen }: Props) {
   const history = useHistory();
+  const {categories} = useCategory();
   const navigateToCategory = (name: string) => {
     // temporary
     history.push(`/categories/${name}`);
@@ -40,15 +43,15 @@ function CategoryDrawer({ isOpen }: Props) {
         <Toolbar />
         <StyledBox>
           <StyledList>
-            {/* shall be replaced with categories */}
-            {["Meme", "Trollololo", "Cooking", "Economic"].map(
-              (text, index) => (
+            {categories.map(
+              (category: Category) => (
                 <ListItem
                   button
-                  key={text}
-                  onClick={() => navigateToCategory(text)}
+                  key={category._id}
+                  onClick={() => navigateToCategory(category.title.toLowerCase())}
                 >
-                  <StyledText>{text}</StyledText>
+                  <span className="material-icons">{category.icon}</span>
+                  <StyledText>{category.title}</StyledText>
                 </ListItem>
               )
             )}
