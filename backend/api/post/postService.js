@@ -11,14 +11,20 @@ const roles = require("../../models/role");
 module.exports = function (app) {
   app.get("/api/posts", async (req, res) => {
     let posts = [];
+    let filter = {}
     try {
+      if (req.query.categoryId) {
+        filter = { ...filter, categoryId: req.query.categoryId };
+        delete req.query.categoryId
+      }
       let data = await postModel
-        .find({})
+        .find(filter)
         .sort(req.query)
         .collation({ locale: "en" })
         .lean()
         .populate("ownerId", "username")
         .exec();
+      
       for (let post of data) {
         let commentLength = await commentModel
           .find({ postId: post._id })
@@ -145,7 +151,7 @@ module.exports = function (app) {
     }
   );
 
-  app.delete("/api/posts/:id", authUserLoggedIn, async (req, res) => {
+  app.delete("/api/posts/:id", authUserLoggedIn, authRole([roles.ADMIN, roles.POSTOWNER]), async (req, res) => {
     let user = req.session.user;
     let filter = {
       _id: req.params.id,

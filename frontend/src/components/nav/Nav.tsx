@@ -68,7 +68,7 @@ function Nav() {
           )}
         </StyledToolBar>
       </StyledAppBar>
-      <CategoryDrawer isOpen={isOpen} />
+      <CategoryDrawer isOpen={isOpen} toggle={toggleDrawer} />
     </StyledBox>
   );
 }

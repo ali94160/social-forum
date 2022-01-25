@@ -2,6 +2,7 @@ const categoryModel = require("../../models/category");
 const postModel = require("../../models/post");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
 const roles = require("../../models/role");
+const { passwordValidation } = require('../../middlewares/validation');
 
 module.exports = function (app) {
   // https://fonts.google.com/icons
@@ -10,6 +11,7 @@ module.exports = function (app) {
     "/api/categories",
     authUserLoggedIn,
     authRole([roles.ADMIN]),
+    passwordValidation,
     async (req, res) => {
       if (!req.body) {
         res.sendStatus(403);
@@ -17,7 +19,7 @@ module.exports = function (app) {
       }
 
       try {
-        const result = await categoryModel(req.body).save();
+        const result = await categoryModel(req.body.category).save();
         if (!result) {
           res.sendStatus(400);
           return;
@@ -62,6 +64,7 @@ module.exports = function (app) {
     "/api/categories/:id",
     authUserLoggedIn,
     authRole([roles.ADMIN]),
+    passwordValidation,
     async (req, res) => {
       const categoryResponse = await categoryModel
         .findOne({ title: "General" })

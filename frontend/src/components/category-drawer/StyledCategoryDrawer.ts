@@ -19,16 +19,10 @@ export const StyledBox = styled(Box)`
   overflow: "auto";
 `;
 
-export const StyledList = styled(List)`
-  color: white;
-`;
-
-export const StyledListItem = styled(ListItem)`
-  color: white;
-`;
-
 export const StyledText = styled(Typography)`
   && {
-    font-weight: bolder;
+    color: white;
+    font-weight: normal;
+    padding-left: 10px;
   }
 `;
