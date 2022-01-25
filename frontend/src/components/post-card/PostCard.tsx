@@ -25,7 +25,7 @@ const modalToConfirmAdminText =
   " NOTE: This will delete the post, content, comments and moderators permanently.";
 
 function PostCard({ post, isInMyPostPage }: PostObj) {
-  const { deletePost, getPosts } = usePost();
+  const { deletePost } = usePost();
   const { isAdmin } = useUser();
   const history = useHistory();
   const [imAdmin, setImAdmin] = useState(false);
