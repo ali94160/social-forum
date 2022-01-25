@@ -27,11 +27,11 @@ function AdminPage() {
   }
 
   if (status !== 200) {
-    // if(status === 401)
-    // setTimeout(() => {
-    //   history.push('/');
-    // }, 5000);
-
+    if(status === 401)
+    setTimeout(() => {
+      history.push('/');
+    }, 5000);
+    
     return (
       <div>
         You are unauthorized...

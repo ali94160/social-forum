@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyledBanlist } from './StyledBanList';
 import Card from '@mui/material/Card';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -6,13 +6,28 @@ import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Collapse from '@mui/material/Collapse';
 import CardActions from '@mui/material/CardActions';
+import { useBan } from '../../../context/BanContext';
+import BanContainer from './BanContainer';
 
 function BanList() {
   const [isOpen, setIsOpen] = useState(false);
+  const { getBanlist, banlist } = useBan();
+
+  useEffect(() => {
+    handleBanlist();
+  }, []);
+
+  useEffect(() => {
+  }, [banlist])
+
+  const handleBanlist = async () => {
+    await getBanlist();
+  }
+
 
   const StyledExpandMore = styled((props): any => {
     const { expand, ...other }: any = props;
-    return <IconButton {...other} />;
+    return <IconButton {...other} onClick={() => setIsOpen(!isOpen)} />;
         })(({ theme, expand}: any) => ({
         transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
         marginLeft: 'auto',
@@ -23,7 +38,7 @@ function BanList() {
 
 
   return (
-    <Card elevation={isOpen ? 0 : 1} onClick={() => setIsOpen(!isOpen)}>
+    <Card elevation={isOpen ? 0 : 1}>
       <StyledBanlist isOpen={isOpen}>
          <CardActions disableSpacing>
           <p>Banlist</p>
@@ -34,7 +49,7 @@ function BanList() {
           </StyledExpandMore>
         </CardActions>
         <Collapse in={isOpen} timeout="auto" unmountOnExit>
-          put ban list here
+          <BanContainer banlist={banlist} />
         </Collapse>
       </StyledBanlist>
     </Card>
