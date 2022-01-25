@@ -18,7 +18,7 @@ import { User } from '../../interfaces/User';
 import EditForm from './EditForm';
 
 interface Props {
-  post: PostItem | null;
+  post: PostItem;
   me: User;
 }
 
@@ -29,12 +29,13 @@ function Post({post, me}: Props) {
   const [edit, setEdit] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [categoryId, setCategoryId] = useState<any>(typeof post?.categoryId == "object" ? post.categoryId._id : "");
   const hours = time?.getHours();
   const minutes = (time && time?.getMinutes() < 10 ? '0' : '') + time?.getMinutes();
-  const [categoryId, setCategoryId] = useState<string>("");
   const { updatePost } = usePost();
   const [status, setStatus] = useState(0);
   const [isPostOwner, setIsPostOwner] = useState(false);
+  
 
   useEffect(() => {
     handleIsPostOwner();
