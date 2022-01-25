@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { Category } from "../../src/interfaces/Category";
 const CategoryContext = createContext<any>(null);
 export const useCategory = () => useContext(CategoryContext);
@@ -9,7 +9,11 @@ interface Props {
 
 
 function CategoryContextProvider({ children }: Props) {
-  const [categories, setCategories] = useState<Category[]>([])
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   const getCategories = async () => {
     const res: Response = await fetch("/api/categories")

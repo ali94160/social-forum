@@ -22,6 +22,7 @@ export const StyledBox = styled(Box)`
 export const StyledText = styled(Typography)`
   && {
     color: white;
-    font-weight: bolder;
+    font-weight: normal;
+    padding-left: 10px;
   }
 `;

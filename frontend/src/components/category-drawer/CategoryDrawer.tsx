@@ -14,7 +14,7 @@ import {
 } from "./StyledCategoryDrawer";
 import { useHistory } from "react-router-dom";
 import { useCategory } from "../../context/CategoryContext";
-import { Category } from "../../interfaces/Category"
+import { Category } from "../../interfaces/Category";
 
 interface Props {
   isOpen: boolean;
@@ -22,15 +22,11 @@ interface Props {
 
 function CategoryDrawer({ isOpen }: Props) {
   const history = useHistory();
-  const { categories, getCategories } = useCategory();
+  const { categories } = useCategory();
 
   const navigateToCategory = (name: string) => {
     history.push(`/categories/${name.toLocaleLowerCase()}`);
   };
-
-  useEffect(() => {
-    getCategories()
-  },[])
 
   return (
     <StyledDrawer
@@ -47,16 +43,18 @@ function CategoryDrawer({ isOpen }: Props) {
         <Toolbar />
         <StyledBox>
           <List>
-            {categories?.length > 0 &&
-              categories.map((cat: Category) => (
-              <ListItem
-                button
-                key={cat._id}
-                onClick={() => navigateToCategory(cat.title)}
-              >
-                <StyledText>{cat.title}</StyledText>
-              </ListItem>
-            ))}
+            {categories.map(
+              (category: Category) => (
+                <ListItem
+                  button
+                  key={category._id}
+                  onClick={() => navigateToCategory(category.title.toLowerCase())}
+                >
+                  <span className="material-icons">{category.icon}</span>
+                  <StyledText>{category.title}</StyledText>
+                </ListItem>
+              )
+            )}
           </List>
           <Divider />
         </StyledBox>

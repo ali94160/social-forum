@@ -145,7 +145,7 @@ module.exports = function (app) {
     }
   );
 
-  app.delete("/api/posts/:id", authUserLoggedIn, async (req, res) => {
+  app.delete("/api/posts/:id", authUserLoggedIn, authRole([roles.ADMIN, roles.POSTOWNER]), async (req, res) => {
     let user = req.session.user;
     let filter = {
       _id: req.params.id,
