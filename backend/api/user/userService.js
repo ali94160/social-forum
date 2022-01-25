@@ -3,7 +3,6 @@ const commentModel = require("../../models/comment");
 const postModel = require("../../models/post");
 const roles = require("../../models/role");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
-// const { hashUtil } = require("../utils");
 const { passwordValidation } = require('../../middlewares/validation');
 
 module.exports = user = (app) => {

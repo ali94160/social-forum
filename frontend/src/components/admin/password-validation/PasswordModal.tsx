@@ -15,8 +15,6 @@ type Props = {
   setPassword: Function;
   status: number;
   setStatus: Function;
-  statusMsg?: string | "default";
-  setStatusMsg: Function;
   showPassword: boolean;
   setShowPassword: Function;
   handleConfirm: Function;
@@ -31,8 +29,6 @@ function PasswordModal({
   setPassword,
   status,
   setStatus,
-  statusMsg,
-  setStatusMsg,
   showPassword,
   setShowPassword,
   handleConfirm,
@@ -65,7 +61,6 @@ function PasswordModal({
             {
               setIsOpen(!isOpen);
               setPassword('');
-              setStatusMsg('');
               setStatus(0);
             }}
           >

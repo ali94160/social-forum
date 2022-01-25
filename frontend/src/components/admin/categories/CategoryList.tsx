@@ -20,7 +20,6 @@ function CategoriesList() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [status, setStatus] = useState(0);
-  const [statusMsg, setStatusMsg] = useState('');
 
   const addNewCategory = async () => {
     const newCategory = {
@@ -89,9 +88,7 @@ function CategoriesList() {
           status={status}
           setIsOpen={setIsAdd}
           setStatus={setStatus}
-          setStatusMsg={setStatusMsg}
           handleConfirm={addNewCategory}
-          statusMsg={statusMsg}
           showPassword={showPassword}
           setShowPassword={setShowPassword}
         >

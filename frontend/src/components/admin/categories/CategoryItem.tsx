@@ -15,7 +15,6 @@ function CategoryItem({ category }: Props) {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [status, setStatus] = useState(0);
-  const [statusMsg, setStatusMsg] = useState('');
 
   const handleDelete = async () => {
     if (category.title != "General") {
@@ -49,9 +48,7 @@ function CategoryItem({ category }: Props) {
           status={status}
           setIsOpen={setIsDelete}
           setStatus={setStatus}
-          setStatusMsg={setStatusMsg}
           handleConfirm={handleDelete}
-          statusMsg={statusMsg}
           showPassword={showPassword}
           setShowPassword={setShowPassword}
         >
