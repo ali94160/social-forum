@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
+  List,
   Toolbar,
   ListItem,
   Divider,
@@ -9,7 +10,6 @@ import {
   StyledDrawerContainer,
   StyledDrawer,
   StyledBox,
-  StyledList,
   StyledText,
 } from "./StyledCategoryDrawer";
 import { useHistory } from "react-router-dom";
@@ -43,7 +43,7 @@ function CategoryDrawer({ isOpen, toggle }: Props) {
       <StyledDrawerContainer>
         <Toolbar />
         <StyledBox>
-          <StyledList>
+          <List>
             {categories.map(
               (category: CategoryItem) => (
                 <ListItem
@@ -56,7 +56,7 @@ function CategoryDrawer({ isOpen, toggle }: Props) {
                 </ListItem>
               )
             )}
-          </StyledList>
+          </List>
           <Divider />
         </StyledBox>
       </StyledDrawerContainer>

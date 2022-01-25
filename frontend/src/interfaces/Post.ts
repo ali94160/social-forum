@@ -1,3 +1,4 @@
+import { Category } from "./Category";
 import { CommentItem } from "./Comment";
 import { User } from "./User";
 
@@ -22,7 +23,7 @@ export interface PostItem {
   _id: string;
   title: string;
   content: string;
-  categoryId: string;
+  categoryId: Category | string;
   commentLength: number;
   createdDate: string;
   ownerId: User;
