@@ -2,15 +2,16 @@ import React from 'react'
 
 import {Box,InputLabel, MenuItem, FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Category } from '../../interfaces/Category';
 
 interface Props {
   value: string;
   handleChange: Function;
-  options: string[];
+  options: Category[];
   label?: string;
 }
 
-function BasicSelect({value, label, handleChange, options }: Props) {
+function CategorySelect({ value, label, handleChange, options }: Props) {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -22,15 +23,16 @@ function BasicSelect({value, label, handleChange, options }: Props) {
             handleChange(ev.target.value as string)
           }
         >
-          {options && options.map((option) => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
+          {options?.length > 0 &&
+            options.map((option) => (
+              <MenuItem key={"option-" + option._id} value={option._id}>
+                {option.title}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
     </Box>
   );
 }
 
-export default BasicSelect
+export default CategorySelect
