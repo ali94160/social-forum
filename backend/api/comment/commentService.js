@@ -71,10 +71,10 @@ module.exports = function (app) {
 
         if (!isAdmin) {
           const post = await Post.findOne({ _id: comment.postId }).exec();
-          isOwner = post.ownerId.toString() === user._id;
-          if (!isOwner) {
-            isModerator = post.moderatorsIds.includes(user._id);
-          }
+            isOwner = post.ownerId !== null && post.ownerId.toString() === user._id;
+            if (!isOwner) {
+              isModerator = post.moderatorsIds.includes(user._id);
+            }
         }
 
         if (isAdmin || isOwner || isModerator) {

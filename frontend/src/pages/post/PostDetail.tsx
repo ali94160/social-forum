@@ -7,6 +7,7 @@ import { usePost } from "../../context/PostContext";
 import CommentSection from "../../components/commentSection/CommentSection";
 import CommentList from "../../components/comment-list/CommentList";
 import LoadingDetailedSkeleton from "../../components/skeleton/LoadingDetailedSkeleton";
+import { StyledText } from "./StyledPostDetail";
 
 function PostDetailPage() {
   // typescript doesnt recognize string nor undefined/null/empty object
@@ -45,21 +46,19 @@ function PostDetailPage() {
   return (
     <div>
       <Post post={post} me={user} />
-      {user && (
-        <CommentSection
-          username={user.username}
-          postId={id}
-          handleComments={handleComments}
-        />
-      )}
-      {post?.ownerId?._id ? (
-        <CommentList
-          ownerId={post.ownerId._id}
-          moderators={post.moderatorsIds}
-        />
-      ) : (
-        <p>There are nothing here O_Q</p>
-      )}
+      {post?.ownerId?._id
+        ? user 
+          ? (<CommentSection
+            username={user.username}
+            postId={id}
+            handleComments={handleComments}
+          />)
+          : <StyledText>Login to comment</StyledText>
+        : <StyledText>Comment section is unavailable for this post</StyledText>}
+      <CommentList
+        ownerId={post?.ownerId?._id}
+        moderators={post.moderatorsIds}
+      />
     </div>
   );
 }
