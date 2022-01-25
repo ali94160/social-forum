@@ -43,7 +43,7 @@ function BanItem({ban, index}: Props) {
 
   return (
      <><TableRow
-      key={ban._id}
+      // key={ban._id}
       sx={{backgroundColor: index % 2 ? 'var(--light-teal)' : 'white'}}
     >
       <StyledTableCell component="th" scope="row">

@@ -12,7 +12,6 @@ import BanContainer from './BanContainer';
 function BanList() {
   const [isOpen, setIsOpen] = useState(false);
   const { getBanlist, banlist } = useBan();
-  const [status, setStatus] = useState(0);
 
   useEffect(() => {
     handleBanlist();
@@ -22,13 +21,9 @@ function BanList() {
   }, [banlist])
 
   const handleBanlist = async () => {
-    const status = await getBanlist();
-    setStatus(status);
+    await getBanlist();
   }
 
-  if (status !== 200) {
-    //loading ??? 
-  }
 
   const StyledExpandMore = styled((props): any => {
     const { expand, ...other }: any = props;
