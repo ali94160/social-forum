@@ -4,6 +4,7 @@ import AuthContextProvider from "./AuthContext";
 import UserContextProvider from "./UserContext";
 import PostContextProvider from "./PostContext";
 import CommentContextProvider from "./CommentContext";
+import CategoryContextProvider from "./CategoryContext";
 import BanContextProvider from "./BanContext";
 
 interface Props {
@@ -19,7 +20,9 @@ function AllContexts({ children }: Props) {
             <UserContextProvider>
               <CommentContextProvider>
                 <BanContextProvider>
+                  <CategoryContextProvider>
                   <ModalContextProvider>{children}</ModalContextProvider>
+                  </CategoryContextProvider>
                 </BanContextProvider>
               </CommentContextProvider>
             </UserContextProvider>
