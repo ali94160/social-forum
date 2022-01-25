@@ -2,6 +2,7 @@ const Comment = require("../../models/comment");
 const Post = require("../../models/post");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
 const roles = require("../../models/role");
+const User = require("../../models/user");
 
 module.exports = function (app) {
   app.post("/api/comments", authUserLoggedIn, async (req, res) => {
@@ -10,7 +11,11 @@ module.exports = function (app) {
       return;
     }
     try {
-      await Post.findById(req.body.postId);
+      const post = await Post.findById(req.body.postId).select("ownerId").exec();
+      if (!post.ownerId && !(await User.findById(post.ownerId))) {
+        res.sendStatus(400);
+        return;
+      }
       let newComment = new Comment({
         ...req.body,
         createdDate: Date.now(),
