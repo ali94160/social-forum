@@ -1,5 +1,4 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from "react";
-import BasicSelect from "../basics/basic-select/BasicSelect";
 import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import { usePost } from "../../context/PostContext";
 import { StyledTealButton } from "../basics/StyledTealButton";
@@ -11,18 +10,19 @@ import {
 import { useHistory } from "react-router-dom";
 import { Checkbox } from "@mui/material";
 import Terms from "../terms-and-conditions/Terms";
+import { useCategory } from "../../context/CategoryContext";
+import CategorySelect from "../category-select/CategorySelect";
 
-// shall be removed
-const categories = ["Meme", "Trollololo", "Cooking", "Economic"];
 const minRow = 5;
 const maxRow = 10;
 
 function CreatePostForm() {
   const history = useHistory();
+  const { categories } = useCategory();
   const [title, setTitle] = useState<string>();
   const [content, setContent] = useState<string>();
   const { createPost } = usePost();
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [categoryId, setCategoryId] = useState<string>("");
   const [check, setCheck] = useState<boolean>(false);
   const [readMore, setReadMore] = useState<boolean>(false);
 
@@ -31,8 +31,9 @@ function CreatePostForm() {
     const newPost = {
       title,
       content,
-      categoryId: "61dc3a622f8ecad1bc1367b2",
+      categoryId,
     };
+    
     await createPost(newPost);
     history.push("/");
   };
@@ -66,11 +67,11 @@ function CreatePostForm() {
               required
             />
           </div>
-          <BasicSelect
-            value={selectedCategory}
+          <CategorySelect
+            value={categoryId}
             label="Category"
             options={categories}
-            handleChange={(value: string) => setSelectedCategory(value)}
+            handleChange={(value: string) => setCategoryId(value)}
           />
           <StyledTermsWrapper>
             <Checkbox

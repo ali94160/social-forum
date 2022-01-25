@@ -21,8 +21,6 @@ interface Props {
   post: PostItem | null;
   me: User;
 }
-// shall be removed
-const categories = ["Meme", "Trollololo", "Cooking", "Economic"];
 
 function Post({post, me}: Props) {
   const date = post?.createdDate?.substr(0, 10);
@@ -33,7 +31,7 @@ function Post({post, me}: Props) {
   const [content, setContent] = useState('');
   const hours = time?.getHours();
   const minutes = (time && time?.getMinutes() < 10 ? '0' : '') + time?.getMinutes();
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [categoryId, setCategoryId] = useState<string>("");
   const { updatePost } = usePost();
   const [status, setStatus] = useState(0);
   const [isPostOwner, setIsPostOwner] = useState(false);
@@ -66,7 +64,7 @@ function Post({post, me}: Props) {
         _id: post?._id,
         title: title? title : post?.title,
         content: content? content : post?.content,
-        categoryId: null // ändra när category är på plats
+        categoryId: categoryId ?? post?.categoryId
       });
       setStatus(status);
     }
@@ -94,29 +92,30 @@ function Post({post, me}: Props) {
             {post?.ownerId?.username}
           </StyledAvatarGrid>
         </Grid>
-        
-        <Grid
-          item xs={8}
-          container
-          direction="column"
-          spacing={2}
-        >
+
+        <Grid item xs={8} container direction="column" spacing={2}>
           <EditForm
             post={post}
             edit={edit}
             setTitle={setTitle}
             setContent={setContent}
-            setSelectedCategory={setSelectedCategory}
-            categories={categories}
-            selectedCategory={selectedCategory}
+            setCategoryId={setCategoryId}
+            categoryId={categoryId}
           />
         </Grid>
 
         <StyledLeftGrid item xs={2}>
-          {isPostOwner ? (!edit ?
-            <EditIcon onClick={handleEdit} />
-            : <><CheckIcon onClick={handleEdit} sx={{marginBottom: '15px'}} /><br/>
-              <CloseIcon onClick={() => setEdit(!edit)} /></>) : ''}
+          {isPostOwner
+            ? (
+              !edit
+                ? <EditIcon onClick={handleEdit} />
+                : (<>
+                    <CheckIcon onClick={handleEdit} sx={{ marginBottom: "15px" }} />
+                    <br />
+                    <CloseIcon onClick={() => setEdit(!edit)} />
+                </>)
+            )
+            : ""}
         </StyledLeftGrid>
 
         <StyledBottomGrid item xs={12} container direction="row" spacing={2}>
@@ -127,8 +126,7 @@ function Post({post, me}: Props) {
             {date} {hours}:{minutes}
           </StyledLeftGrid>
         </StyledBottomGrid>
-
-      </StyledGrid> 
+      </StyledGrid>
     </StyledPost>
   );
 }
