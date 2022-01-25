@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledText = styled.p`
-  color: white;
-  font-weight: bolder;
+  font-size: 1.2rem;
+  color: var(--light-blue);
   text-align: center;
 `
