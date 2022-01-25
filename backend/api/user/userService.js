@@ -3,7 +3,8 @@ const commentModel = require("../../models/comment");
 const postModel = require("../../models/post");
 const roles = require("../../models/role");
 const { authUserLoggedIn, authRole } = require("../../middlewares/acl");
-const { hashUtil } = require("../utils");
+// const { hashUtil } = require("../utils");
+const { passwordValidation } = require('../../middlewares/validation');
 
 module.exports = user = (app) => {
   // delete your self
@@ -11,26 +12,12 @@ module.exports = user = (app) => {
     "/api/user/self",
     authUserLoggedIn,
     authRole([roles.USER]),
+    passwordValidation,
     async (req, res) => {
       const user = { ...req.session.user };
-      const password = req.body.password;
-
-      if (!password) {
-        return res.status(403).json({
-          message: "No password.",
-        });
-      }
-
-      const hash = hashUtil(req.body?.password);
-
-      if (user.password !== hash) {
-        return res.status(403).json({
-          message: "Bad credentials.",
-        });
-      }
 
       // if we made it all the way here all good, deleting user!
-      const userFromDb = await userModel.findByIdAndDelete(user._id);
+      await userModel.findByIdAndDelete(user._id);
 
       // now lets update comments and posts
       const commentsFromDb = await commentModel.updateMany(
