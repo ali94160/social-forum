@@ -4,6 +4,7 @@ import CreatePost from "../pages/create-post/CreatePost";
 import Home from "../pages/home/Home";
 import MyPost from "../pages/my-posts/MyPosts";
 import AdminPage from '../pages/admin/Admin';
+import CategoryPostsPage from "../pages/category-posts/CategoryPosts";
 
 interface Props {
   children: JSX.Element[];
@@ -17,6 +18,7 @@ const AllRoutes = ({ children }: Props) => {
         <Switch>
           <Route exact path="/create-post" component={CreatePost} />
           <Route path="/posts/:id" exact={true} component={PostDetailPage} />
+          <Route path="/posts/categories/:categoryId" exact={true} component={CategoryPostsPage} />
           <Route path="/my-posts" exact={true} component={MyPost} />
           <Route path="/admin" exact={true} component={AdminPage} />
           <Route path="/" component={Home} />

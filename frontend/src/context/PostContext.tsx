@@ -28,22 +28,36 @@ function PostContextProvider({ children }: Props) {
 
   const getPost = async (id: string) => {
     const response: Response = await fetch("/api/posts/" + id);
-    const body = await response.json();
-    if (response.status === 200) {
-      setPost(body);
+    try {
+      const body = await response.json();
+      if (response.status === 200) {
+        setPost(body);
+      }
+    } catch (e) {
+      setPost(null)
     }
     return response.status;
   }
     
-  const getPosts = async (ascDate: boolean, ascTitle: boolean) => {
-    const response: Response = await fetch(
-      `/api/posts?createdDate=${ascDate ? "asc" : "desc"}&title=${
-        ascTitle ? "asc" : "desc"
-      }`
-    );
-    const result = await response.json();
-    setPosts(result);
+  const getPosts = async (ascDate: boolean, ascTitle: boolean, categoryId: string) => {
+    let query = `/api/posts?createdDate=${ascDate ? "asc" : "desc"}&title=${ascTitle ? "asc" : "desc"}`;
+    if (categoryId) {
+      query = `${query}&categoryId=${categoryId}`;
+    }
+    const response: Response = await fetch(query);
+    console.log(response);
+    
+    try {
+      const result = await response.json();
+      setPosts(result);
+    } catch {
+      setPosts([])
+    }
     return response.status === 200;
+  };
+    
+  const getPostsByCategory = async () => {
+
   };
 
   const getMyPosts = async () => {
@@ -106,6 +120,7 @@ function PostContextProvider({ children }: Props) {
     updatePost,
     post,
     updateModerators,
+    getPostsByCategory,
   };
 
   return <PostContext.Provider value={values}>{children}</PostContext.Provider>;
