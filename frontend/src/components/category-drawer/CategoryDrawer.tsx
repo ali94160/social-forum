@@ -14,18 +14,19 @@ import {
 } from "./StyledCategoryDrawer";
 import { useHistory } from "react-router-dom";
 import { useCategory } from "../../context/CategoryContext";
-import { Category } from "../../interfaces/Category";
+import { CategoryItem } from "../../interfaces/Category";
 
 interface Props {
   isOpen: boolean;
+  toggle: Function;
 }
 
-function CategoryDrawer({ isOpen }: Props) {
+function CategoryDrawer({ isOpen, toggle }: Props) {
   const history = useHistory();
   const { categories } = useCategory();
-
-  const navigateToCategory = (name: string) => {
-    history.push(`/categories/${name.toLocaleLowerCase()}`);
+  const navigateToCategory = (id: string) => {
+    history.push(`/posts/categories/${id}`);
+    toggle();
   };
 
   return (
@@ -44,11 +45,11 @@ function CategoryDrawer({ isOpen }: Props) {
         <StyledBox>
           <List>
             {categories.map(
-              (category: Category) => (
+              (category: CategoryItem) => (
                 <ListItem
                   button
                   key={category._id}
-                  onClick={() => navigateToCategory(category.title.toLowerCase())}
+                  onClick={() => navigateToCategory(category._id)}
                 >
                   <span className="material-icons">{category.icon}</span>
                   <StyledText>{category.title}</StyledText>
