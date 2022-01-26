@@ -51,4 +51,9 @@ describe("Test user authentication - Register", () => {
     });
   });
 
+  afterAll((done) => {
+    mongoose.connection.close();
+    done();
+  });
+
 });

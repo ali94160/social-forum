@@ -33,4 +33,9 @@ describe('Test user authentication - Logout', () => {
     });
   });
 
+  afterAll((done) => {
+    mongoose.connection.close();
+    done();
+  });
+
 });

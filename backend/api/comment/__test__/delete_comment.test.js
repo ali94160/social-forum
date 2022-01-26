@@ -74,16 +74,17 @@ describe("Test to delete comment as post owner or post moderator", () => {
       const res = await testSession.delete("/api/comments/" + comment2._id);
       await testSession.delete("/api/logout");
       expect(res.statusCode).toBe(200);
+      await User.findByIdAndDelete(postOwner._id)
+      await User.findByIdAndDelete(postModerator._id)
+      await User.findByIdAndDelete(normalUser._id)
+      await Post.findByIdAndDelete(post._id)
+      await Comment.findByIdAndDelete(comment1._id)
+      await Comment.findByIdAndDelete(comment2._id)
     });
-
-  afterAll(async function () {
+    
+    afterAll((done) => {
     testSession = null;
-    await User.findByIdAndDelete(postOwner._id)
-    await User.findByIdAndDelete(postModerator._id)
-    await User.findByIdAndDelete(normalUser._id)
-    await Post.findByIdAndDelete(post._id)
-    await Comment.findByIdAndDelete(comment1._id)
-    await Comment.findByIdAndDelete(comment2._id)
     mongoose.connection.close();
+    done();
   });
 });

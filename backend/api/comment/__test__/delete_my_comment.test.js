@@ -57,12 +57,13 @@ describe("User authenticated", () => {
       );
       await postModel.findByIdAndDelete(postId);
       expect(res.statusCode).toBe(200);
+      await testSession.post("/api/logout");
     });
   });
 
-  afterAll(async function () {
-    await testSession.post("/api/logout");
+  afterAll(function (done) {
     testSession = null;
     mongoose.connection.close();
+    done();
   });
 });
