@@ -24,7 +24,7 @@ function DropDownMenu({ menuItems, anchorEl, setAnchorEl }: Props) {
 
   const handleClick = (item: MenuItem) => {
     item.method();
-    handleClose
+    handleClose();
   };
 
   return (
