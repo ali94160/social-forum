@@ -30,14 +30,21 @@ function PostDetailPage() {
   useEffect(() => {
     handleAdmin();
     handlePost();
-  }, []);
+    return () => {
+      setImAdmin(false);
+    }
+  }, [user]);
 
   useEffect(() => {
     handleComments();
   }, [post]);
 
   const handleAdmin = async () => {
-    setImAdmin(await isAdmin());
+    if (user) {
+      setImAdmin(await isAdmin());
+    } else {
+      setImAdmin(false);
+    }
   };
 
   const handlePost = async () => {

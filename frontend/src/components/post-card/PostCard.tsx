@@ -17,6 +17,7 @@ import { PostItem } from "../../interfaces/Post";
 import { useHistory } from "react-router-dom";
 import EditDotsPost from "../edit-dots-post/EditDotsPost";
 import { useUser } from "../../context/UserContext";
+import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import ConfirmModal from "../confirm-modal/ConfirmModal";
 import { usePost } from "../../context/PostContext";
@@ -32,16 +33,21 @@ interface Props {
 function PostCard({ post, isInMyPostPage }: Props) {
   const { deletePost } = usePost();
   const { isAdmin } = useUser();
+  const { user } = useAuth();
   const history = useHistory();
   const [imAdmin, setImAdmin] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
 
   useEffect(() => {
     handleAdmin();
-  }, []);
+  }, [user]);
 
   const handleAdmin = async () => {
-    setImAdmin(await isAdmin());
+    if (user) {
+      setImAdmin(await isAdmin());
+    } else {
+      setImAdmin(false);
+    }
   };
 
   const handleDeletePost = async () => {
