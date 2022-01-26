@@ -28,8 +28,8 @@ describe("Test to delete a category", () => {
       .send(categoryToAdd);
     const res = await testSession.delete(
       `/api/categories/${categoryResponse.body._id}`
-    );
-    expect(res.statusCode).toBe(200);
+    ).send(categoryToAdd);
+    expect(res.statusCode).toBe(200); 
   });
 
   afterAll((done) => {

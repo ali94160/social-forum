@@ -31,7 +31,7 @@ describe("Test if a user can create a post", () => {
       .send(moderatorIds);
     await Post.findById(postResponse.body._id);
     const user = await testSession.get(`/api/users/username/${user4.username}`);
-    const moderator = await User.findById(user.body._id);
+    const moderator = await User.findById(user.body._id); 
     expect(moderator.roles).toContain("POSTMODERATOR");
   });
 
@@ -39,9 +39,10 @@ describe("Test if a user can create a post", () => {
     await testSession.delete(`/api/posts/${postResponse.body._id}`);
     const { body } = await testSession.get("/api/whoAmI");
     const user = await testSession.get(`/api/users/username/${user4.username}`);
-    const moderator = await User.findById(user.body._id);
+    const moderator = await User.findById(user.body._id); 
     expect(body.roles).not.toEqual(expect.arrayContaining(["POSTOWNER"]));
     expect(moderator.roles).not.toContain("POSTMODERATOR");
+    await Post.findByIdAndDelete(postResponse.body._id);
   });
 
   afterAll((done) => {

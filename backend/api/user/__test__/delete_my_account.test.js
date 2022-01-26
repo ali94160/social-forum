@@ -42,7 +42,7 @@ describe("Test if a user can delete his/her account.", () => {
     await testSession.delete("/api/logout");
     await testSession.post("/api/login").send(testLogin);
     const res = await testSession.delete("/api/user/self");
-    expect(res.statusCode).toBe(403);
+    expect(res.statusCode).toBe(400);
   });
 
   describe("Correct credentials", () => {

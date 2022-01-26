@@ -59,7 +59,7 @@ describe("Test delete posts", () => {
       await testSession.post("/api/login").send(user1Login);
       const res = await testSession.delete("/api/posts/" + newPost.body._id);
 
-      await postModel.findOneAndDelete({ title: post.title });
+      await postModel.findByIdAndDelete(newPost.body._id);
 
       expect(res.statusCode).toBe(403);
     });

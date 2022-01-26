@@ -1,11 +1,17 @@
 const categoryToAdd = {
-  title: "categoryTest",
-  icon: "hej"
+  category: {
+    title: "categoryTest",
+    icon: "hej"
+  },
+  password: process.env.SECRETPASSWORD
 };
 
 const category_success = {
-  title: "hej hej yo",
-  icon: "test"
+  category: {
+    title: "hej hej yo",
+    icon: "test"
+  },
+  password: process.env.SECRETPASSWORD
 }
 
 module.exports = {
