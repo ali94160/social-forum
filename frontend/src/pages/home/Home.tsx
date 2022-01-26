@@ -14,9 +14,7 @@ function Home() {
   return (
     <div style={{ height: "90vh" }}>
       {posts ? (
-        posts.map((post: PostItem) => (
-          <PostCard key={post._id} post={post} />
-        ))
+        posts.map((post: PostItem) => <PostCard key={post._id} post={post} />)
       ) : (
         <LoadingSkeleton />
       )}

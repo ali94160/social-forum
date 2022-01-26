@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { PostItem, UpdatePost } from "../interfaces/Post";
 
 const PostContext = createContext<any>(null);
@@ -34,13 +34,19 @@ function PostContextProvider({ children }: Props) {
         setPost(body);
       }
     } catch (e) {
-      setPost(null)
+      setPost(null);
     }
     return response.status;
-  }
-    
-  const getPosts = async (ascDate: boolean, ascTitle: boolean, categoryId?: string) => {
-    let query = `/api/posts?createdDate=${ascDate ? "asc" : "desc"}&title=${ascTitle ? "asc" : "desc"}`;
+  };
+
+  const getPosts = async (
+    ascDate: boolean,
+    ascTitle: boolean,
+    categoryId?: string
+  ) => {
+    let query = `/api/posts?createdDate=${ascDate ? "asc" : "desc"}&title=${
+      ascTitle ? "asc" : "desc"
+    }`;
     if (categoryId) {
       query = `${query}&categoryId=${categoryId}`;
     }
@@ -49,7 +55,7 @@ function PostContextProvider({ children }: Props) {
       const result = await response.json();
       setPosts(result);
     } catch {
-      setPosts([])
+      setPosts([]);
     }
     return response.status === 200;
   };
