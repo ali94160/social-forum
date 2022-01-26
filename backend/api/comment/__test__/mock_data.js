@@ -17,7 +17,7 @@ const testComment2 = {
 const testPost = {
   title: "postTestTitleForComment",
   content: "postTestContent",
-  categoryId: "61dc3a622f8ecad1bc1367b2",
+  categoryId: "61eef564a81e0c95199d558e",
 };
 
 const testPostOwner = {

@@ -19,7 +19,8 @@ module.exports = function (app) {
       }
 
       try {
-        const result = await categoryModel(req.body.category).save();
+        const newCategory = new categoryModel(req.body.category);
+        const result = await newCategory.save();
         if (!result) {
           res.sendStatus(400);
           return;

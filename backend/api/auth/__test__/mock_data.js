@@ -47,8 +47,8 @@ const user3 = {
 };
 
 const user4 = {
-  username: "hugo2",
-  email: "hugo2@haha.se",
+  username: "Pelle",
+  email: "pelle@haha.se",
   password: "123",
 };
 

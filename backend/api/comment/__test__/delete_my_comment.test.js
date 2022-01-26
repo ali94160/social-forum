@@ -60,7 +60,7 @@ describe("User authenticated", () => {
     });
   });
 
-  afterAll(async function (done) {
+  afterAll(async function () {
     await testSession.post("/api/logout");
     testSession = null;
     mongoose.connection.close();
