@@ -177,17 +177,4 @@ module.exports = function (app) {
     }
   });
 
-  app.get(
-    "/api/posts/owner/:id",
-    authUserLoggedIn,
-    authRole([roles.POSTOWNER]),
-    isPostOwner,
-    async (req, res) => {
-      try {
-        return res.sendStatus(200);
-      } catch (err) {
-        return res.sendStatus(403);
-      }
-    }
-  );
 };

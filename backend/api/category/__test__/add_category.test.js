@@ -30,12 +30,13 @@ describe("Test to add a category", () => {
       .send(category_success);
     expect(categoryResponse.statusCode).toBe(200);
     expect(categoryResponse.body.title).toEqual(category_success.category.title);
+    await categoryModel.findOneAndDelete({ title: category_success.category.title })
   });
 
 
-  afterAll(async () => {
-    await categoryModel.findOneAndDelete({ title: category_success.category.title })
+  afterAll(done => {
     mongoose.connection.close();
+    done()
   })
   
 });

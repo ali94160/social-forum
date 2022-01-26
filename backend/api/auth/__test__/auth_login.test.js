@@ -60,4 +60,9 @@ describe("Test user authentication - Login", () => {
       expect(res.statusCode).toBe(403);
     });
   });
+
+  afterAll((done) => {
+    mongoose.connection.close();
+    done();
+  });
 });
