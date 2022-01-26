@@ -1,7 +1,8 @@
 import {
   StyledInputContainer,
   StyledCloseButton,
-  StyledButtonContainer
+  StyledButtonContainer,
+  StyledErrorMsg
 } from './StyledPasswordModal';
 import { StyledTealButton } from "../../basics/StyledTealButton";
 import BasicModal from '../../basics/basic-modal/BasicModal';
@@ -55,7 +56,8 @@ function PasswordModal({
             required
             error={status !== 200 && status !== 0}
           />
-        </StyledInputContainer>
+      </StyledInputContainer>
+      {status !== 200 && status !== 0 && <><StyledErrorMsg>Incorrect input</StyledErrorMsg><br/></>}
         <StyledButtonContainer>
           <StyledCloseButton
             type="button"
