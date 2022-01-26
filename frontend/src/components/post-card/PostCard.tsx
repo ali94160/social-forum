@@ -13,7 +13,7 @@ import {
   StyledCommentSection,
   StyledTrash,
 } from "./StyledPostCard";
-import { PostObj } from "../../interfaces/Post";
+import { PostItem } from "../../interfaces/Post";
 import { useHistory } from "react-router-dom";
 import EditDotsPost from "../edit-dots-post/EditDotsPost";
 import { useUser } from "../../context/UserContext";
@@ -24,7 +24,12 @@ import { usePost } from "../../context/PostContext";
 const modalToConfirmAdminText =
   " NOTE: This will delete the post, content, comments and moderators permanently.";
 
-function PostCard({ post, isInMyPostPage }: PostObj) {
+interface Props {
+  post: PostItem;
+  isInMyPostPage?: boolean | false;
+}
+
+function PostCard({ post, isInMyPostPage }: Props) {
   const { deletePost } = usePost();
   const { isAdmin } = useUser();
   const history = useHistory();
