@@ -6,7 +6,7 @@ import {
 import { StyledTealButton } from "../../basics/StyledTealButton";
 import BasicModal from '../../basics/basic-modal/BasicModal';
 import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
-import { BaseSyntheticEvent } from 'react';
+import { BaseSyntheticEvent, useEffect } from 'react';
 
 type Props = {
   isOpen: boolean;
@@ -35,9 +35,12 @@ function PasswordModal({
   children
 }: Props) {
 
+  const handleClose = () => {
+    setIsOpen(!isOpen);
+  }
 
   return (
-    <BasicModal isOpen={isOpen} handleClose={setIsOpen}>
+    <BasicModal isOpen={isOpen} handleClose={handleClose}>
       {children}
       <StyledInputContainer>
           <BasicVisibilityInput
