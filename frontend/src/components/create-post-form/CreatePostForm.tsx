@@ -34,8 +34,8 @@ function CreatePostForm() {
       categoryId,
     };
     
-    await createPost(newPost);
-    history.push("/");
+    const res = await createPost(newPost);
+    res && history.push("/");
   };
 
   return (
