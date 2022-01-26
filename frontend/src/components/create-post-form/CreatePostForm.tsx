@@ -19,8 +19,8 @@ const maxRow = 10;
 function CreatePostForm() {
   const history = useHistory();
   const { categories } = useCategory();
-  const [title, setTitle] = useState<string>();
-  const [content, setContent] = useState<string>();
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const { createPost } = usePost();
   const [categoryId, setCategoryId] = useState<string>("");
   const [check, setCheck] = useState<boolean>(false);
@@ -33,7 +33,7 @@ function CreatePostForm() {
       content,
       categoryId,
     };
-    
+
     const isSuccess = await createPost(newPost);
     isSuccess && history.push("/");
   };
