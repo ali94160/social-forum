@@ -30,14 +30,21 @@ function PostDetailPage() {
   useEffect(() => {
     handleAdmin();
     handlePost();
-  }, []);
+    return () => {
+      setImAdmin(false);
+    }
+  }, [user]);
 
   useEffect(() => {
     handleComments();
   }, [post]);
 
   const handleAdmin = async () => {
-    setImAdmin(await isAdmin());
+    if (user && user.roles.includes('ADMIN')) {
+      setImAdmin(await isAdmin());
+    } else {
+      setImAdmin(false);
+    }
   };
 
   const handlePost = async () => {
@@ -46,8 +53,8 @@ function PostDetailPage() {
   };
 
   const handleComments = async () => {
-    if (post && post._id) {
-      await getComments(post._id);
+    if (post && post._id && post._id === id) {
+      await getComments(post._id, "desc");
     }
   };
 
