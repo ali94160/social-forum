@@ -16,7 +16,7 @@ function UserContextProvider({ children }: Props) {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(password),
+      body: JSON.stringify({password}),
     });
 
     return response.status === 200;
