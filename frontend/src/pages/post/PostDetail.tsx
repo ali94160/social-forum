@@ -7,7 +7,7 @@ import { usePost } from "../../context/PostContext";
 import CommentSection from "../../components/commentSection/CommentSection";
 import CommentList from "../../components/comment-list/CommentList";
 import LoadingDetailedSkeleton from "../../components/skeleton/LoadingDetailedSkeleton";
-import { StyledButton, StyledBtnWrapper } from "./StyledPostDetail";
+import { StyledButton, StyledBtnWrapper, StyledText } from "./StyledPostDetail";
 import ConfirmModal from "../../components/confirm-modal/ConfirmModal";
 import { useUser } from "../../context/UserContext";
 import { useHistory } from "react-router-dom";
@@ -74,21 +74,23 @@ function PostDetailPage() {
     <div>
       {imAdmin && renderDeletePostAsAdmin()}
       <Post post={post} me={user} />
-      {user && (
-        <CommentSection
-          username={user.username}
-          postId={id}
-          handleComments={handleComments}
-        />
-      )}
       {post?.ownerId?._id ? (
-        <CommentList
-          ownerId={post.ownerId._id}
-          moderators={post.moderatorsIds}
-        />
+        user ? (
+          <CommentSection
+            username={user.username}
+            postId={id}
+            handleComments={handleComments}
+          />
+        ) : (
+          <StyledText>Login to comment</StyledText>
+        )
       ) : (
-        <p>There are nothing here O_Q</p>
+        <StyledText>Comment section is unavailable for this post</StyledText>
       )}
+      <CommentList
+        ownerId={post?.ownerId?._id}
+        moderators={post.moderatorsIds}
+      />
       <ConfirmModal
         openModal={openConfirmModal}
         setOpenModal={setOpenConfirmModal}
