@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Avatar from "@mui/material/Avatar";
 import ChatIcon from "@mui/icons-material/Chat";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const StyledCardWrapper = styled.div`
   background: var(--light-teal);
@@ -86,4 +87,10 @@ export const StyledDots = styled(MoreVertIcon)`
 export const StyledCommentSection = styled.div`
   display: flex;
   gap: 0.4rem;
+`;
+
+export const StyledTrash = styled(DeleteIcon)`
+  &&& {
+    color: var(--dark-teal);
+  }
 `;
