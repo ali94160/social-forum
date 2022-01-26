@@ -14,11 +14,24 @@ interface Props {
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   handleDeletePost: () => void;
+  text?: string;
 }
 
-function ConfirmModal({ openModal, setOpenModal, handleDeletePost }: Props) {
+function ConfirmModal({
+  openModal,
+  setOpenModal,
+  handleDeletePost,
+  text,
+}: Props) {
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => setOpenModal(false);
+
+  const handleText = () => {
+    const defaultText =
+      " NOTE: This will delete your post, content, comments and moderators permanently.";
+
+    return text ? text : defaultText;
+  };
 
   return (
     <Modal
@@ -29,10 +42,7 @@ function ConfirmModal({ openModal, setOpenModal, handleDeletePost }: Props) {
     >
       <StyledBox>
         <StyledTitle>Delete post</StyledTitle>
-        <StyledText>
-          NOTE: This will delete your post, content, comments and moderators
-          permanently.
-        </StyledText>
+        <StyledText>{handleText()}</StyledText>
         <StyledBtnWrapper>
           <StyledDeleteButton onClick={handleDeletePost}>
             Yes

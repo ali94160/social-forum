@@ -30,6 +30,7 @@ function CommentCard({ comment, ownerId, moderators, hasDeleteAccess }: Props) {
   const { user } = useAuth();
 
   const isCommentOwner = comment?.writerId?._id === user?._id;
+  const showEdit = user && (isCommentOwner || hasDeleteAccess);
   
   const isPostOwner = comment?.writerId?._id === ownerId;
   let isPostModerator = false;
@@ -65,7 +66,7 @@ function CommentCard({ comment, ownerId, moderators, hasDeleteAccess }: Props) {
           <StyledComment>{comment.content}</StyledComment>
         </RightGrid>
         <Grid item xs={1}>
-          {user && (
+          {showEdit && (
             <EditDotsComment
               commentId={comment._id}
               isCommentOwner={isCommentOwner}

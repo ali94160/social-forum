@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BasicModal from "../basics/basic-modal/BasicModal";
 import BasicTextField from "../basics/basic-text-field/BasicTextField";
 import {
@@ -29,13 +29,17 @@ interface TrimmedUser {
 }
 
 function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
-  const { updateModerators } = usePost();
+  const { updateModerators, getMyPosts } = usePost();
   const [searchForUser, setSearchForUser] = useState("");
   const [searchResult, setSearchResult] = useState<null | TrimmedUser>(null);
   const [noUserFound, setNoUserFound] = useState<null | boolean>(null);
   const [currentModerators, setCurrentModerators] = useState(moderators);
   const { searchUser } = useUser();
   const { user } = useAuth();
+
+  useEffect(() => {
+    getMyPosts();
+  }, [isOpen]);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,6 +74,11 @@ function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
       moderatorsIds,
     };
     updateModerators(postId, moderatorObj);
+    handleClose(setSearchResult);
+  };
+
+  const handleExitModal = () => {
+    setCurrentModerators(moderators);
     handleClose(setSearchResult);
   };
 
@@ -119,10 +128,7 @@ function SearchModal({ isOpen, handleClose, moderators, postId }: Props) {
 
   return (
     <>
-      <BasicModal
-        isOpen={isOpen}
-        handleClose={() => handleClose(setSearchResult)}
-      >
+      <BasicModal isOpen={isOpen} handleClose={handleExitModal}>
         <StyledContentWrapper>
           {renderSearch()}
           <StyledSearchResult addMargin={searchResult === null}>

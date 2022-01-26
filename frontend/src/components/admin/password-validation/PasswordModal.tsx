@@ -1,12 +1,13 @@
 import {
   StyledInputContainer,
   StyledCloseButton,
-  StyledButtonContainer
+  StyledButtonContainer,
+  StyledErrorMsg
 } from './StyledPasswordModal';
 import { StyledTealButton } from "../../basics/StyledTealButton";
 import BasicModal from '../../basics/basic-modal/BasicModal';
 import BasicVisibilityInput from "../../basics/basic-visibility-input/BasicVisibilityInput";
-import { BaseSyntheticEvent } from 'react';
+import { BaseSyntheticEvent, useEffect } from 'react';
 
 type Props = {
   isOpen: boolean;
@@ -35,9 +36,12 @@ function PasswordModal({
   children
 }: Props) {
 
+  const handleClose = () => {
+    setIsOpen(!isOpen);
+  }
 
   return (
-    <BasicModal isOpen={isOpen} handleClose={setIsOpen}>
+    <BasicModal isOpen={isOpen} handleClose={handleClose}>
       {children}
       <StyledInputContainer>
           <BasicVisibilityInput
@@ -52,7 +56,8 @@ function PasswordModal({
             required
             error={status !== 200 && status !== 0}
           />
-        </StyledInputContainer>
+      </StyledInputContainer>
+      {status !== 200 && status !== 0 && <><StyledErrorMsg>Incorrect input</StyledErrorMsg><br/></>}
         <StyledButtonContainer>
           <StyledCloseButton
             type="button"
