@@ -17,3 +17,7 @@ export const StyledButtonContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 2%;
 `;
+
+export const StyledErrorMsg = styled.div`
+  --dark-text: #C72B1B;
+`;
