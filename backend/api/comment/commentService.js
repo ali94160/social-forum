@@ -5,7 +5,10 @@ const roles = require("../../models/role");
 const User = require("../../models/user");
 
 module.exports = function (app) {
-  app.post("/api/comments", authUserLoggedIn, async (req, res) => {
+  app.post("/api/comments",
+  authUserLoggedIn,
+  authRole([roles.USER]),
+  async (req, res) => {
     if (!req.body) {
       res.sendStatus(403);
       return;

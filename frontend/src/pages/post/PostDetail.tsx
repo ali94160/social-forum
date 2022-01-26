@@ -75,6 +75,9 @@ function PostDetailPage() {
       {imAdmin && renderDeletePostAsAdmin()}
       <Post post={post} me={user} />
       {post?.ownerId?._id ? (
+        imAdmin ? (
+          <StyledText>Admins can't comment.</StyledText>
+        ) : (
         user ? (
           <CommentSection
             username={user.username}
@@ -84,7 +87,7 @@ function PostDetailPage() {
         ) : (
           <StyledText>Login to comment</StyledText>
         )
-      ) : (
+      )) : (
         <StyledText>Comment section is unavailable for this post</StyledText>
       )}
       <CommentList
