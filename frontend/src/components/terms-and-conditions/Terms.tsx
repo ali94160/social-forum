@@ -53,11 +53,11 @@ function Terms({ setReadMore }: Props) {
         §1.2 By creating an Account we will have the rights to use your data for
         security reasons. <br /> <br />
         §1.3 The data we are using for security reason are following:
-        <ul>
-          <li>IP-Adress</li>
-          <li>Email</li>
-        </ul>
       </StyledText>
+      <ul>
+        <li>IP-Adress</li>
+        <li>Email</li>
+      </ul>
       <StyledText>
         §1.4 You are solely responsible for the information associated with your
         Account and anything happens related to your Account.
