@@ -1,19 +1,19 @@
 const post = {
   title: "postTestTitle",
   content: "postTestContent",
-  categoryId: "61dc3a622f8ecad1bc1367b2",
+  categoryId: "61eef564a81e0c95199d558e",
 };
 
 const post2 = {
   title: "postTestTitle2",
   content: "postTestContent2",
-  categoryId: "61dc3a622f8ecad1bc1367b2",
+  categoryId: "61eef564a81e0c95199d558e",
 };
 
 const updPost = {
   title: "new post title",
   content: "new content",
-  categoryId: "61dc3a622f8ecad1bc1367b2",
+  categoryId: "61eef564a81e0c95199d558e",
 };
 
 const user2Login = {
