@@ -47,7 +47,7 @@ function PostDetailPage() {
 
   const handleComments = async () => {
     if (post && post._id && post._id === id) {
-      await getComments(post._id);
+      await getComments(post._id, "desc");
     }
   };
 
