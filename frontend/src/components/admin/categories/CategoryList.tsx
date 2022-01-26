@@ -29,9 +29,6 @@ function CategoriesList() {
     const res = await addCategory({ category: newCategory, password });
     setStatus(res);
     if (res === 200) {
-      setTitle('');
-      setIcon('');
-      setIsAdd(!isAdd);
       setPassword('');
       setDisplay(!display);
     }
