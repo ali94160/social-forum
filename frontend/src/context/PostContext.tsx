@@ -39,7 +39,7 @@ function PostContextProvider({ children }: Props) {
     return response.status;
   }
     
-  const getPosts = async (ascDate: boolean, ascTitle: boolean, categoryId: string) => {
+  const getPosts = async (ascDate: boolean, ascTitle: boolean, categoryId?: string) => {
     let query = `/api/posts?createdDate=${ascDate ? "asc" : "desc"}&title=${ascTitle ? "asc" : "desc"}`;
     if (categoryId) {
       query = `${query}&categoryId=${categoryId}`;

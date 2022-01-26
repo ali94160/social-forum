@@ -12,11 +12,16 @@ import {
   StyledDots,
   StyledCommentSection,
 } from "./StyledPostCard";
-import { PostObj } from "../../interfaces/Post";
+import { PostItem } from "../../interfaces/Post";
 import { useHistory } from "react-router-dom";
 import EditDotsPost from "../edit-dots-post/EditDotsPost";
 
-function PostCard({ post, isInMyPostPage }: PostObj) {
+interface Props {
+  post: PostItem;
+  isInMyPostPage?: boolean | false;
+}
+
+function PostCard({ post, isInMyPostPage }: Props) {
   const history = useHistory();
   const renderAvatar = () => (
     <StyledAvatarWrapper>
