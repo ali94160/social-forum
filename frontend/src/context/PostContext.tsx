@@ -61,12 +61,14 @@ function PostContextProvider({ children }: Props) {
     return response.status === 200;
   };
 
-  const deletePost = async (postId: string) => {
+  const deletePost = async (postId: string, isAdmin?: boolean) => {
     const response: Response = await fetch(`/api/posts/${postId}`, {
       method: "DELETE",
     });
-    if (response.status === 200) {
+    if (response.status === 200 && !isAdmin) {
       getMyPosts();
+    } else {
+      getPosts(true, false, "");
     }
     return response.status === 200;
   };
@@ -75,23 +77,23 @@ function PostContextProvider({ children }: Props) {
     const updatePost = {
       content: post.content,
       title: post.title,
-      categoryId: post.categoryId
-    }
+      categoryId: post.categoryId,
+    };
     const response: Response = await fetch(`/api/posts/${post._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(updatePost)
+      body: JSON.stringify(updatePost),
     });
     if (response.status === 200) {
       getPost(post._id);
     } else {
       return response.status;
     }
-  }
+  };
 
-  const updateModerators = async(postId: string, moderators: string[]) => {
+  const updateModerators = async (postId: string, moderators: string[]) => {
     const res = await fetch(`/api/posts/${postId}/moderators`, {
       method: "PUT",
       headers: {
@@ -101,7 +103,7 @@ function PostContextProvider({ children }: Props) {
     });
 
     return res.status === 200;
-  }
+  };
 
   const values = {
     createPost,

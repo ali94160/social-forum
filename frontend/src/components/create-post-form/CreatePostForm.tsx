@@ -34,8 +34,8 @@ function CreatePostForm() {
       categoryId,
     };
     
-    await createPost(newPost);
-    history.push("/");
+    const isSuccess = await createPost(newPost);
+    isSuccess && history.push("/");
   };
 
   return (

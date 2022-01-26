@@ -4,7 +4,7 @@ import PostCard from '../../components/post-card/PostCard';
 import LoadingSkeleton from '../../components/skeleton/LoadingSkeleton';
 import { useCategory } from '../../context/CategoryContext';
 import { usePost } from '../../context/PostContext';
-import { Category, CategoryItem } from '../../interfaces/Category';
+import { CategoryItem } from '../../interfaces/Category';
 import { PostItem } from '../../interfaces/Post';
 import {StyledTitle} from './StyledCategoryPosts'
 
@@ -24,7 +24,7 @@ function CategoryPostsPage() {
   
   const getCategory = () => {
     if (categories) {      
-      let res = categories.find((cat: Category) => cat._id == categoryId);
+      let res = categories.find((cat: CategoryItem) => cat._id == categoryId);
       setCategory(res);
     }
   }
