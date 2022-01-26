@@ -41,7 +41,7 @@ function PostDetailPage() {
   };
 
   const handlePost = async () => {
-    const res = await getPost(true, false, id);
+    const res = await getPost(id);
     setStatus(res.status);
   };
 
