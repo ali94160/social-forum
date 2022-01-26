@@ -6,6 +6,7 @@ import { usePost } from "../../context/PostContext";
 import ConfirmModal from "../confirm-modal/ConfirmModal";
 import SearchModal from "../search-modal/SearchModal";
 import { User } from "../../interfaces/User";
+import { useHistory } from "react-router-dom";
 
 interface Props {
   postId: string;
@@ -19,6 +20,7 @@ interface TrimmedUser {
 
 function EditDotsPost({ postId, moderators }: Props) {
   const { deletePost } = usePost();
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModal, setOpenModal] = React.useState(false);
   const [openSearchModal, setOpenSearchModal] = React.useState(false);
@@ -28,6 +30,15 @@ function EditDotsPost({ postId, moderators }: Props) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleEditPost = () => {
+    history.push({
+      pathname: `/posts/${postId}`,
+      state: {
+        editMode: true,
+      },
+    });
   };
 
   const handleDeletePost = async () => {
@@ -65,7 +76,7 @@ function EditDotsPost({ postId, moderators }: Props) {
       }}
     >
       <MenuItem onClick={handleOpenSearchModal}>Handle moderators</MenuItem>
-      <MenuItem onClick={handleClose}>Edit post</MenuItem>
+      <MenuItem onClick={handleEditPost}>Edit post</MenuItem>
       <MenuItem onClick={handleOpenConfirmModal}>Delete post</MenuItem>
     </Menu>
   );

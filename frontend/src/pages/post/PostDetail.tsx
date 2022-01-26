@@ -48,14 +48,13 @@ function PostDetailPage() {
   };
 
   const handlePost = async () => {
-    
     const res = await getPost(id);
     setStatus(res.status);
   };
 
   const handleComments = async () => {
     if (post && post._id && post._id === id) {
-      await getComments(post._id);
+      await getComments(post._id, "desc");
     }
   };
 

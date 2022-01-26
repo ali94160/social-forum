@@ -4,45 +4,54 @@ import {
   StyledLeftGrid,
   StyledBottomGrid,
   StyledAvatarGrid,
-} from './StyledPost';
-import Grid from '@mui/material/Grid';
-import EditIcon from '@mui/icons-material/Edit';
-import { useEffect, useState } from 'react';
-import { PostItem } from '../../interfaces/Post';
-import { StyledAvatar } from '../post-card/StyledPostCard';
-import { formatModStr } from './HandleModerators';
-import CheckIcon from '@mui/icons-material/Check';
-import { usePost } from '../../context/PostContext';
-import CloseIcon from '@mui/icons-material/Close';
-import { User } from '../../interfaces/User';
-import EditForm from './EditForm';
+} from "./StyledPost";
+import Grid from "@mui/material/Grid";
+import EditIcon from "@mui/icons-material/Edit";
+import { useEffect, useState } from "react";
+import { PostItem } from "../../interfaces/Post";
+import { StyledAvatar } from "../post-card/StyledPostCard";
+import { formatModStr } from "./HandleModerators";
+import CheckIcon from "@mui/icons-material/Check";
+import { usePost } from "../../context/PostContext";
+import CloseIcon from "@mui/icons-material/Close";
+import { User } from "../../interfaces/User";
+import EditForm from "./EditForm";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   post: PostItem;
   me: User;
 }
 
-function Post({post, me}: Props) {
+interface Location {
+  location: undefined | true;
+  editMode?: boolean;
+}
+
+function Post({ post, me }: Props) {
   const date = post?.createdDate?.substr(0, 10);
   const time = post && new Date(post.createdDate);
-  const [moderators, setModerators] = useState('');
+  const [moderators, setModerators] = useState("");
   const [edit, setEdit] = useState(false);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [categoryId, setCategoryId] = useState<any>(typeof post?.categoryId == "object" ? post.categoryId._id : "");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [categoryId, setCategoryId] = useState<any>(
+    typeof post?.categoryId == "object" ? post.categoryId._id : ""
+  );
   const hours = time?.getHours();
-  const minutes = (time && time?.getMinutes() < 10 ? '0' : '') + time?.getMinutes();
+  const minutes =
+    (time && time?.getMinutes() < 10 ? "0" : "") + time?.getMinutes();
   const { updatePost } = usePost();
   const [status, setStatus] = useState(0);
   const [isPostOwner, setIsPostOwner] = useState(false);
+  const location = useLocation<Location>();
   
-
   useEffect(() => {
     handleIsPostOwner();
-  }, [me])
-  
+  }, [me]);
+
   useEffect(() => {
-    handleModeratorStr()
+    handleModeratorStr();
   }, [post?.moderatorsIds]);
 
   const handleIsPostOwner = () => {
@@ -51,28 +60,34 @@ function Post({post, me}: Props) {
     } else {
       setIsPostOwner(false);
     }
-  }
+  };
 
   const handleModeratorStr = () => {
     const str = formatModStr(post);
     setModerators(str);
   };
 
+  useEffect(() => {
+    if (location?.state?.editMode === true) {
+      setEdit(true);
+    }
+  }, []);
+
   const handleEdit = async () => {
     setEdit(!edit);
     if (edit) {
       const status = await updatePost({
         _id: post?._id,
-        title: title? title : post?.title,
-        content: content? content : post?.content,
-        categoryId: categoryId ?? post?.categoryId
+        title: title ? title : post?.title,
+        content: content ? content : post?.content,
+        categoryId: categoryId ?? post?.categoryId,
       });
       setStatus(status);
     }
     if (status === 200) {
-      setEdit(!edit); 
+      setEdit(!edit);
     }
-  }
+  };
 
   return (
     <StyledPost>
@@ -106,17 +121,19 @@ function Post({post, me}: Props) {
         </Grid>
 
         <StyledLeftGrid item xs={2}>
-          {isPostOwner
-            ? (
-              !edit
-                ? <EditIcon onClick={handleEdit} />
-                : (<>
-                    <CheckIcon onClick={handleEdit} sx={{ marginBottom: "15px" }} />
-                    <br />
-                    <CloseIcon onClick={() => setEdit(!edit)} />
-                </>)
+          {isPostOwner ? (
+            !edit ? (
+              <EditIcon onClick={handleEdit} />
+            ) : (
+              <>
+                <CheckIcon onClick={handleEdit} sx={{ marginBottom: "15px" }} />
+                <br />
+                <CloseIcon onClick={() => setEdit(!edit)} />
+              </>
             )
-            : ""}
+          ) : (
+            ""
+          )}
         </StyledLeftGrid>
 
         <StyledBottomGrid item xs={12} container direction="row" spacing={2}>
