@@ -24,7 +24,7 @@ function UserContextProvider({ children }: Props) {
 
   const isAdmin = async () => {
     const response = await fetch("/api/admin");
-    return response.status === 200;
+    return response.status;
   };
 
   const searchUser = async (username: string) => {
