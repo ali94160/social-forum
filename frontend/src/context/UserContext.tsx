@@ -23,10 +23,10 @@ function UserContextProvider({ children }: Props) {
   };
 
   const isAdmin = async () => {
-    const response = await fetch('/api/admin');
-    return response.status;
+    const response = await fetch("/api/admin");
+    return response.status === 200;
   };
-  
+
   const searchUser = async (username: string) => {
     const response: Response = await fetch(`/api/users/username/${username}`);
     const user = await response.json();
@@ -36,7 +36,7 @@ function UserContextProvider({ children }: Props) {
   const values = {
     deleteSelf,
     isAdmin,
-    searchUser
+    searchUser,
   };
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
