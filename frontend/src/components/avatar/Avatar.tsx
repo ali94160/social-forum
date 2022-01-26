@@ -47,8 +47,8 @@ function Avatar({ justify, margin, backgroundColor }: Props) {
     { title: "Admin Panel", method: () => history.push("/admin") },
     {
       title: "Logout",
-      method: () => {
-        logout();
+      method: async () => {
+        await logout();
         history.push("/");
       },
     }
