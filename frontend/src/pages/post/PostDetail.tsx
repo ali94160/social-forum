@@ -26,7 +26,7 @@ function PostDetailPage() {
   }, [post]);
 
   const handlePost = async () => {
-    const res = await getPost(id);
+    const res = await getPost(true, false, id);
     setStatus(res.status);
   };
 
