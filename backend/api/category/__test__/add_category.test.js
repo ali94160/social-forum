@@ -29,12 +29,12 @@ describe("Test to add a category", () => {
       .post("/api/categories")
       .send(category_success);
     expect(categoryResponse.statusCode).toBe(200);
-    expect(categoryResponse.body.title).toEqual(category_success.title);
+    expect(categoryResponse.body.title).toEqual(category_success.category.title);
   });
 
 
   afterAll(async () => {
-    await categoryModel.findOneAndDelete({ title: category_success.title })
+    await categoryModel.findOneAndDelete({ title: category_success.category.title })
     mongoose.connection.close();
   })
   
