@@ -43,7 +43,7 @@ function PostCard({ post, isInMyPostPage }: Props) {
   }, [user]);
 
   const handleAdmin = async () => {
-    if (user) {
+    if (user && user.roles.includes('ADMIN')){
       setImAdmin(await isAdmin());
     } else {
       setImAdmin(false);

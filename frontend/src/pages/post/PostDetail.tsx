@@ -40,7 +40,7 @@ function PostDetailPage() {
   }, [post]);
 
   const handleAdmin = async () => {
-    if (user) {
+    if (user && user.roles.includes('ADMIN')) {
       setImAdmin(await isAdmin());
     } else {
       setImAdmin(false);
