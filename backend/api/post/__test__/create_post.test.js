@@ -8,6 +8,7 @@ const mongoose = global.mongoose;
 
 describe("Test if a user can create a post", () => {
   let testSession = null;
+  let postId;
 
   beforeAll(function () {
     testSession = session(app);
@@ -15,6 +16,7 @@ describe("Test if a user can create a post", () => {
 
   test("To not allow a unauthorized user to create a post", async () => {
     const res = await testSession.post("/api/user/posts").send(post);
+    postId = res.body._id;
     expect(res.statusCode).toBe(401);
   });
 
@@ -22,7 +24,7 @@ describe("Test if a user can create a post", () => {
     await testSession.post("/api/login").send(user1Login);
     const res = await testSession.post("/api/user/posts").send(post);
     const { body } = await testSession.get("/api/whoAmI");
-    await Post.findOneAndDelete({ title: post.title });
+    await Post.findByIdAndDelete(postId);
     expect(res.statusCode).toBe(200);
     expect(body.roles).toEqual(expect.arrayContaining(["POSTOWNER"]));
   });

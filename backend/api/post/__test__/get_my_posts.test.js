@@ -20,14 +20,14 @@ describe("Test getting users own posts", () => {
 
   describe("Get posts owner by user", () => {
     let testSession = null;
+    let postId;
     beforeAll(async () => {
       testSession = session(app);
 
-      // delete all the test posts in db
-      await Post.findOneAndDelete({ title: post.title });
       // login the user first and create a test post
       await testSession.post("/api/login").send(user2Login);
-      await testSession.post("/api/user/posts").send(post);
+      const res = await testSession.post("/api/user/posts").send(post);
+      postId = res.body._id;
     });
 
     test("GET api/user/posts", async () => {
@@ -40,6 +40,7 @@ describe("Test getting users own posts", () => {
       expect(postResult.title).toBe(post.title);
       expect(postResult.content).toBe(post.content);
       expect(postResult.categoryId).toBe(post.categoryId);
+      await Post.findByIdAndDelete(postId);
     });
   });
 
