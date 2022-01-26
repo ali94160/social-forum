@@ -24,7 +24,6 @@ function EditDotsPost({ postId, moderators }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModal, setOpenModal] = React.useState(false);
   const [openSearchModal, setOpenSearchModal] = React.useState(false);
-  const [isEditMode, setIsEditMode] = React.useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -37,9 +36,9 @@ function EditDotsPost({ postId, moderators }: Props) {
     history.push({
       pathname: `/posts/${postId}`,
       state: {
-        editMode: true
-      }
-    })
+        editMode: true,
+      },
+    });
   };
 
   const handleDeletePost = async () => {
