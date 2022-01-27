@@ -31,7 +31,7 @@ export default function ConfirmDeleteUserModal({ isConfirmDeleteModal, toggleCon
 
   const submitConfirm = async (ev: BaseSyntheticEvent) => {
     ev.preventDefault();
-    const isSucceed = await deleteSelf(password);
+    const isSucceed = await deleteSelf({password});
     if (!isSucceed) {
     setShowErrorMessage(true);
       return;

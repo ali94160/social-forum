@@ -9,8 +9,12 @@ interface Props {
   children: any;
 }
 
+interface CatProps {
+  password: string;
+}
+
 function UserContextProvider({ children }: Props) {
-  const deleteSelf = async (password: string) => {
+  const deleteSelf = async ({password}: CatProps) => {
     const response: Response = await fetch("/api/user/self", {
       method: "DELETE",
       headers: {
